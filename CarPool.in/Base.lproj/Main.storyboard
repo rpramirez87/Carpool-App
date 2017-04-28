@@ -149,6 +149,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rjr-94-AWN">
                                         <rect key="frame" x="0.0" y="70" width="335" height="60"/>
                                         <state key="normal" image="FacebookButton"/>
+                                        <connections>
+                                            <action selector="facebookButtonPressed:" destination="sel-U1-r7e" eventType="touchUpInside" id="vjS-D6-e0h"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ptX-sZ-hcI">
                                         <rect key="frame" x="0.0" y="140" width="335" height="60"/>
@@ -186,7 +189,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4qN-yv-B93" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1189.5999999999999" y="71.514242878560722"/>
+            <point key="canvasLocation" x="863" y="503"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="Yff-Ju-fgz">
@@ -204,7 +207,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kpV-bO-Hfp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1906" y="72"/>
+            <point key="canvasLocation" x="1756" y="72"/>
         </scene>
     </scenes>
     <resources>

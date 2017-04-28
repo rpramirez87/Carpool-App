@@ -8,12 +8,17 @@
 
 #import "SignUpViewController.h"
 #import "FCAlertView.h"
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+
 
 @import FirebaseAuth;
 @import FirebaseDatabase;
 
 
-@interface SignUpViewController () <GIDSignInUIDelegate, GIDSignInDelegate, UITextFieldDelegate>
+
+
+@interface SignUpViewController () <GIDSignInUIDelegate, GIDSignInDelegate, FBSDKLoginButtonDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailAddressTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
@@ -102,9 +107,7 @@ didSignInForUser:(GIDGoogleUser *)user
                                       [[[self.rootReference child:@"users"] child:user.uid] updateChildValues:userDict];
                                       
                                       //Load up new view controller
-                                      
-                                      
-                                      
+                                    
                                   }];
         
     } else {
@@ -157,6 +160,65 @@ didDisconnectWithUser:(GIDGoogleUser *)user
     
 }
 
+- (IBAction)facebookButtonPressed:(id)sender {
+    FBSDKLoginManager *fbLoginManager = [[FBSDKLoginManager alloc] init];
+    
+    [fbLoginManager logInWithReadPermissions:@[@"email", @"public_profile"] fromViewController:self handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+        if (error)
+        {
+            // Process error
+            NSLog(@"Facebook Login Error %@", error.localizedDescription);
+        }
+        else if (result.isCancelled)
+        {
+            // Handle cancellations
+            NSLog(@"Facebook is cancelled");
+        }
+        else
+        {
+            NSLog(@"Successfully logged in");
+            
+            //Graph Request
+            [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me"
+                                               parameters:@{@"fields": @"id, name, picture, email"}]
+             startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+                 if (!error) {
+                     NSString *pictureURL = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture?type=large",[result objectForKey:@"id"]];
+                     
+                     //Print
+                     NSLog(@"name is %@",[result objectForKey:@"name"]);
+                     NSLog(@"id is %@", [result objectForKey:@"id"]);
+                     NSLog(@"picture is %@", pictureURL);
+                     NSLog(@"email is %@", [result objectForKey:@"email"]);
+                     
+                     //Create a token for Firebase authentication
+                     NSString *currentToken = [[FBSDKAccessToken currentAccessToken] tokenString];
+                     NSLog(@"Current Token - %@", currentToken);
+                     FIRAuthCredential *credential = [FIRFacebookAuthProvider
+                                                      credentialWithAccessToken:[FBSDKAccessToken currentAccessToken]
+                                                      .tokenString];
+                     
+                     
+                     //Create a user dictionary
+                     NSDictionary *userDict = @{
+                                                @"name" : [result objectForKey:@"name"],
+                                                @"image" : pictureURL,
+                                                @"email": [result objectForKey:@"email"],
+                                                @"provider" : credential.provider
+                                                };
+                     
+                     
+                     [self createFacebookuserWithCredential:credential withUserInfo:userDict];
+                 }
+                 else{
+                     NSLog(@"%@", [error localizedDescription]);
+                 }
+             }];
+        }
+    }];
+}
+
+
 #pragma mark - Text Field Delegate Methods
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -184,15 +246,30 @@ didDisconnectWithUser:(GIDGoogleUser *)user
     
     [[FIRAuth auth] createUserWithEmail:email password:password completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
         if(error == nil){
+            FIRAuthCredential *credential =
+            [FIREmailPasswordAuthProvider credentialWithEmail:email
+                                                     password:password];
+            //Credential Provider shows "password"
+            NSLog(@"Credential provider - %@", credential.provider);
             NSLog(@"%@", user.uid);
             
-            //Create email user in Firebase private database
-            //            [[[self.rootReference child:@"users"] child:user.uid] setValue:@{@"name" : self.nameTextField.text, @"email": email,@"provider":@"email"}];
-            //
-            //            //Create email user in Firebase public database
-            //            [[[self.rootReference child:@"publicUsers"] child:user.uid] setValue:@{@"name" : self.nameTextField.text}];
+            //Create a user dictionary
+            NSDictionary *userDict = @{
+                                       @"name" : self.nameTextField.text,
+                                       @"email": email,
+                                       @"provider" : @"email"
+                                       };
             
-            NSLog(@"Successfully created user");
+            NSDictionary *publicUserDict = @{@"name" : self.nameTextField.text};
+            
+            
+            //Update public user
+            [[[self.rootReference child:@"publicUsers"] child:user.uid] updateChildValues:publicUserDict];
+            
+            //Update private user
+            [[[self.rootReference child:@"users"] child:user.uid] updateChildValues:userDict];
+        
+            NSLog(@"Successfully created email user");
             
             //Send Verification email
             [self sendVerificationToEmail:email];
@@ -237,6 +314,72 @@ didDisconnectWithUser:(GIDGoogleUser *)user
         }
     }];
 }
+
+-(void)createFacebookuserWithCredential:(FIRAuthCredential *)credential withUserInfo:(NSDictionary *)userDict {
+    [[FIRAuth auth] signInWithCredential:credential
+                              completion:^(FIRUser *user, NSError *error) {
+                                  
+                                  if (error) {
+                                      //Error code for multipler users
+                                      if (error.code == 17007) {
+                                          NSLog(@"FIRAuthCredential error - %@", error.localizedDescription);
+                                          NSLog(@"Error code -%ld", (long)error.code);
+                                          [[FIRAuth auth].currentUser linkWithCredential:credential
+                                                                              completion:^(FIRUser *_Nullable user, NSError *_Nullable error) {
+                                                                                  if (error) {
+                                                                                      NSLog(@"FIRAuth linking error - %@", error.localizedDescription);
+                                                                                      return;
+                                                                                  }
+                                                                                  NSLog(@"Sucessfully linked accounts");
+                                                                                  
+                                                                                  //Save to database
+                                                                                  //Create a user dictionary
+                                                                                  
+                                                                                  NSDictionary *publicUserDict = @{
+                                                                                                                   @"name" : [userDict valueForKey:@"name"],
+                                                                                                                   @"image" : [userDict valueForKey:@"image"]
+                                                                                                                   };
+                                                                                  //Update public user
+                                                                                  [[[self.rootReference child:@"publicUsers"] child:user.uid] updateChildValues:publicUserDict];
+                                                                                  
+                                                                                  //Change credential to facebook
+                                                                                  //userDict[@"provider"] = credential.provider;
+                                                                                  [userDict setValue:credential.provider forKey:@"provider"];
+                                                                                  
+                                                                                  //Update private user
+                                                                                  [[[self.rootReference child:@"users"] child:user.uid] updateChildValues:userDict];
+                                                                                  
+                                                                        
+                                                                              }];
+                                      }
+                                      return;
+                                  }
+                                  
+                                  NSLog(@"Successfully logged in");
+                                  //Create User in Firebase - DELETES NEW VALUES CREATED EVERY LOGIN
+                                  //Create a public dictionary of user's values
+                                  //Create a user dictionary
+                                  
+                                  NSDictionary *publicUserDict = @{
+                                                                   @"name" : [userDict valueForKey:@"name"],
+                                                                   @"image" : [userDict valueForKey:@"image"]
+                                                                   };
+                                  //Update public user
+                                  [[[self.rootReference child:@"publicUsers"] child:user.uid] updateChildValues:publicUserDict];
+                                  
+                                  //Update private user
+                                  [[[self.rootReference child:@"users"] child:user.uid] updateChildValues:userDict];
+                                  
+                                  //Save Keychain as current uid
+                                  //[self keychainSaveWithUID:user.uid];
+                                  
+                                  //Present Main VC
+                                  //                                  MainVC *mainVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MainVC"];
+                                  //                                  [self.navigationController pushViewController:mainVC animated:YES];
+                                  
+                              }];
+}
+
 
 
 @end

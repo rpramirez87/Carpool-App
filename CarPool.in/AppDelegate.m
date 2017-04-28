@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 @import Firebase;
 
 @interface AppDelegate ()
@@ -27,6 +28,10 @@
     
     //Reset Google Sign in
     [[GIDSignIn sharedInstance] signOut];
+    
+    //Facebook
+    [[FBSDKApplicationDelegate sharedInstance] application:application
+                             didFinishLaunchingWithOptions:launchOptions];
     
     return YES;
 }
@@ -61,15 +66,41 @@
 
 #pragma mark - Google Sign Delegate Functions
 
-- (BOOL)application:(nonnull UIApplication *)application
-            openURL:(nonnull NSURL *)url
-            options:(nonnull NSDictionary<NSString *, id> *)options {
-    return [[GIDSignIn sharedInstance] handleURL:url
-                               sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
-                                      annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+
+// Google Sign in
+
+//- (BOOL)application:(nonnull UIApplication *)application
+//            openURL:(nonnull NSURL *)url
+//            options:(nonnull NSDictionary<NSString *, id> *)options {
+//    return [[GIDSignIn sharedInstance] handleURL:url
+//                               sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+//                                      annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+//}
+
+// Facebook
+
+//- (BOOL)application:(UIApplication *)application
+//            openURL:(NSURL *)url
+//            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+//    
+//    BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application
+//                                                                  openURL:url
+//                                                        sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+//                                                               annotation:options[UIApplicationOpenURLOptionsAnnotationKey]
+//                    ];
+//    // Add any custom logic here.
+//    return handled;
+//}
+
+
+
+
+- (BOOL)application:(UIApplication* )app openURL:(NSURL* )url options:(NSDictionary *)options {
+    
+    NSLog(@"Url = %@",url);
+    NSLog(@"Dict = %@",options);
+    
+    return [[GIDSignIn sharedInstance] handleURL:url sourceApplication:options [UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey]] ||[[FBSDKApplicationDelegate sharedInstance]application:app openURL:url options:options];
 }
-
-
-
 
 @end
