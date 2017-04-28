@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+@import Firebase;
 
 @interface AppDelegate ()
 
@@ -17,6 +18,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    //Firebase Configure
+    [FIRApp configure];
+    
+    //Google Sign in
+    [GIDSignIn sharedInstance].clientID = [FIRApp defaultApp].options.clientID;
+    
+    //Reset Google Sign in
+    [[GIDSignIn sharedInstance] signOut];
+    
     return YES;
 }
 
@@ -44,8 +55,21 @@
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+    NSLog(@"Application will Terminate");
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+#pragma mark - Google Sign Delegate Functions
+
+- (BOOL)application:(nonnull UIApplication *)application
+            openURL:(nonnull NSURL *)url
+            options:(nonnull NSDictionary<NSString *, id> *)options {
+    return [[GIDSignIn sharedInstance] handleURL:url
+                               sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                                      annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+}
+
+
 
 
 @end

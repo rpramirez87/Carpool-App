@@ -7,25 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4317A2EFF4443ADE2BB3DC71 /* libPods-CarPool.in.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB60DCAA4804DE4E6235A6C /* libPods-CarPool.in.a */; };
 		D920DB1A1EB268A60087EB95 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D920DB191EB268A60087EB95 /* main.m */; };
 		D920DB1D1EB268A60087EB95 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D920DB1C1EB268A60087EB95 /* AppDelegate.m */; };
-		D920DB201EB268A60087EB95 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D920DB1F1EB268A60087EB95 /* ViewController.m */; };
 		D920DB231EB268A60087EB95 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D920DB211EB268A60087EB95 /* Main.storyboard */; };
 		D920DB251EB268A60087EB95 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D920DB241EB268A60087EB95 /* Assets.xcassets */; };
 		D920DB281EB268A60087EB95 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D920DB261EB268A60087EB95 /* LaunchScreen.storyboard */; };
+		D920DB311EB2690B0087EB95 /* TitleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D920DB301EB2690B0087EB95 /* TitleViewController.m */; };
+		D920DB361EB26BB30087EB95 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D920DB351EB26BB30087EB95 /* GoogleService-Info.plist */; };
+		D920DB381EB278190087EB95 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D920DB371EB278190087EB95 /* logo.png */; };
+		D920DB3B1EB288F90087EB95 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D920DB3A1EB288F90087EB95 /* SignUpViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C4B4E6C8138EEC3169C015FF /* Pods-CarPool.in.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarPool.in.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CarPool.in/Pods-CarPool.in.debug.xcconfig"; sourceTree = "<group>"; };
+		D046A8D805A607FA53EFBDA8 /* Pods-CarPool.in.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarPool.in.release.xcconfig"; path = "Pods/Target Support Files/Pods-CarPool.in/Pods-CarPool.in.release.xcconfig"; sourceTree = "<group>"; };
 		D920DB151EB268A60087EB95 /* CarPool.in.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarPool.in.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D920DB191EB268A60087EB95 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D920DB1B1EB268A60087EB95 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D920DB1C1EB268A60087EB95 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		D920DB1E1EB268A60087EB95 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		D920DB1F1EB268A60087EB95 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		D920DB221EB268A60087EB95 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D920DB241EB268A60087EB95 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D920DB271EB268A60087EB95 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D920DB291EB268A60087EB95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D920DB2F1EB2690B0087EB95 /* TitleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleViewController.h; sourceTree = "<group>"; };
+		D920DB301EB2690B0087EB95 /* TitleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleViewController.m; sourceTree = "<group>"; };
+		D920DB351EB26BB30087EB95 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D920DB371EB278190087EB95 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		D920DB391EB288F90087EB95 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
+		D920DB3A1EB288F90087EB95 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
+		FEB60DCAA4804DE4E6235A6C /* libPods-CarPool.in.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CarPool.in.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +44,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4317A2EFF4443ADE2BB3DC71 /* libPods-CarPool.in.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		63F10BB99D92AF41AC35C0CE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FEB60DCAA4804DE4E6235A6C /* libPods-CarPool.in.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		899EB7271C7B01BF3C0A207D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C4B4E6C8138EEC3169C015FF /* Pods-CarPool.in.debug.xcconfig */,
+				D046A8D805A607FA53EFBDA8 /* Pods-CarPool.in.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		D920DB0C1EB268A60087EB95 = {
 			isa = PBXGroup;
 			children = (
 				D920DB171EB268A60087EB95 /* CarPool.in */,
 				D920DB161EB268A60087EB95 /* Products */,
+				899EB7271C7B01BF3C0A207D /* Pods */,
+				63F10BB99D92AF41AC35C0CE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,14 +89,10 @@
 		D920DB171EB268A60087EB95 /* CarPool.in */ = {
 			isa = PBXGroup;
 			children = (
-				D920DB1B1EB268A60087EB95 /* AppDelegate.h */,
-				D920DB1C1EB268A60087EB95 /* AppDelegate.m */,
-				D920DB1E1EB268A60087EB95 /* ViewController.h */,
-				D920DB1F1EB268A60087EB95 /* ViewController.m */,
-				D920DB211EB268A60087EB95 /* Main.storyboard */,
-				D920DB241EB268A60087EB95 /* Assets.xcassets */,
-				D920DB261EB268A60087EB95 /* LaunchScreen.storyboard */,
-				D920DB291EB268A60087EB95 /* Info.plist */,
+				D969C1221EB2BEC0006B8CEF /* Data Service */,
+				D920DB341EB269190087EB95 /* Controller */,
+				D920DB331EB269130087EB95 /* View */,
+				D920DB321EB2690F0087EB95 /* Model */,
 				D920DB181EB268A60087EB95 /* Supporting Files */,
 			);
 			path = CarPool.in;
@@ -74,9 +101,49 @@
 		D920DB181EB268A60087EB95 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D920DB351EB26BB30087EB95 /* GoogleService-Info.plist */,
+				D920DB1B1EB268A60087EB95 /* AppDelegate.h */,
+				D920DB1C1EB268A60087EB95 /* AppDelegate.m */,
+				D920DB211EB268A60087EB95 /* Main.storyboard */,
+				D920DB371EB278190087EB95 /* logo.png */,
+				D920DB241EB268A60087EB95 /* Assets.xcassets */,
+				D920DB261EB268A60087EB95 /* LaunchScreen.storyboard */,
+				D920DB291EB268A60087EB95 /* Info.plist */,
 				D920DB191EB268A60087EB95 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D920DB321EB2690F0087EB95 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		D920DB331EB269130087EB95 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		D920DB341EB269190087EB95 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D920DB2F1EB2690B0087EB95 /* TitleViewController.h */,
+				D920DB301EB2690B0087EB95 /* TitleViewController.m */,
+				D920DB391EB288F90087EB95 /* SignUpViewController.h */,
+				D920DB3A1EB288F90087EB95 /* SignUpViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		D969C1221EB2BEC0006B8CEF /* Data Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Data Service";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,9 +153,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D920DB2C1EB268A60087EB95 /* Build configuration list for PBXNativeTarget "CarPool.in" */;
 			buildPhases = (
+				5AB6BC6DCC4518FD38CCD3D2 /* [CP] Check Pods Manifest.lock */,
 				D920DB111EB268A60087EB95 /* Sources */,
 				D920DB121EB268A60087EB95 /* Frameworks */,
 				D920DB131EB268A60087EB95 /* Resources */,
+				8D4A073CA83F53B462A3C636 /* [CP] Embed Pods Frameworks */,
+				462A2521F0018ECC5C837AD1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -138,6 +208,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D920DB361EB26BB30087EB95 /* GoogleService-Info.plist in Resources */,
+				D920DB381EB278190087EB95 /* logo.png in Resources */,
 				D920DB281EB268A60087EB95 /* LaunchScreen.storyboard in Resources */,
 				D920DB251EB268A60087EB95 /* Assets.xcassets in Resources */,
 				D920DB231EB268A60087EB95 /* Main.storyboard in Resources */,
@@ -146,13 +218,62 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		462A2521F0018ECC5C837AD1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CarPool.in/Pods-CarPool.in-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5AB6BC6DCC4518FD38CCD3D2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8D4A073CA83F53B462A3C636 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CarPool.in/Pods-CarPool.in-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D920DB111EB268A60087EB95 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D920DB201EB268A60087EB95 /* ViewController.m in Sources */,
 				D920DB1D1EB268A60087EB95 /* AppDelegate.m in Sources */,
+				D920DB311EB2690B0087EB95 /* TitleViewController.m in Sources */,
+				D920DB3B1EB288F90087EB95 /* SignUpViewController.m in Sources */,
 				D920DB1A1EB268A60087EB95 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -273,24 +394,26 @@
 		};
 		D920DB2D1EB268A60087EB95 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C4B4E6C8138EEC3169C015FF /* Pods-CarPool.in.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = RJETQ2A4J2;
 				INFOPLIST_FILE = CarPool.in/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.RJTtraining.CarPool-in";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.RJTTraining.CarPool-in";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
 		D920DB2E1EB268A60087EB95 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D046A8D805A607FA53EFBDA8 /* Pods-CarPool.in.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = RJETQ2A4J2;
 				INFOPLIST_FILE = CarPool.in/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.RJTtraining.CarPool-in";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.RJTTraining.CarPool-in";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -314,6 +437,7 @@
 				D920DB2E1EB268A60087EB95 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

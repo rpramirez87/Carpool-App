@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  TitleViewController.h
 //  CarPool.in
 //
 //  Created by Ron Ramirez on 4/27/17.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface TitleViewController : UIViewController
 
 @end
-

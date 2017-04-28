@@ -1,5 +1,5 @@
 //
-//  AppDelegate.h
+//  SignUpViewController.h
 //  CarPool.in
 //
 //  Created by Ron Ramirez on 4/27/17.
@@ -10,10 +10,6 @@
 @import Firebase;
 @import GoogleSignIn;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
-
-@property (strong, nonatomic) UIWindow *window;
-
+@interface SignUpViewController : UIViewController
 
 @end
-
