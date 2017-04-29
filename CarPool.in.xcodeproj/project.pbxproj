@@ -20,6 +20,7 @@
 		D94341DB1EB4449700AF6336 /* CircleImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = D94341DA1EB4449700AF6336 /* CircleImageView.m */; };
 		D94341DE1EB5076700AF6336 /* PostRideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D94341DD1EB5076700AF6336 /* PostRideViewController.m */; };
 		D94341E11EB5093B00AF6336 /* MaterialNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = D94341E01EB5093B00AF6336 /* MaterialNavigationView.m */; };
+		D95E97FD1EB559E6004F41EE /* DataService.m in Sources */ = {isa = PBXBuildFile; fileRef = D95E97FC1EB559E6004F41EE /* DataService.m */; };
 		D9F02A451EB42ADB007EB6EB /* RideLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F02A441EB42ADB007EB6EB /* RideLogViewController.m */; };
 		D9F02A481EB4352C007EB6EB /* MaterialView.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F02A471EB4352C007EB6EB /* MaterialView.m */; };
 /* End PBXBuildFile section */
@@ -47,6 +48,8 @@
 		D94341DD1EB5076700AF6336 /* PostRideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostRideViewController.m; sourceTree = "<group>"; };
 		D94341DF1EB5093B00AF6336 /* MaterialNavigationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialNavigationView.h; sourceTree = "<group>"; };
 		D94341E01EB5093B00AF6336 /* MaterialNavigationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaterialNavigationView.m; sourceTree = "<group>"; };
+		D95E97FB1EB559E6004F41EE /* DataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataService.h; sourceTree = "<group>"; };
+		D95E97FC1EB559E6004F41EE /* DataService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataService.m; sourceTree = "<group>"; };
 		D9F02A431EB42ADB007EB6EB /* RideLogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideLogViewController.h; sourceTree = "<group>"; };
 		D9F02A441EB42ADB007EB6EB /* RideLogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideLogViewController.m; sourceTree = "<group>"; };
 		D9F02A461EB4352C007EB6EB /* MaterialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialView.h; sourceTree = "<group>"; };
@@ -167,6 +170,8 @@
 		D969C1221EB2BEC0006B8CEF /* Data Service */ = {
 			isa = PBXGroup;
 			children = (
+				D95E97FB1EB559E6004F41EE /* DataService.h */,
+				D95E97FC1EB559E6004F41EE /* DataService.m */,
 			);
 			name = "Data Service";
 			sourceTree = "<group>";
@@ -297,6 +302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D94341E11EB5093B00AF6336 /* MaterialNavigationView.m in Sources */,
+				D95E97FD1EB559E6004F41EE /* DataService.m in Sources */,
 				D920DB1D1EB268A60087EB95 /* AppDelegate.m in Sources */,
 				D920DB311EB2690B0087EB95 /* TitleViewController.m in Sources */,
 				D94341DB1EB4449700AF6336 /* CircleImageView.m in Sources */,

@@ -10,7 +10,7 @@
 #import "FCAlertView.h"
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
-
+#import "DataService.h"
 
 @import FirebaseAuth;
 @import FirebaseDatabase;
@@ -24,9 +24,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *confirmPasswordTextField;
 
-//Root Reference
-@property (strong, nonatomic) FIRDatabaseReference *rootReference;
-
 @end
 
 @implementation SignUpViewController
@@ -34,9 +31,6 @@
 #pragma mark - View Controller Life Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    //Firebase Reference
-    self.rootReference = [[FIRDatabase database] reference];
     
     //Google Sign in
     [GIDSignIn sharedInstance].uiDelegate = self;
@@ -93,8 +87,7 @@ didSignInForUser:(GIDGoogleUser *)user
                                                                        @"name" : fullName,
                                                                        @"image" : stringURL,
                                                                        };
-                                      
-                                      [[[self.rootReference child:@"publicUsers"] child:user.uid] updateChildValues:publicUserDict];
+                                      [[[[DataService ds] publicUserReference]child:user.uid] updateChildValues:publicUserDict];
                                       
                                       //Create a user dictionary
                                       NSDictionary *userDict = @{
@@ -104,10 +97,11 @@ didSignInForUser:(GIDGoogleUser *)user
                                                                  @"provider" : credential.provider
                                                                  };
                                       
-                                      [[[self.rootReference child:@"users"] child:user.uid] updateChildValues:userDict];
+                                      
+                                      [[[[DataService ds] userReference]child:user.uid] updateChildValues:userDict];
                                       
                                       //Load up new view controller
-                                    
+                                      
                                   }];
         
     } else {
@@ -264,11 +258,11 @@ didDisconnectWithUser:(GIDGoogleUser *)user
             
             
             //Update public user
-            [[[self.rootReference child:@"publicUsers"] child:user.uid] updateChildValues:publicUserDict];
+            [[[[DataService ds] publicUserReference]child:user.uid] updateChildValues:publicUserDict];
             
             //Update private user
-            [[[self.rootReference child:@"users"] child:user.uid] updateChildValues:userDict];
-        
+            [[[[DataService ds] userReference]child:user.uid] updateChildValues:userDict];
+            
             NSLog(@"Successfully created email user");
             
             //Send Verification email
@@ -334,22 +328,20 @@ didDisconnectWithUser:(GIDGoogleUser *)user
                                                                                   
                                                                                   //Save to database
                                                                                   //Create a user dictionary
-                                                                                  
                                                                                   NSDictionary *publicUserDict = @{
                                                                                                                    @"name" : [userDict valueForKey:@"name"],
-                                                                                                                   @"image" : [userDict valueForKey:@"image"]
+                                                                                                                @"image" : [userDict valueForKey:@"image"]
                                                                                                                    };
                                                                                   //Update public user
-                                                                                  [[[self.rootReference child:@"publicUsers"] child:user.uid] updateChildValues:publicUserDict];
+                                                                                  [[[[DataService ds] publicUserReference]child:user.uid] updateChildValues:publicUserDict];
                                                                                   
                                                                                   //Change credential to facebook
                                                                                   //userDict[@"provider"] = credential.provider;
                                                                                   [userDict setValue:credential.provider forKey:@"provider"];
                                                                                   
                                                                                   //Update private user
-                                                                                  [[[self.rootReference child:@"users"] child:user.uid] updateChildValues:userDict];
-                                                                                  
-                                                                        
+                                                                                  [[[[DataService ds] userReference]child:user.uid] updateChildValues:userDict];
+
                                                                               }];
                                       }
                                       return;
@@ -365,10 +357,10 @@ didDisconnectWithUser:(GIDGoogleUser *)user
                                                                    @"image" : [userDict valueForKey:@"image"]
                                                                    };
                                   //Update public user
-                                  [[[self.rootReference child:@"publicUsers"] child:user.uid] updateChildValues:publicUserDict];
+                                  [[[[DataService ds] publicUserReference]child:user.uid] updateChildValues:publicUserDict];
                                   
                                   //Update private user
-                                  [[[self.rootReference child:@"users"] child:user.uid] updateChildValues:userDict];
+                                  [[[[DataService ds] userReference]child:user.uid] updateChildValues:userDict];
                                   
                                   //Save Keychain as current uid
                                   //[self keychainSaveWithUID:user.uid];
@@ -376,10 +368,6 @@ didDisconnectWithUser:(GIDGoogleUser *)user
                                   //Present Main VC
                                   //                                  MainVC *mainVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MainVC"];
                                   //                                  [self.navigationController pushViewController:mainVC animated:YES];
-                                  
-                              }];
+                                  }];
 }
-
-
-
 @end

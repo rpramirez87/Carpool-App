@@ -106,8 +106,6 @@
     region.span.latitudeDelta = 0.1;
     region.span.longitudeDelta = 0.1;
     [self.mapView setRegion:region animated:YES];
-    
-    
 }
 
 
