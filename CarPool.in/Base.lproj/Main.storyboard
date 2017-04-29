@@ -511,10 +511,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W8U-d8-g36">
-                                <rect key="frame" x="8" y="193" width="359" height="386"/>
+                                <rect key="frame" x="8" y="218" width="359" height="361"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="Mgl-do-fjG">
-                                        <rect key="frame" x="29" y="43" width="300" height="300"/>
+                                        <rect key="frame" x="29" y="30.5" width="300" height="300"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ckj-gu-ZBF">
                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="32.5"/>
@@ -533,6 +533,9 @@
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                                 <textInputTraits key="textInputTraits"/>
+                                                                <connections>
+                                                                    <outlet property="delegate" destination="FBf-9P-lIL" id="now-KO-wIK"/>
+                                                                </connections>
                                                             </textField>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="input line" translatesAutoresizingMaskIntoConstraints="NO" id="6sq-zS-Gl7">
                                                                 <rect key="frame" x="0.0" y="31.5" width="300" height="1"/>
@@ -549,6 +552,9 @@
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="FBf-9P-lIL" id="adb-jj-8B3"/>
+                                                        </connections>
                                                     </textField>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="input line" translatesAutoresizingMaskIntoConstraints="NO" id="79j-Ym-Sj0">
                                                         <rect key="frame" x="0.0" y="31.5" width="300" height="1"/>
@@ -602,22 +608,6 @@
                                     <constraint firstItem="Mgl-do-fjG" firstAttribute="centerY" secondItem="W8U-d8-g36" secondAttribute="centerY" id="iAS-mC-TNa"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Map" translatesAutoresizingMaskIntoConstraints="NO" id="SJa-VT-gy7">
-                                <rect key="frame" x="0.0" y="60" width="375" height="125"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="125" id="k3e-fY-5rB"/>
-                                </constraints>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qOP-E6-yGt">
-                                <rect key="frame" x="16" y="587" width="343" height="60"/>
-                                <color key="backgroundColor" red="0.68710386749999997" green="0.41235345600000001" blue="0.7686903477" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="dGA-Rg-fud"/>
-                                </constraints>
-                                <state key="normal" title="Post Ride">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ehA-Ny-Riq" customClass="MaterialNavigationView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
@@ -644,11 +634,36 @@
                                     <constraint firstItem="Fzs-c3-XIx" firstAttribute="centerX" secondItem="ehA-Ny-Riq" secondAttribute="centerX" id="wVh-fZ-kig"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qOP-E6-yGt">
+                                <rect key="frame" x="16" y="587" width="343" height="60"/>
+                                <color key="backgroundColor" red="0.68710386749999997" green="0.41235345600000001" blue="0.7686903477" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="dGA-Rg-fud"/>
+                                </constraints>
+                                <state key="normal" title="Post Ride">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="A8m-r4-DD4">
+                                <rect key="frame" x="0.0" y="60" width="375" height="150"/>
+                                <connections>
+                                    <outlet property="delegate" destination="FBf-9P-lIL" id="QQU-o9-k84"/>
+                                </connections>
+                            </mapView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Map" translatesAutoresizingMaskIntoConstraints="NO" id="SJa-VT-gy7">
+                                <rect key="frame" x="0.0" y="60" width="375" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="k3e-fY-5rB"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="A8m-r4-DD4" firstAttribute="width" secondItem="SJa-VT-gy7" secondAttribute="width" id="0tQ-Zm-VNj"/>
+                            <constraint firstItem="A8m-r4-DD4" firstAttribute="height" secondItem="SJa-VT-gy7" secondAttribute="height" id="7g6-8A-HVT"/>
                             <constraint firstItem="SJa-VT-gy7" firstAttribute="leading" secondItem="2Fu-LK-Mp2" secondAttribute="leading" id="CPX-hV-2Fz"/>
                             <constraint firstItem="ehA-Ny-Riq" firstAttribute="top" secondItem="2Fu-LK-Mp2" secondAttribute="top" id="Fih-46-TMa"/>
+                            <constraint firstItem="SJa-VT-gy7" firstAttribute="centerY" secondItem="A8m-r4-DD4" secondAttribute="centerY" id="TAA-kE-jd3"/>
                             <constraint firstItem="Riv-fJ-AQm" firstAttribute="top" secondItem="qOP-E6-yGt" secondAttribute="bottom" constant="20" id="UcK-Ct-TWO"/>
                             <constraint firstItem="ehA-Ny-Riq" firstAttribute="leading" secondItem="2Fu-LK-Mp2" secondAttribute="leading" id="WpX-Hr-vVf"/>
                             <constraint firstAttribute="trailing" secondItem="SJa-VT-gy7" secondAttribute="trailing" id="aB0-nh-wzq"/>
@@ -660,12 +675,19 @@
                             <constraint firstItem="W8U-d8-g36" firstAttribute="leading" secondItem="2Fu-LK-Mp2" secondAttribute="leading" constant="8" id="pvO-xo-ROU"/>
                             <constraint firstItem="W8U-d8-g36" firstAttribute="top" secondItem="SJa-VT-gy7" secondAttribute="bottom" constant="8" id="qDq-4v-ukZ"/>
                             <constraint firstItem="qOP-E6-yGt" firstAttribute="top" secondItem="W8U-d8-g36" secondAttribute="bottom" constant="8" id="w0l-LZ-n9g"/>
+                            <constraint firstItem="SJa-VT-gy7" firstAttribute="centerX" secondItem="A8m-r4-DD4" secondAttribute="centerX" id="xsu-OI-6Dn"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="endingAddressTextField" destination="KM6-Ej-x7a" id="nqv-66-bRy"/>
+                        <outlet property="mapFillerImageView" destination="SJa-VT-gy7" id="6F7-Ii-OmD"/>
+                        <outlet property="mapView" destination="A8m-r4-DD4" id="VwX-ck-hjo"/>
+                        <outlet property="startingAddressTextField" destination="fnU-ii-gK1" id="2a8-kK-xwA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DTz-GZ-DRd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2487" y="909"/>
+            <point key="canvasLocation" x="2485.5999999999999" y="908.9955022488756"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="nEU-8i-sj4">
