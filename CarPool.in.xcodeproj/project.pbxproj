@@ -18,6 +18,8 @@
 		D920DB381EB278190087EB95 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D920DB371EB278190087EB95 /* logo.png */; };
 		D920DB3B1EB288F90087EB95 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D920DB3A1EB288F90087EB95 /* SignUpViewController.m */; };
 		D94341DB1EB4449700AF6336 /* CircleImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = D94341DA1EB4449700AF6336 /* CircleImageView.m */; };
+		D94341DE1EB5076700AF6336 /* PostRideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D94341DD1EB5076700AF6336 /* PostRideViewController.m */; };
+		D94341E11EB5093B00AF6336 /* MaterialNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = D94341E01EB5093B00AF6336 /* MaterialNavigationView.m */; };
 		D9F02A451EB42ADB007EB6EB /* RideLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F02A441EB42ADB007EB6EB /* RideLogViewController.m */; };
 		D9F02A481EB4352C007EB6EB /* MaterialView.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F02A471EB4352C007EB6EB /* MaterialView.m */; };
 /* End PBXBuildFile section */
@@ -41,6 +43,10 @@
 		D920DB3A1EB288F90087EB95 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		D94341D91EB4449700AF6336 /* CircleImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleImageView.h; sourceTree = "<group>"; };
 		D94341DA1EB4449700AF6336 /* CircleImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleImageView.m; sourceTree = "<group>"; };
+		D94341DC1EB5076700AF6336 /* PostRideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostRideViewController.h; sourceTree = "<group>"; };
+		D94341DD1EB5076700AF6336 /* PostRideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostRideViewController.m; sourceTree = "<group>"; };
+		D94341DF1EB5093B00AF6336 /* MaterialNavigationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialNavigationView.h; sourceTree = "<group>"; };
+		D94341E01EB5093B00AF6336 /* MaterialNavigationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaterialNavigationView.m; sourceTree = "<group>"; };
 		D9F02A431EB42ADB007EB6EB /* RideLogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideLogViewController.h; sourceTree = "<group>"; };
 		D9F02A441EB42ADB007EB6EB /* RideLogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideLogViewController.m; sourceTree = "<group>"; };
 		D9F02A461EB4352C007EB6EB /* MaterialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialView.h; sourceTree = "<group>"; };
@@ -137,6 +143,8 @@
 				D94341DA1EB4449700AF6336 /* CircleImageView.m */,
 				D9F02A461EB4352C007EB6EB /* MaterialView.h */,
 				D9F02A471EB4352C007EB6EB /* MaterialView.m */,
+				D94341DF1EB5093B00AF6336 /* MaterialNavigationView.h */,
+				D94341E01EB5093B00AF6336 /* MaterialNavigationView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -150,6 +158,8 @@
 				D920DB3A1EB288F90087EB95 /* SignUpViewController.m */,
 				D9F02A431EB42ADB007EB6EB /* RideLogViewController.h */,
 				D9F02A441EB42ADB007EB6EB /* RideLogViewController.m */,
+				D94341DC1EB5076700AF6336 /* PostRideViewController.h */,
+				D94341DD1EB5076700AF6336 /* PostRideViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -286,10 +296,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D94341E11EB5093B00AF6336 /* MaterialNavigationView.m in Sources */,
 				D920DB1D1EB268A60087EB95 /* AppDelegate.m in Sources */,
 				D920DB311EB2690B0087EB95 /* TitleViewController.m in Sources */,
 				D94341DB1EB4449700AF6336 /* CircleImageView.m in Sources */,
 				D920DB3B1EB288F90087EB95 /* SignUpViewController.m in Sources */,
+				D94341DE1EB5076700AF6336 /* PostRideViewController.m in Sources */,
 				D9F02A481EB4352C007EB6EB /* MaterialView.m in Sources */,
 				D9F02A451EB42ADB007EB6EB /* RideLogViewController.m in Sources */,
 				D920DB1A1EB268A60087EB95 /* main.m in Sources */,
