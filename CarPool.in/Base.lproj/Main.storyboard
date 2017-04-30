@@ -238,7 +238,7 @@
                                 <rect key="frame" x="0.0" y="60" width="375" height="547"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CarpoolPostCell" rowHeight="200" id="UEW-g0-hjZ">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CarpoolPostCell" rowHeight="200" id="UEW-g0-hjZ" customClass="DriverPostTableViewCell">
                                         <rect key="frame" x="0.0" y="28" width="375" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UEW-g0-hjZ" id="ejZ-jB-rBj">
@@ -262,34 +262,19 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="83.5" height="168"/>
                                                                     <subviews>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="hr2-Tc-8Xx">
-                                                                            <rect key="frame" x="8" y="92" width="67.5" height="68"/>
+                                                                            <rect key="frame" x="8" y="105.5" width="67.5" height="54.5"/>
                                                                             <subviews>
-                                                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="HLS-ou-GQs">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="67.5" height="34"/>
-                                                                                    <subviews>
-                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JIAJUN" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WyI-gf-byt">
-                                                                                            <rect key="frame" x="0.0" y="0.0" width="67.5" height="17"/>
-                                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                                            <nil key="highlightedColor"/>
-                                                                                        </label>
-                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmX-cc-pNa">
-                                                                                            <rect key="frame" x="0.0" y="17" width="67.5" height="17"/>
-                                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                                            <nil key="highlightedColor"/>
-                                                                                        </label>
-                                                                                    </subviews>
-                                                                                </stackView>
                                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="gO4-pP-HDb">
-                                                                                    <rect key="frame" x="0.0" y="34" width="67.5" height="34"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="67.5" height="54.5"/>
                                                                                     <subviews>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TODAY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4No-m6-ZDo">
-                                                                                            <rect key="frame" x="0.0" y="0.0" width="67.5" height="17"/>
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="67.5" height="27.5"/>
                                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                                             <nil key="highlightedColor"/>
                                                                                         </label>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7:30 AM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tef-kK-KKg">
-                                                                                            <rect key="frame" x="0.0" y="17" width="67.5" height="17"/>
+                                                                                            <rect key="frame" x="0.0" y="27.5" width="67.5" height="27"/>
                                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                                             <nil key="highlightedColor"/>
@@ -304,14 +289,24 @@
                                                                                 <constraint firstAttribute="width" secondItem="Eze-WW-T8u" secondAttribute="height" multiplier="1:1" id="2XT-Ll-DCf"/>
                                                                             </constraints>
                                                                         </imageView>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jiajun Lu" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NAA-Pd-C8D">
+                                                                            <rect key="frame" x="8" y="83" width="67" height="14.5"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                     <constraints>
                                                                         <constraint firstItem="Eze-WW-T8u" firstAttribute="leading" secondItem="bSS-02-vd7" secondAttribute="leading" constant="8" id="1rR-my-RAN"/>
                                                                         <constraint firstAttribute="trailing" secondItem="hr2-Tc-8Xx" secondAttribute="trailing" constant="8" id="3d8-dT-Ibx"/>
+                                                                        <constraint firstItem="hr2-Tc-8Xx" firstAttribute="top" secondItem="NAA-Pd-C8D" secondAttribute="bottom" constant="8" id="EyY-TM-aD2"/>
                                                                         <constraint firstAttribute="bottom" secondItem="hr2-Tc-8Xx" secondAttribute="bottom" constant="8" id="RJW-8A-Dut"/>
                                                                         <constraint firstItem="hr2-Tc-8Xx" firstAttribute="leading" secondItem="bSS-02-vd7" secondAttribute="leading" constant="8" id="Rzj-7E-Xyk"/>
                                                                         <constraint firstItem="Eze-WW-T8u" firstAttribute="top" secondItem="bSS-02-vd7" secondAttribute="top" constant="8" id="TSS-c3-o3n"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="NAA-Pd-C8D" secondAttribute="trailing" constant="8" id="WBV-aY-EeR"/>
+                                                                        <constraint firstItem="NAA-Pd-C8D" firstAttribute="top" secondItem="Eze-WW-T8u" secondAttribute="bottom" constant="8" id="fEI-d2-81Z"/>
+                                                                        <constraint firstItem="NAA-Pd-C8D" firstAttribute="leading" secondItem="bSS-02-vd7" secondAttribute="leading" constant="8" id="oPA-ux-3MA"/>
                                                                         <constraint firstAttribute="trailing" secondItem="Eze-WW-T8u" secondAttribute="trailing" constant="8" id="p3d-Kf-fha"/>
                                                                     </constraints>
                                                                 </view>
@@ -462,6 +457,13 @@
                                                 <constraint firstItem="Auc-RP-Anv" firstAttribute="leading" secondItem="ejZ-jB-rBj" secondAttribute="leadingMargin" constant="8" id="prj-Od-wbb"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="driverImageView" destination="Eze-WW-T8u" id="oj9-h3-3wZ"/>
+                                            <outlet property="driverNameLabel" destination="NAA-Pd-C8D" id="VLU-XG-oSy"/>
+                                            <outlet property="endingAddressLabel" destination="Sn9-VI-Cfv" id="XGx-r1-mUR"/>
+                                            <outlet property="startingAddressLabel" destination="wgd-eA-3p4" id="8Jl-wN-sEk"/>
+                                            <outlet property="timeLabel" destination="tef-kK-KKg" id="ehP-RS-4c5"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -496,7 +498,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="43I-ZP-wKL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1905" y="125"/>
+            <point key="canvasLocation" x="1904.8" y="124.58770614692655"/>
         </scene>
         <!--Post Ride View Controller-->
         <scene sceneID="eJG-1J-QJW">
