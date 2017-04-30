@@ -13,6 +13,7 @@
 
 //Get the current location
 #import "CoreLocation/CoreLocation.h"
+#import "DataService.h"
 
 @interface PostRideViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -61,20 +62,17 @@
     CLLocationCoordinate2D center;
     center.latitude=latitude;
     center.longitude = longitude;
-//    NSLog(@"View Controller get Location Logitute : %f", center.latitude);
-//    NSLog(@"View Controller get Location Latitute : %f", center.longitude);
+    //    NSLog(@"View Controller get Location Logitute : %f", center.latitude);
+    //    NSLog(@"View Controller get Location Latitute : %f", center.longitude);
     return center;
 }
 
 - (void)calculateAddressInMap {
     
-    //NSString *addressString = @"1935 Wessel Ct";
-    //NSString *addressString = @"3809 Illinois Ave. Suite 100";
-    
     //Starting Address
     NSString *startingAddress = self.startingAddressTextField.text;
     CLLocationCoordinate2D startingAddressLocation = [self getLocationFromAddressString:startingAddress];
-                                                      
+    
     double latFrom = startingAddressLocation.latitude;
     double lonFrom = startingAddressLocation.longitude;
     NSLog(@"Starting Address Location - %f,%f", latFrom, lonFrom);
@@ -85,7 +83,6 @@
     mapPin.coordinate = startingAddressLocation;
     [self.mapView addAnnotation:mapPin];
     
-
     //Ending Address
     NSString *endingAddress = self.endingAddressTextField.text;
     CLLocationCoordinate2D endingAddressLocation = [self getLocationFromAddressString:endingAddress];
@@ -100,14 +97,85 @@
     mapPin.coordinate = endingAddressLocation;
     [self.mapView addAnnotation:mapPin];
     
+    
     //Set up viewing of map view
     MKCoordinateRegion region = self.mapView.region;
     region.center = endingAddressLocation;
     region.span.latitudeDelta = 0.1;
     region.span.longitudeDelta = 0.1;
     [self.mapView setRegion:region animated:YES];
+    
+    //Save to Firebase
+    [self saveStartingLocationToFirebase:&startingAddressLocation andEndingLocation:&endingAddressLocation];
+    
+    
 }
 
+#pragma mark - Firebase Database Functions
+
+- (void)saveStartingLocationToFirebase:(CLLocationCoordinate2D *)startingLocation andEndingLocation:(CLLocationCoordinate2D *)endingLocation {
+    
+    //SAVE TO CURRENT USER ID
+    
+    //Current User ID
+    NSString *currentUID = [FIRAuth auth].currentUser.uid;
+    FIRDatabaseReference *driverRef = [[[[[DataService ds] publicUserReference] child:currentUID] child:@"driverPosts"] childByAutoId];
+    [driverRef setValue:@YES];
+    
+    NSString *driverPostID = driverRef.key;
+    
+    
+    //SAVE TO DRIVERS POSTS
+    
+    
+    //Date formatter with current date
+    NSDate *date = [[NSDate alloc] init];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    
+    //Current Time
+    [dateFormatter setDateFormat:@"h:mm a"];
+    NSString *dateString = [dateFormatter stringFromDate:date];
+
+    
+    //Driver Post Dictionary to save
+    NSDictionary *driverPostDict = @{@"ownerKey": currentUID,
+                                     @"startingAddress": self.startingAddressTextField.text,
+                                     @"endingAddress": self.endingAddressTextField.text,
+                                     @"time" : dateString
+                                     };
+    
+    [[[[DataService ds] driverPostsReference] child:driverPostID] updateChildValues:driverPostDict];
+    
+    //Save to Firebase staring locations
+    FIRDatabaseReference *startingLocationReference = [[DataService ds] startingLocationsReference];
+    GeoFire *startingLocationGeofire = [[GeoFire alloc] initWithFirebaseRef:startingLocationReference];
+    
+    [startingLocationGeofire setLocation:[[CLLocation alloc] initWithLatitude:startingLocation->latitude longitude:startingLocation->longitude]
+                                  forKey:driverPostID
+                     withCompletionBlock:^(NSError *error) {
+                         if (error != nil) {
+                             NSLog(@"An error occurred: %@", error);
+                         } else {
+                             NSLog(@"Saved staring location successfully!");
+                         }
+                     }];
+    
+    
+    //Save to Firebase ending locations
+    FIRDatabaseReference *endingLocationReference = [[DataService ds] endingLocationsReference];
+    GeoFire *endingLocationGeofire = [[GeoFire alloc] initWithFirebaseRef:endingLocationReference];
+    //CLLocation is a structure - Use Pointers not dot notation.
+    [endingLocationGeofire setLocation:[[CLLocation alloc] initWithLatitude:endingLocation->latitude longitude:endingLocation->longitude]
+                                forKey:driverPostID
+                   withCompletionBlock:^(NSError *error) {
+                       if (error != nil) {
+                           NSLog(@"An error occurred: %@", error);
+                           
+                       } else {
+                           NSLog(@"Saved ending location successfully!");
+                       }
+                   }];
+}
 
 #pragma mark - UITextFieldDelegate
 

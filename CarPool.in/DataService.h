@@ -8,8 +8,10 @@
 
 
 #import <Foundation/Foundation.h>
+#import "Geofire.h"
 @import Firebase;
 @import FirebaseStorage;
+
 
 @interface DataService : NSObject
 
@@ -19,6 +21,9 @@
 @property (strong, nonatomic) FIRDatabaseReference *rootReference;
 @property (strong, nonatomic) FIRDatabaseReference *publicUserReference;
 @property (strong, nonatomic) FIRDatabaseReference *userReference;
+@property (strong, nonatomic) FIRDatabaseReference *driverPostsReference;
+
+//Geofire
 @property (strong, nonatomic) FIRDatabaseReference *startingLocationsReference;
 @property (strong, nonatomic) FIRDatabaseReference *endingLocationsReference;
 

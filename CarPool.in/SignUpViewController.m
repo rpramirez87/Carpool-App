@@ -11,6 +11,7 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "DataService.h"
+#import "RideLogViewController.h"
 
 @import FirebaseAuth;
 @import FirebaseDatabase;
@@ -101,6 +102,8 @@ didSignInForUser:(GIDGoogleUser *)user
                                       [[[[DataService ds] userReference]child:user.uid] updateChildValues:userDict];
                                       
                                       //Load up new view controller
+                                      RideLogViewController *rideLogVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RideLogVC"];
+                                      [self presentViewController:rideLogVC animated:YES completion:nil];
                                       
                                   }];
         
@@ -153,7 +156,6 @@ didDisconnectWithUser:(GIDGoogleUser *)user
     [self createEmailUserWith:self.emailAddressTextField.text andPassword:self.passwordTextField.text];
     
 }
-
 - (IBAction)facebookButtonPressed:(id)sender {
     FBSDKLoginManager *fbLoginManager = [[FBSDKLoginManager alloc] init];
     
@@ -200,7 +202,6 @@ didDisconnectWithUser:(GIDGoogleUser *)user
                                                 @"email": [result objectForKey:@"email"],
                                                 @"provider" : credential.provider
                                                 };
-                     
                      
                      [self createFacebookuserWithCredential:credential withUserInfo:userDict];
                  }
@@ -271,9 +272,6 @@ didDisconnectWithUser:(GIDGoogleUser *)user
             //Save Keychain as current uid
             //[self keychainSaveWithUID:user.uid];
             
-            //Present Main VC
-            //            MainVC *mainVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MainVC"];
-            //            [self.navigationController pushViewController:mainVC animated:YES];
         }
         else{
             NSLog(@"%@", error.localizedDescription);
@@ -304,6 +302,8 @@ didDisconnectWithUser:(GIDGoogleUser *)user
             [alert doneActionBlock:^{
                 // Put your action here
                 NSLog(@"Email Verified Done");
+                RideLogViewController *rideLogVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RideLogVC"];
+                [self presentViewController:rideLogVC animated:YES completion:nil];
             }];
         }
     }];
@@ -330,7 +330,7 @@ didDisconnectWithUser:(GIDGoogleUser *)user
                                                                                   //Create a user dictionary
                                                                                   NSDictionary *publicUserDict = @{
                                                                                                                    @"name" : [userDict valueForKey:@"name"],
-                                                                                                                @"image" : [userDict valueForKey:@"image"]
+                                                                                                                   @"image" : [userDict valueForKey:@"image"]
                                                                                                                    };
                                                                                   //Update public user
                                                                                   [[[[DataService ds] publicUserReference]child:user.uid] updateChildValues:publicUserDict];
@@ -341,7 +341,13 @@ didDisconnectWithUser:(GIDGoogleUser *)user
                                                                                   
                                                                                   //Update private user
                                                                                   [[[[DataService ds] userReference]child:user.uid] updateChildValues:userDict];
-
+                                                                                  
+                                                                                  //Load up Main VC
+                                                                                  RideLogViewController *rideLogVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RideLogVC"];
+                                                                                  [self presentViewController:rideLogVC animated:YES completion:nil];
+                                                                                  
+                                                                                  
+                                                                                  
                                                                               }];
                                       }
                                       return;
@@ -349,9 +355,7 @@ didDisconnectWithUser:(GIDGoogleUser *)user
                                   
                                   NSLog(@"Successfully logged in");
                                   //Create User in Firebase - DELETES NEW VALUES CREATED EVERY LOGIN
-                                  //Create a public dictionary of user's values
-                                  //Create a user dictionary
-                                  
+                              
                                   NSDictionary *publicUserDict = @{
                                                                    @"name" : [userDict valueForKey:@"name"],
                                                                    @"image" : [userDict valueForKey:@"image"]
@@ -365,9 +369,9 @@ didDisconnectWithUser:(GIDGoogleUser *)user
                                   //Save Keychain as current uid
                                   //[self keychainSaveWithUID:user.uid];
                                   
-                                  //Present Main VC
-                                  //                                  MainVC *mainVC = [self.storyboard instantiateViewControllerWithIdentifier:@"MainVC"];
-                                  //                                  [self.navigationController pushViewController:mainVC animated:YES];
-                                  }];
+                                  //Load up Main View Controller
+                                  RideLogViewController *rideLogVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RideLogVC"];
+                                  [self presentViewController:rideLogVC animated:YES completion:nil];
+                              }];
 }
 @end
