@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *endingAddressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *driverNameLabel;
 
+@property (weak, nonatomic) IBOutlet UIView *sideBackgroundView;
 
 
 - (void)configureCellWithDriverPost:(DriverPost *)driverPost;
