@@ -17,6 +17,7 @@
         self.endingAddress = [driverPostDict valueForKey:@"endingAddress"];
         self.ownerKey = [driverPostDict valueForKey:@"ownerKey"];
         self.time = [driverPostDict valueForKey:@"time"];
+        self.milesInDistanceString = [driverPostDict valueForKey:@"miles"];
     }
     return self;
 }

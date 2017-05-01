@@ -27,14 +27,14 @@
     self.startingAddressLabel.text = driverPost.startingAddress;
     self.endingAddressLabel.text = driverPost.endingAddress;
     self.timeLabel.text = driverPost.time;
+    self.distanceInMilesLabel.text = driverPost.milesInDistanceString;
     
     //Randomize color for side view
-    CGFloat red = arc4random() % 255 / 255.0;
-    CGFloat green = arc4random() % 255 / 255.0;
-    CGFloat blue = arc4random() % 255 / 255.0;
-    UIColor *randomColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
-    
-    self.sideBackgroundView.backgroundColor = randomColor;
+//    CGFloat red = arc4random() % 255 / 255.0;
+//    CGFloat green = arc4random() % 255 / 255.0;
+//    CGFloat blue = arc4random() % 255 / 255.0;
+//    UIColor *randomColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
+//    self.sideBackgroundView.backgroundColor = randomColor;
     
     //Load up user name and image
     //Load user image and text

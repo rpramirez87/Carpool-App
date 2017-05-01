@@ -1,32 +1,28 @@
 //
-//  PostRideViewController.m
+//  RequestRideViewController.m
 //  CarPool.in
 //
-//  Created by Ron Ramirez on 4/29/17.
+//  Created by Ron Ramirez on 5/1/17.
 //  Copyright © 2017 Ron Ramirez. All rights reserved.
 //
 
-#import "PostRideViewController.h"
-
-//Access maps in Apple
-#import "MapKit/Mapkit.h"
+#import "RequestRideViewController.h"
 
 //Get the current location
 #import "CoreLocation/CoreLocation.h"
 #import "DataService.h"
 
-@interface PostRideViewController () <UITextFieldDelegate>
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
-@property (weak, nonatomic) IBOutlet UIImageView *mapFillerImageView;
+@interface RequestRideViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *startingAddressTextField;
 @property (weak, nonatomic) IBOutlet UITextField *endingAddressTextField;
 @end
 
-@implementation PostRideViewController
-
+@implementation RequestRideViewController
 #pragma mark - View Controller Life Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.startingAddressTextField.delegate = self;
+    self.endingAddressTextField.delegate = self;
     self.navigationController.navigationBarHidden = YES;
 }
 
@@ -78,12 +74,6 @@
     double lonFrom = startingAddressLocation.longitude;
     NSLog(@"Starting Address Location - %f,%f", latFrom, lonFrom);
     
-    //Setup annotation for ending address
-    MKPointAnnotation *mapPin = [[MKPointAnnotation alloc] init];
-    mapPin.title = startingAddress;
-    mapPin.coordinate = startingAddressLocation;
-    [self.mapView addAnnotation:mapPin];
-    
     //Ending Address
     NSString *endingAddress = self.endingAddressTextField.text;
     CLLocationCoordinate2D endingAddressLocation = [self getLocationFromAddressString:endingAddress];
@@ -91,19 +81,6 @@
     latFrom = endingAddressLocation.latitude;
     lonFrom = endingAddressLocation.longitude;
     NSLog(@"Ending Address Location - %f,%f", latFrom, lonFrom);
-    
-    //Setup annotation for ending address
-    mapPin = [[MKPointAnnotation alloc] init];
-    mapPin.title = endingAddress;
-    mapPin.coordinate = endingAddressLocation;
-    [self.mapView addAnnotation:mapPin];
-    
-    //Set up viewing of map view
-    MKCoordinateRegion region = self.mapView.region;
-    region.center = endingAddressLocation;
-    region.span.latitudeDelta = 0.1;
-    region.span.longitudeDelta = 0.1;
-    [self.mapView setRegion:region animated:YES];
     
     //Save to Firebase
     [self saveStartingLocationToFirebase:&startingAddressLocation andEndingLocation:&endingAddressLocation];
@@ -121,7 +98,6 @@
     
     NSString *driverPostID = driverRef.key;
     
-    
     //SAVE TO DRIVERS POSTS
     
     //Date formatter with current date
@@ -131,7 +107,7 @@
     //Current Time
     [dateFormatter setDateFormat:@"h:mm a"];
     NSString *dateString = [dateFormatter stringFromDate:date];
-
+    
     //Driver Post Dictionary to save
     NSDictionary *driverPostDict = @{@"ownerKey": currentUID,
                                      @"startingAddress": self.startingAddressTextField.text,
@@ -179,14 +155,11 @@
     [textField resignFirstResponder];
     
     if (![self.endingAddressTextField.text isEqualToString:@""] && ![self.startingAddressTextField.text isEqualToString:@""]) {
-        
-        self.mapFillerImageView.hidden = YES;
-        
         NSLog(@"Run the code");
         //Set up Address
         [self calculateAddressInMap];
-        
     }
     return YES;
 }
+
 @end

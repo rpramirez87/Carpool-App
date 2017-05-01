@@ -92,9 +92,6 @@
 //    return handled;
 //}
 
-
-
-
 - (BOOL)application:(UIApplication* )app openURL:(NSURL* )url options:(NSDictionary *)options {
     
     NSLog(@"Url = %@",url);

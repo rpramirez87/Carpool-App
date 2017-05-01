@@ -19,8 +19,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *startingAddressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *endingAddressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *driverNameLabel;
-
 @property (weak, nonatomic) IBOutlet UIView *sideBackgroundView;
+@property (weak, nonatomic) IBOutlet UILabel *isDriverLabel;
+@property (weak, nonatomic) IBOutlet UILabel *distanceInMilesLabel;
+
 
 
 - (void)configureCellWithDriverPost:(DriverPost *)driverPost;
