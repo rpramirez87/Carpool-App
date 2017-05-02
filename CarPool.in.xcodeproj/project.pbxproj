@@ -16,6 +16,8 @@
 		D920DB311EB2690B0087EB95 /* TitleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D920DB301EB2690B0087EB95 /* TitleViewController.m */; };
 		D920DB361EB26BB30087EB95 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D920DB351EB26BB30087EB95 /* GoogleService-Info.plist */; };
 		D920DB3B1EB288F90087EB95 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D920DB3A1EB288F90087EB95 /* SignUpViewController.m */; };
+		D92176EA1EB81DC3001249EE /* SelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D92176E91EB81DC3001249EE /* SelectViewController.m */; };
+		D92176ED1EB83BA0001249EE /* UserDestination.m in Sources */ = {isa = PBXBuildFile; fileRef = D92176EC1EB83BA0001249EE /* UserDestination.m */; };
 		D922AA6C1EB63DED0004A1A7 /* DriverPost.m in Sources */ = {isa = PBXBuildFile; fileRef = D922AA6B1EB63DED0004A1A7 /* DriverPost.m */; };
 		D922AA711EB642190004A1A7 /* DriverPostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D922AA701EB642190004A1A7 /* DriverPostTableViewCell.m */; };
 		D94341DB1EB4449700AF6336 /* CircleImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = D94341DA1EB4449700AF6336 /* CircleImageView.m */; };
@@ -43,6 +45,10 @@
 		D920DB351EB26BB30087EB95 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D920DB391EB288F90087EB95 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
 		D920DB3A1EB288F90087EB95 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
+		D92176E81EB81DC3001249EE /* SelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectViewController.h; sourceTree = "<group>"; };
+		D92176E91EB81DC3001249EE /* SelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectViewController.m; sourceTree = "<group>"; };
+		D92176EB1EB83BA0001249EE /* UserDestination.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDestination.h; sourceTree = "<group>"; };
+		D92176EC1EB83BA0001249EE /* UserDestination.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDestination.m; sourceTree = "<group>"; };
 		D922AA6A1EB63DED0004A1A7 /* DriverPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DriverPost.h; sourceTree = "<group>"; };
 		D922AA6B1EB63DED0004A1A7 /* DriverPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DriverPost.m; sourceTree = "<group>"; };
 		D922AA6F1EB642190004A1A7 /* DriverPostTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DriverPostTableViewCell.h; sourceTree = "<group>"; };
@@ -141,6 +147,8 @@
 		D920DB321EB2690F0087EB95 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D92176EB1EB83BA0001249EE /* UserDestination.h */,
+				D92176EC1EB83BA0001249EE /* UserDestination.m */,
 				D922AA6A1EB63DED0004A1A7 /* DriverPost.h */,
 				D922AA6B1EB63DED0004A1A7 /* DriverPost.m */,
 			);
@@ -169,6 +177,8 @@
 				D94341DD1EB5076700AF6336 /* PostRideViewController.m */,
 				D9BD7B9F1EB7BCF90011591A /* RequestRideViewController.h */,
 				D9BD7BA01EB7BCF90011591A /* RequestRideViewController.m */,
+				D92176E81EB81DC3001249EE /* SelectViewController.h */,
+				D92176E91EB81DC3001249EE /* SelectViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -328,6 +338,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D92176EA1EB81DC3001249EE /* SelectViewController.m in Sources */,
+				D92176ED1EB83BA0001249EE /* UserDestination.m in Sources */,
 				D94341E11EB5093B00AF6336 /* MaterialNavigationView.m in Sources */,
 				D95E97FD1EB559E6004F41EE /* DataService.m in Sources */,
 				D9BD7BA11EB7BCF90011591A /* RequestRideViewController.m in Sources */,

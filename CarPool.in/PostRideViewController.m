@@ -14,12 +14,14 @@
 //Get the current location
 #import "CoreLocation/CoreLocation.h"
 #import "DataService.h"
+#import "SelectViewController.h"
 
 @interface PostRideViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIImageView *mapFillerImageView;
 @property (weak, nonatomic) IBOutlet UITextField *startingAddressTextField;
 @property (weak, nonatomic) IBOutlet UITextField *endingAddressTextField;
+
 @end
 
 @implementation PostRideViewController
@@ -39,6 +41,11 @@
 - (IBAction)backButtonPressed:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.navigationController popViewControllerAnimated:YES];
+}
+- (IBAction)postRideButtonPressed:(UIButton *)sender {
+    SelectViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"SelectVC"];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller setIsSelectingRiders:YES];
 }
 
 #pragma mark - Core Location Manager Functions
@@ -109,6 +116,8 @@
     [self saveStartingLocationToFirebase:&startingAddressLocation andEndingLocation:&endingAddressLocation];
 }
 
+
+
 #pragma mark - Firebase Database Functions
 
 - (void)saveStartingLocationToFirebase:(CLLocationCoordinate2D *)startingLocation andEndingLocation:(CLLocationCoordinate2D *)endingLocation {
@@ -137,7 +146,7 @@
                                      @"startingAddress": self.startingAddressTextField.text,
                                      @"endingAddress": self.endingAddressTextField.text,
                                      @"time" : dateString,
-                                     @"isDriver" : @YES
+                                     @"isDriver" : @"YES"
                                      };
     
     [[[[DataService ds] driverPostsReference] child:driverPostID] updateChildValues:driverPostDict];

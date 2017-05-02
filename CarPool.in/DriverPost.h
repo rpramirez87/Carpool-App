@@ -14,7 +14,10 @@
 @property (strong, nonatomic) NSString *ownerKey;
 @property (strong, nonatomic) NSString *time;
 @property (strong, nonatomic) NSString *milesInDistanceString;
+@property (strong, nonatomic) NSString *isDriver;
+@property (strong, nonatomic) NSString *drivePostID;
 
 //Initializer methods
 - (instancetype)initWithDict:(NSDictionary *)driverPostDict;
+- (instancetype)initWithDict:(NSDictionary *)driverPostDict andKey:(NSString *)key;
 @end

@@ -11,6 +11,7 @@
 //Get the current location
 #import "CoreLocation/CoreLocation.h"
 #import "DataService.h"
+#import "SelectViewController.h"
 
 @interface RequestRideViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *startingAddressTextField;
@@ -36,6 +37,11 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
+- (IBAction)requestButtonPressed:(UIButton *)sender {
+    SelectViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"SelectVC"];
+    [self.navigationController pushViewController:controller animated:YES];
+    [controller setIsSelectingRiders:NO];
+}
 
 #pragma mark - Core Location Manager Functions
 
@@ -59,8 +65,10 @@
     CLLocationCoordinate2D center;
     center.latitude=latitude;
     center.longitude = longitude;
+    
     //    NSLog(@"View Controller get Location Logitute : %f", center.latitude);
     //    NSLog(@"View Controller get Location Latitute : %f", center.longitude);
+    
     return center;
 }
 
@@ -113,7 +121,7 @@
                                      @"startingAddress": self.startingAddressTextField.text,
                                      @"endingAddress": self.endingAddressTextField.text,
                                      @"time" : dateString,
-                                     @"isDriver" : @YES
+                                     @"isDriver" : @"NO"
                                      };
     
     [[[[DataService ds] driverPostsReference] child:driverPostID] updateChildValues:driverPostDict];
@@ -153,7 +161,6 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
-    
     if (![self.endingAddressTextField.text isEqualToString:@""] && ![self.startingAddressTextField.text isEqualToString:@""]) {
         NSLog(@"Run the code");
         //Set up Address

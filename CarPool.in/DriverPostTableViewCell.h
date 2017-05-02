@@ -22,7 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIView *sideBackgroundView;
 @property (weak, nonatomic) IBOutlet UILabel *isDriverLabel;
 @property (weak, nonatomic) IBOutlet UILabel *distanceInMilesLabel;
-
+@property (weak, nonatomic) IBOutlet UIImageView *destinationLogoImageView;
 
 
 - (void)configureCellWithDriverPost:(DriverPost *)driverPost;

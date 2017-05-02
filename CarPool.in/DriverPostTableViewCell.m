@@ -18,7 +18,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 
@@ -29,17 +29,36 @@
     self.timeLabel.text = driverPost.time;
     self.distanceInMilesLabel.text = driverPost.milesInDistanceString;
     
-    //Randomize color for side view
-//    CGFloat red = arc4random() % 255 / 255.0;
-//    CGFloat green = arc4random() % 255 / 255.0;
-//    CGFloat blue = arc4random() % 255 / 255.0;
-//    UIColor *randomColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
-//    self.sideBackgroundView.backgroundColor = randomColor;
+    if ([driverPost.isDriver isEqualToString:@"NO"]) {
+        //Red color for side view
+        CGFloat red = 186.0 / 255.0;
+        CGFloat green = 0 / 255.0;
+        CGFloat blue = 0 / 255.0;
+        UIColor *redColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
+        self.sideBackgroundView.backgroundColor = redColor;
+        self.isDriverLabel.textColor = redColor;
+        self.isDriverLabel.text = @"Rider";
+        self.destinationLogoImageView.image = [UIImage imageNamed:@"redDestinationLogo"];
+    }else {
+        //Green Color for side view
+        CGFloat red = 91.0 / 255.0;
+        CGFloat green = 189.0 / 255.0;
+        CGFloat blue = 110.0 / 255.0;
+        UIColor *greenColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
+        self.sideBackgroundView.backgroundColor = greenColor;
+        self.isDriverLabel.textColor = greenColor;
+        self.isDriverLabel.text = @"Driver";
+        self.destinationLogoImageView.image = [UIImage imageNamed:@"destinationLogo"];
+        
+    }
+    
+    
+    
+    
     
     //Load up user name and image
     //Load user image and text
     [[[[[DataService ds] rootReference] child:@"publicUsers"] child:driverPost.ownerKey] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
         
         //Access image
         if ([snapshot exists]) {
@@ -47,10 +66,10 @@
             
             if (firebaseImageURL != nil) {
                 [self.driverImageView sd_setImageWithURL:[NSURL URLWithString:firebaseImageURL]
-                                      placeholderImage:[UIImage imageNamed:@"userCircle.png"]
-                                               options:SDWebImageRefreshCached];
+                                        placeholderImage:[UIImage imageNamed:@"userCircle.png"]
+                                                 options:SDWebImageRefreshCached];
                 
-                NSLog(@"%@Profile Image URL", firebaseImageURL);
+                //NSLog(@"%@Profile Image URL", firebaseImageURL);
             }
             //Access user name
             NSString *currentUserName = snapshot.value[@"name"];

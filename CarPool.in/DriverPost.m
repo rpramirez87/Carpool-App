@@ -18,6 +18,20 @@
         self.ownerKey = [driverPostDict valueForKey:@"ownerKey"];
         self.time = [driverPostDict valueForKey:@"time"];
         self.milesInDistanceString = [driverPostDict valueForKey:@"miles"];
+        self.isDriver = [driverPostDict valueForKey:@"isDriver"];
+    }
+    return self;
+}
+
+- (instancetype)initWithDict:(NSDictionary *)driverPostDict andKey:(NSString *)key {
+    if (self = [super init]) {
+        self.startingAddress = [driverPostDict valueForKey:@"startingAddress"];
+        self.endingAddress = [driverPostDict valueForKey:@"endingAddress"];
+        self.ownerKey = [driverPostDict valueForKey:@"ownerKey"];
+        self.time = [driverPostDict valueForKey:@"time"];
+        self.milesInDistanceString = [driverPostDict valueForKey:@"miles"];
+        self.isDriver = [driverPostDict valueForKey:@"isDriver"];
+        self.drivePostID = key;
     }
     return self;
 }

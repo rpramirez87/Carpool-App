@@ -31,8 +31,6 @@
     //Load all driverPosts for now
     [self loadAllDriverPostsFromFirebase];
     
-    //[self loadAllDriversPostsUsingGeofire];
-    
     //Initialize Search Controller
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
@@ -71,7 +69,6 @@
 }
 #pragma mark - UISearchResultController/UISearchBarDelegate Delegate Functions
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    
     NSString *searchtext = searchController.searchBar.text;
     //    if (searchtext.length > 0) {
     //        [self.filteredArray removeAllObjects];
@@ -83,8 +80,10 @@
     //    }
     //
     //    [self.tableView reloadData];
-    
 }
+
+
+
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     NSLog(@"%@", searchBar.text);
@@ -92,12 +91,13 @@
     CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:userDestinationLocation.latitude longitude:userDestinationLocation.longitude];
     [self loadAllDriversPostsUsingGeofireWithLocation:userLocation];
 }
+
+
 #pragma mark - Firebase Functionalities
 - (void)loadAllDriverPostsFromFirebase {
     [[[DataService ds] driverPostsReference]
      observeEventType:FIRDataEventTypeValue
      withBlock:^(FIRDataSnapshot *snapshot) {
-         
          //Clear Array
          [self.driverPostsArray removeAllObjects];
          
