@@ -124,7 +124,6 @@
     FIRDatabaseReference *endingLocationReference = [[DataService ds] endingLocationsReference];
     GeoFire *endingLocationGeofire = [[GeoFire alloc] initWithFirebaseRef:endingLocationReference];
     
-    
    // CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:41.9048757 longitude:-88.33587759999999];
     // Query locations at [37.7832889, -122.4056973] with a radius of 600 meters
     

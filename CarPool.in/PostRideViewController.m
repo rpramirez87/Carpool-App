@@ -15,12 +15,15 @@
 #import "CoreLocation/CoreLocation.h"
 #import "DataService.h"
 #import "SelectViewController.h"
+#import "FCAlertview.h"
 
 @interface PostRideViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIImageView *mapFillerImageView;
 @property (weak, nonatomic) IBOutlet UITextField *startingAddressTextField;
 @property (weak, nonatomic) IBOutlet UITextField *endingAddressTextField;
+@property (strong, nonatomic) CLLocation *startingLocation;
+@property (strong, nonatomic) CLLocation *endingLocation;
 
 @end
 
@@ -35,17 +38,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - IBAction
-- (IBAction)backButtonPressed:(UIButton *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    [self.navigationController popViewControllerAnimated:YES];
-}
-- (IBAction)postRideButtonPressed:(UIButton *)sender {
-    SelectViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"SelectVC"];
-    [self.navigationController pushViewController:controller animated:YES];
-    [controller setIsSelectingRiders:YES];
 }
 
 #pragma mark - Core Location Manager Functions
@@ -90,13 +82,14 @@
     mapPin.title = startingAddress;
     mapPin.coordinate = startingAddressLocation;
     [self.mapView addAnnotation:mapPin];
-    
+    self.startingLocation = [[CLLocation alloc] initWithLatitude:latFrom longitude:lonFrom];
     //Ending Address
     NSString *endingAddress = self.endingAddressTextField.text;
     CLLocationCoordinate2D endingAddressLocation = [self getLocationFromAddressString:endingAddress];
     
     latFrom = endingAddressLocation.latitude;
     lonFrom = endingAddressLocation.longitude;
+    self.endingLocation = [[CLLocation alloc] initWithLatitude:latFrom longitude:lonFrom];
     NSLog(@"Ending Address Location - %f,%f", latFrom, lonFrom);
     
     //Setup annotation for ending address
@@ -113,14 +106,13 @@
     [self.mapView setRegion:region animated:YES];
     
     //Save to Firebase
-    [self saveStartingLocationToFirebase:&startingAddressLocation andEndingLocation:&endingAddressLocation];
+//    [self saveStartingLocationToFirebase:&startingAddressLocation andEndingLocation:&endingAddressLocation];
 }
-
 
 
 #pragma mark - Firebase Database Functions
 
-- (void)saveStartingLocationToFirebase:(CLLocationCoordinate2D *)startingLocation andEndingLocation:(CLLocationCoordinate2D *)endingLocation {
+- (void)saveStartingLocationToFirebase:(CLLocation *)startingLocation andEndingLocation:(CLLocation *)endingLocation {
     
     //SAVE TO CURRENT USER ID
     //Current User ID
@@ -155,7 +147,7 @@
     FIRDatabaseReference *startingLocationReference = [[DataService ds] startingLocationsReference];
     GeoFire *startingLocationGeofire = [[GeoFire alloc] initWithFirebaseRef:startingLocationReference];
     
-    [startingLocationGeofire setLocation:[[CLLocation alloc] initWithLatitude:startingLocation->latitude longitude:startingLocation->longitude]
+    [startingLocationGeofire setLocation:[[CLLocation alloc] initWithLatitude:startingLocation.coordinate.latitude longitude:startingLocation.coordinate.longitude]
                                   forKey:driverPostID
                      withCompletionBlock:^(NSError *error) {
                          if (error != nil) {
@@ -170,7 +162,7 @@
     GeoFire *endingLocationGeofire = [[GeoFire alloc] initWithFirebaseRef:endingLocationReference];
     
     //CLLocation is a structure - Use Pointers not dot notation.
-    [endingLocationGeofire setLocation:[[CLLocation alloc] initWithLatitude:endingLocation->latitude longitude:endingLocation->longitude]
+    [endingLocationGeofire setLocation:[[CLLocation alloc] initWithLatitude:startingLocation.coordinate.latitude longitude:endingLocation.coordinate.longitude]
                                 forKey:driverPostID
                    withCompletionBlock:^(NSError *error) {
                        if (error != nil) {
@@ -180,6 +172,36 @@
                            NSLog(@"Saved ending location successfully!");
                        }
                    }];
+}
+
+#pragma mark - IBAction
+- (IBAction)backButtonPressed:(UIButton *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+- (IBAction)postRideButtonPressed:(UIButton *)sender {
+    if (![self.endingAddressTextField.text isEqualToString:@""] && ![self.startingAddressTextField.text isEqualToString:@""]) {
+        
+        SelectViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"SelectVC"];
+        [self.navigationController pushViewController:controller animated:YES];
+        [controller setIsSelectingRiders:YES];
+        
+        //Save to Firebase
+        [self saveStartingLocationToFirebase:self.startingLocation andEndingLocation:self.endingLocation];
+        
+        [controller setUserLocation:self.endingLocation];
+    }else {
+        //Create an alert
+        FCAlertView *alert = [[FCAlertView alloc] init];
+        [alert makeAlertTypeWarning];
+        
+        [alert showAlertInView:self
+                     withTitle:@"Warning"
+                  withSubtitle:[NSString stringWithFormat:@"Please fill in all fields before posting"]
+               withCustomImage:nil
+           withDoneButtonTitle:nil
+                    andButtons:nil];
+    }
 }
 
 #pragma mark - UITextFieldDelegate

@@ -18,7 +18,6 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) NSMutableArray *carpoolPostsArray;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) CLLocation *userLocation;
 @end
 
 @implementation SelectViewController
@@ -30,7 +29,6 @@
     
     //Initialize properties
     self.carpoolPostsArray = [[NSMutableArray alloc] init];
-    self.userLocation = [[CLLocation alloc] initWithLatitude:41.9048757 longitude:-88.33587759999999];
     
     //Unhide Navigation bar
     self.navigationController.navigationBarHidden = NO;
@@ -42,7 +40,7 @@
     
     //Setup annotation for center point
     MKPointAnnotation *centerPin = [[MKPointAnnotation alloc] init];
-    centerPin.title = @"User Location";
+    centerPin.title = self.userAddress;
     centerPin.coordinate = self.userLocation.coordinate;
     [self.mapView addAnnotation:centerPin];
     

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CoreLocation/CoreLocation.h"
 
 @interface SelectViewController : UIViewController
 @property (nonatomic, assign) BOOL isSelectingRiders;
+@property (strong, nonatomic) CLLocation *userLocation;
+@property (strong, nonatomic) NSString *userAddress;
 @end
