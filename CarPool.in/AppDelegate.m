@@ -8,17 +8,44 @@
 
 #import "AppDelegate.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+@import UserNotifications;
+
+
 @import Firebase;
-
-@interface AppDelegate ()
-
+@import FirebaseMessaging;
+@interface AppDelegate () <FIRMessagingDelegate>
 @end
 
+NSString *const kGCMMessageIDKey = @"gcm.message_id";
+
 @implementation AppDelegate
+
+#pragma mark - App Delegate Methods
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    //Register for remote notifications
+    //Register Remote Settings
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_9_x_Max) {
+        UIUserNotificationType allNotificationTypes =
+        (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+        
+        
+        
+        UIUserNotificationSettings *settings =
+        [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    } else {
+        // Support iOS 10 or later
+    }
+    
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    
+    // Add observer for InstanceID token refresh callback.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenRefreshNotification:)
+                                                 name:kFIRInstanceIDTokenRefreshNotification object:nil];
     
     //Firebase Configure
     [FIRApp configure];
@@ -46,6 +73,9 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [[FIRMessaging messaging] disconnect];
+    NSLog(@"Disconnected from FCM");
+
 }
 
 
@@ -64,34 +94,9 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-#pragma mark - Google Sign Delegate Functions
+#pragma mark - Google Sign / Facebook Delegate Functions
 
-
-// Google Sign in
-
-//- (BOOL)application:(nonnull UIApplication *)application
-//            openURL:(nonnull NSURL *)url
-//            options:(nonnull NSDictionary<NSString *, id> *)options {
-//    return [[GIDSignIn sharedInstance] handleURL:url
-//                               sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
-//                                      annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
-//}
-
-// Facebook
-
-//- (BOOL)application:(UIApplication *)application
-//            openURL:(NSURL *)url
-//            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-//    
-//    BOOL handled = [[FBSDKApplicationDelegate sharedInstance] application:application
-//                                                                  openURL:url
-//                                                        sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
-//                                                               annotation:options[UIApplicationOpenURLOptionsAnnotationKey]
-//                    ];
-//    // Add any custom logic here.
-//    return handled;
-//}
-
+//Handles both google and facebook sign in
 - (BOOL)application:(UIApplication* )app openURL:(NSURL* )url options:(NSDictionary *)options {
     
     NSLog(@"Url = %@",url);
@@ -99,5 +104,84 @@
     
     return [[GIDSignIn sharedInstance] handleURL:url sourceApplication:options [UIApplicationOpenURLOptionsSourceApplicationKey] annotation:options[UIApplicationOpenURLOptionsAnnotationKey]] ||[[FBSDKApplicationDelegate sharedInstance]application:app openURL:url options:options];
 }
+
+#pragma mark - Push Notifications
+
+-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    NSLog(@"Remote Notifications");
+    NSString *deviceTokenString = [[[[deviceToken description]stringByReplacingOccurrencesOfString:@"<" withString:@""]stringByReplacingOccurrencesOfString:@">" withString:@""]stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"Device Token String- %@",deviceTokenString);
+    
+    NSString *refreshedToken = [[FIRInstanceID instanceID] token];
+    NSLog(@"InstanceID token: %@", refreshedToken);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    // If you are receiving a notification message while your app is in the background,
+    // this callback will not be fired till the user taps on the notification launching the application.
+    // TODO: Handle data of notification
+    
+    // Print message ID.
+    if (userInfo[kGCMMessageIDKey]) {
+        NSLog(@"Message ID: %@", userInfo[kGCMMessageIDKey]);
+    }
+    
+    // Print full message.
+    NSLog(@"Full Message%@", userInfo);
+}
+
+
+-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    NSLog(@"Remote Notification Error %@", error.localizedDescription);
+    
+}
+
+#pragma mark - Firebase Remote Notifications
+- (void)tokenRefreshNotification:(NSNotification *)notification {
+    // Note that this callback will be fired everytime a new token is generated, including the first
+    // time. So if you need to retrieve the token as soon as it is available this is where that
+    // should be done.
+    NSString *refreshedToken = [[FIRInstanceID instanceID] token];
+    NSLog(@"InstanceID token: %@", refreshedToken);
+    
+    // Connect to FCM since connection may have failed when attempted before having a token.
+    [self connectToFcm];
+    
+    // TODO: If necessary send token to application server.
+}
+
+
+#pragma mark - Firebase Messaging Delegate Functions
+- (void)applicationReceivedRemoteMessage:(nonnull FIRMessagingRemoteMessage *)remoteMessage {
+    NSLog(@"Remote Message App Data %@", remoteMessage.appData);
+}
+
+#pragma Firebase Messaging 
+// [START connect_to_fcm]
+- (void)connectToFcm {
+    // Won't connect since there is no token
+    if (![[FIRInstanceID instanceID] token]) {
+        return;
+    }
+    
+    // Disconnect previous FCM connection if it exists.
+    [[FIRMessaging messaging] disconnect];
+    
+    [[FIRMessaging messaging] connectWithCompletion:^(NSError * _Nullable error) {
+        if (error != nil) {
+            NSLog(@"Unable to connect to FCM. %@", error);
+        } else {
+            NSLog(@"Connected to FCM.");
+        }
+    }];
+}
+// [END connect_to_fcm]
+
+
+
+
+
+
+
 
 @end

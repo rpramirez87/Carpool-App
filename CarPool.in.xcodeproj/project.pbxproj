@@ -61,6 +61,7 @@
 		D94341E01EB5093B00AF6336 /* MaterialNavigationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaterialNavigationView.m; sourceTree = "<group>"; };
 		D95E97FB1EB559E6004F41EE /* DataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataService.h; sourceTree = "<group>"; };
 		D95E97FC1EB559E6004F41EE /* DataService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataService.m; sourceTree = "<group>"; };
+		D98D89601EB97DAF002DC15A /* CarPool.in.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CarPool.in.entitlements; sourceTree = "<group>"; };
 		D9BD7B9F1EB7BCF90011591A /* RequestRideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestRideViewController.h; sourceTree = "<group>"; };
 		D9BD7BA01EB7BCF90011591A /* RequestRideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestRideViewController.m; sourceTree = "<group>"; };
 		D9F02A431EB42ADB007EB6EB /* RideLogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideLogViewController.h; sourceTree = "<group>"; };
@@ -120,6 +121,7 @@
 		D920DB171EB268A60087EB95 /* CarPool.in */ = {
 			isa = PBXGroup;
 			children = (
+				D98D89601EB97DAF002DC15A /* CarPool.in.entitlements */,
 				D969C1221EB2BEC0006B8CEF /* Data Service */,
 				D920DB341EB269190087EB95 /* Controller */,
 				D920DB331EB269130087EB95 /* View */,
@@ -250,6 +252,14 @@
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = RJETQ2A4J2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -475,6 +485,7 @@
 			baseConfigurationReference = C4B4E6C8138EEC3169C015FF /* Pods-CarPool.in.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CarPool.in/CarPool.in.entitlements;
 				DEVELOPMENT_TEAM = RJETQ2A4J2;
 				INFOPLIST_FILE = CarPool.in/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -488,6 +499,7 @@
 			baseConfigurationReference = D046A8D805A607FA53EFBDA8 /* Pods-CarPool.in.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CarPool.in/CarPool.in.entitlements;
 				DEVELOPMENT_TEAM = RJETQ2A4J2;
 				INFOPLIST_FILE = CarPool.in/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
