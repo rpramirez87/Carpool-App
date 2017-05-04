@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *startingAddressTextField;
 @property (weak, nonatomic) IBOutlet UITextField *endingAddressTextField;
 @property (strong, nonatomic) CLLocation *startingLocation;
+@property (weak, nonatomic) IBOutlet UITextField *carModelTextField;
+@property (weak, nonatomic) IBOutlet UITextField *carColorTextField;
 @property (strong, nonatomic) CLLocation *endingLocation;
 
 @end

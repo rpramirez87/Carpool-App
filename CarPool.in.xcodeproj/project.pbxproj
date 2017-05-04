@@ -23,7 +23,9 @@
 		D94341DB1EB4449700AF6336 /* CircleImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = D94341DA1EB4449700AF6336 /* CircleImageView.m */; };
 		D94341DE1EB5076700AF6336 /* PostRideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D94341DD1EB5076700AF6336 /* PostRideViewController.m */; };
 		D94341E11EB5093B00AF6336 /* MaterialNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = D94341E01EB5093B00AF6336 /* MaterialNavigationView.m */; };
+		D9541B331EBA246500D28903 /* FlatImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = D9541B321EBA246500D28903 /* FlatImageView.m */; };
 		D95E97FD1EB559E6004F41EE /* DataService.m in Sources */ = {isa = PBXBuildFile; fileRef = D95E97FC1EB559E6004F41EE /* DataService.m */; };
+		D98655341EBA7EF400C07EEE /* CarpoolPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D98655331EBA7EF400C07EEE /* CarpoolPostViewController.m */; };
 		D9BD7BA11EB7BCF90011591A /* RequestRideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9BD7BA01EB7BCF90011591A /* RequestRideViewController.m */; };
 		D9F02A451EB42ADB007EB6EB /* RideLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F02A441EB42ADB007EB6EB /* RideLogViewController.m */; };
 		D9F02A481EB4352C007EB6EB /* MaterialView.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F02A471EB4352C007EB6EB /* MaterialView.m */; };
@@ -59,8 +61,12 @@
 		D94341DD1EB5076700AF6336 /* PostRideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostRideViewController.m; sourceTree = "<group>"; };
 		D94341DF1EB5093B00AF6336 /* MaterialNavigationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialNavigationView.h; sourceTree = "<group>"; };
 		D94341E01EB5093B00AF6336 /* MaterialNavigationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaterialNavigationView.m; sourceTree = "<group>"; };
+		D9541B311EBA246500D28903 /* FlatImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlatImageView.h; sourceTree = "<group>"; };
+		D9541B321EBA246500D28903 /* FlatImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlatImageView.m; sourceTree = "<group>"; };
 		D95E97FB1EB559E6004F41EE /* DataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataService.h; sourceTree = "<group>"; };
 		D95E97FC1EB559E6004F41EE /* DataService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataService.m; sourceTree = "<group>"; };
+		D98655321EBA7EF400C07EEE /* CarpoolPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarpoolPostViewController.h; sourceTree = "<group>"; };
+		D98655331EBA7EF400C07EEE /* CarpoolPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarpoolPostViewController.m; sourceTree = "<group>"; };
 		D98D89601EB97DAF002DC15A /* CarPool.in.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CarPool.in.entitlements; sourceTree = "<group>"; };
 		D9BD7B9F1EB7BCF90011591A /* RequestRideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestRideViewController.h; sourceTree = "<group>"; };
 		D9BD7BA01EB7BCF90011591A /* RequestRideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestRideViewController.m; sourceTree = "<group>"; };
@@ -181,6 +187,8 @@
 				D9BD7BA01EB7BCF90011591A /* RequestRideViewController.m */,
 				D92176E81EB81DC3001249EE /* SelectViewController.h */,
 				D92176E91EB81DC3001249EE /* SelectViewController.m */,
+				D98655321EBA7EF400C07EEE /* CarpoolPostViewController.h */,
+				D98655331EBA7EF400C07EEE /* CarpoolPostViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -194,6 +202,8 @@
 				D9F02A471EB4352C007EB6EB /* MaterialView.m */,
 				D94341DF1EB5093B00AF6336 /* MaterialNavigationView.h */,
 				D94341E01EB5093B00AF6336 /* MaterialNavigationView.m */,
+				D9541B311EBA246500D28903 /* FlatImageView.h */,
+				D9541B321EBA246500D28903 /* FlatImageView.m */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -354,6 +364,7 @@
 				D95E97FD1EB559E6004F41EE /* DataService.m in Sources */,
 				D9BD7BA11EB7BCF90011591A /* RequestRideViewController.m in Sources */,
 				D920DB1D1EB268A60087EB95 /* AppDelegate.m in Sources */,
+				D98655341EBA7EF400C07EEE /* CarpoolPostViewController.m in Sources */,
 				D920DB311EB2690B0087EB95 /* TitleViewController.m in Sources */,
 				D94341DB1EB4449700AF6336 /* CircleImageView.m in Sources */,
 				D920DB3B1EB288F90087EB95 /* SignUpViewController.m in Sources */,
@@ -363,6 +374,7 @@
 				D922AA711EB642190004A1A7 /* DriverPostTableViewCell.m in Sources */,
 				D9F02A451EB42ADB007EB6EB /* RideLogViewController.m in Sources */,
 				D920DB1A1EB268A60087EB95 /* main.m in Sources */,
+				D9541B331EBA246500D28903 /* FlatImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,7 +441,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -472,7 +484,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -488,6 +500,7 @@
 				CODE_SIGN_ENTITLEMENTS = CarPool.in/CarPool.in.entitlements;
 				DEVELOPMENT_TEAM = RJETQ2A4J2;
 				INFOPLIST_FILE = CarPool.in/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.RJTTraining.CarPool-in";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -502,6 +515,7 @@
 				CODE_SIGN_ENTITLEMENTS = CarPool.in/CarPool.in.entitlements;
 				DEVELOPMENT_TEAM = RJETQ2A4J2;
 				INFOPLIST_FILE = CarPool.in/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.RJTTraining.CarPool-in";
 				PRODUCT_NAME = "$(TARGET_NAME)";

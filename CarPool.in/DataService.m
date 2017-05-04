@@ -20,15 +20,19 @@ static DataService *ds;
         ds.rootReference = [[FIRDatabase database] reference];
         ds.publicUserReference = [ds.rootReference child:@"publicUsers"];
         ds.userReference = [ds.rootReference child:@"users"];
-        ds.driverPostsReference = [ds.rootReference child:@"driversPost"];
+        ds.driverPostsReference = [ds.rootReference child:@"carpoolPost"];
         
         //Geofire Databases
         ds.startingLocationsReference = [ds.rootReference child:@"startingLocations"];
         ds.endingLocationsReference = [ds.rootReference child:@"endingLocations"];
+        
+        //Push Notifications
+        ds.pushNotificationsReference = [ds.rootReference child:@"notificationRequests"];
+    
+        
        
         //Firebase Storage
         ds.storageRefence = [[FIRStorage storage] reference];
-        
         
     });
     return ds;

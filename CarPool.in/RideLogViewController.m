@@ -42,6 +42,11 @@
     self.searchController.searchBar.placeholder = @"Enter destination";
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    self.navigationController.navigationBarHidden = NO;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -129,15 +134,15 @@
     
     GFCircleQuery *circleQuery = [endingLocationGeofire queryAtLocation:userLocation withRadius:6.1];
     [circleQuery observeEventType:GFEventTypeKeyEntered withBlock:^(NSString *key, CLLocation *location) {
-        NSLog(@"Circle Query - Key '%@' entered the search area and is at location '%@'", key, location);
+        //NSLog(@"Circle Query - Key '%@' entered the search area and is at location '%@'", key, location);
         
-        [[[[DataService ds] driverPostsReference]child:key] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        [[[[DataService ds] driverPostsReference]child:key] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
             //Convert snapshot value to dictionary
             NSMutableDictionary *driverPostDictionary = snapshot.value;
             double metersToMilesConverter = 0.000621371;
             driverPostDictionary[@"miles"] = [NSString stringWithFormat:@"%.2f miles",[userLocation distanceFromLocation:location] * metersToMilesConverter];
-            NSLog(@"Distance from Location in meters %f", [userLocation distanceFromLocation:location]);
-            NSLog(@"Driver Post - %@", driverPostDictionary);
+            //NSLog(@"Distance from Location in meters %f", [userLocation distanceFromLocation:location]);
+            //NSLog(@"Driver Post - %@", driverPostDictionary);
             DriverPost *driverPost = [[DriverPost alloc] initWithDict:driverPostDictionary];
             [self.driverPostsArray addObject:driverPost];
             [self.tableView reloadData];

@@ -13,10 +13,11 @@
 
 @import Firebase;
 @import FirebaseMessaging;
-@interface AppDelegate () <FIRMessagingDelegate>
+@interface AppDelegate () <FIRMessagingDelegate, UNUserNotificationCenterDelegate>
 @end
 
 NSString *const kGCMMessageIDKey = @"gcm.message_id";
+#define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
 @implementation AppDelegate
 
@@ -28,20 +29,23 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     
     //Register for remote notifications
     //Register Remote Settings
-    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_9_x_Max) {
-        UIUserNotificationType allNotificationTypes =
-        (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
-        
-        
-        
-        UIUserNotificationSettings *settings =
-        [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
-        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-    } else {
-        // Support iOS 10 or later
-    }
+//    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_9_x_Max) {
+//        UIUserNotificationType allNotificationTypes =
+//        (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+//        
+//        
+//        
+//        UIUserNotificationSettings *settings =
+//        [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+//        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+//    } else {
+//        // Support iOS 10 or later
+//    }
+//    
+//    //self register
+//    [[UIApplication sharedApplication] registerForRemoteNotifications];
     
-    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    [self registerForRemoteNotification];
     
     // Add observer for InstanceID token refresh callback.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenRefreshNotification:)
@@ -107,6 +111,15 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
 
 #pragma mark - Push Notifications
 
+- (void)application:(UIApplication* )application didRegisterUserNotificationSettings:(UIUserNotificationSettings* )notificationSettings {
+    [application registerForRemoteNotifications];
+    
+    //to get the firebase device token
+    NSString *refreshedToken = [[FIRInstanceID instanceID] token];
+    NSLog(@"Firebase InstanceID token: %@", refreshedToken);
+}
+
+
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
     NSLog(@"Remote Notifications");
     NSString *deviceTokenString = [[[[deviceToken description]stringByReplacingOccurrencesOfString:@"<" withString:@""]stringByReplacingOccurrencesOfString:@">" withString:@""]stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -114,6 +127,10 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     
     NSString *refreshedToken = [[FIRInstanceID instanceID] token];
     NSLog(@"InstanceID token: %@", refreshedToken);
+    
+    [[FIRInstanceID instanceID] setAPNSToken:deviceToken
+                                        type:FIRInstanceIDAPNSTokenTypeSandbox];
+
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
@@ -128,12 +145,32 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     
     // Print full message.
     NSLog(@"Full Message%@", userInfo);
+    
+    //Extract the rideInfo key from userInfo, Display the appropriate VC with information based on the rideInfo key
+    //[self.window.rootViewController presentViewController:dummyVC animated:YES completion:nil];
 }
 
 
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
     NSLog(@"Remote Notification Error %@", error.localizedDescription);
     
+}
+
+- (void)registerForRemoteNotification {
+    if(SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(@"10.0")) {
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        center.delegate = self;
+        [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error){
+            if( !error ){
+                [[UIApplication sharedApplication] registerForRemoteNotifications];
+            }
+        }];
+        [FIRMessaging messaging].remoteMessageDelegate = self;
+    }
+    else {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }
 }
 
 #pragma mark - Firebase Remote Notifications
@@ -149,6 +186,8 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     
     // TODO: If necessary send token to application server.
 }
+
+
 
 
 #pragma mark - Firebase Messaging Delegate Functions
@@ -176,12 +215,5 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     }];
 }
 // [END connect_to_fcm]
-
-
-
-
-
-
-
 
 @end

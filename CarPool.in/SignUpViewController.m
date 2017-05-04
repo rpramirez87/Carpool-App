@@ -19,11 +19,12 @@
 
 
 
-@interface SignUpViewController () <GIDSignInUIDelegate, GIDSignInDelegate, FBSDKLoginButtonDelegate, UITextFieldDelegate>
+@interface SignUpViewController () <GIDSignInUIDelegate, GIDSignInDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailAddressTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *confirmPasswordTextField;
+@property (strong, nonatomic) NSString *currentInstanceID;
 
 @end
 
@@ -32,6 +33,9 @@
 #pragma mark - View Controller Life Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.currentInstanceID = [[FIRInstanceID instanceID] token];
+    NSLog(@"Hello InstanceID token: %@", self.currentInstanceID);
     
     //Google Sign in
     [GIDSignIn sharedInstance].uiDelegate = self;
@@ -44,15 +48,6 @@
     self.confirmPasswordTextField.delegate = self;
 }
 
-#pragma mark - UIStoryboard Functionalities
-
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-//    //Handle segues between VCs
-//    if([segue.identifier isEqual: @"showTimeViewController"]) {
-//        RideLogViewController *RideriderLogVC = [segue destinationViewController];
-//    }
-//
-//}
 #pragma mark - Google Sign In
 
 - (void)signIn:(GIDSignIn *)signIn
@@ -96,6 +91,7 @@ didSignInForUser:(GIDGoogleUser *)user
                                       NSDictionary *publicUserDict = @{
                                                                        @"name" : fullName,
                                                                        @"image" : stringURL,
+                                                                       @"pushMessageID" : self.currentInstanceID
                                                                        };
                                       [[[[DataService ds] publicUserReference]child:user.uid] updateChildValues:publicUserDict];
                                       
@@ -264,7 +260,8 @@ didDisconnectWithUser:(GIDGoogleUser *)user
                                        @"provider" : @"email"
                                        };
             
-            NSDictionary *publicUserDict = @{@"name" : self.nameTextField.text};
+            NSDictionary *publicUserDict = @{@"name" : self.nameTextField.text,
+                                             @"pushMessageID" : self.currentInstanceID};
             
             
             //Update public user
@@ -339,7 +336,8 @@ didDisconnectWithUser:(GIDGoogleUser *)user
                                                                                   //Create a user dictionary
                                                                                   NSDictionary *publicUserDict = @{
                                                                                                                    @"name" : [userDict valueForKey:@"name"],
-                                                                                                                   @"image" : [userDict valueForKey:@"image"]
+                                                                                                                   @"image" : [userDict valueForKey:@"image"],
+                                                                                                                   @"pushMessageID" : self.currentInstanceID
                                                                                                                    };
                                                                                   //Update public user
                                                                                   [[[[DataService ds] publicUserReference]child:user.uid] updateChildValues:publicUserDict];
@@ -367,7 +365,8 @@ didDisconnectWithUser:(GIDGoogleUser *)user
                                   
                                   NSDictionary *publicUserDict = @{
                                                                    @"name" : [userDict valueForKey:@"name"],
-                                                                   @"image" : [userDict valueForKey:@"image"]
+                                                                   @"image" : [userDict valueForKey:@"image"],
+                                                                   @"pushMessageID" : self.currentInstanceID
                                                                    };
                                   //Update public user
                                   [[[[DataService ds] publicUserReference]child:user.uid] updateChildValues:publicUserDict];
@@ -379,7 +378,7 @@ didDisconnectWithUser:(GIDGoogleUser *)user
                                   //[self keychainSaveWithUID:user.uid];
                                   
                                   //Load up Main View Controller
-                                  //                                  RideLogViewController *rideLogVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RideLogVC"];
+                                  //RideLogViewController *rideLogVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RideLogVC"];
                                   
                                   //[self presentViewController:rideLogVC animated:YES completion:nil];
                                   

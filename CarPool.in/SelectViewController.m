@@ -13,6 +13,9 @@
 #import "DriverPostTableViewCell.h"
 #import "DriverPost.h"
 #import "UserDestination.h"
+#import "FCAlertView.h"
+#import "CarpoolPostViewController.h"
+#import "RideLogViewController.h"
 
 @interface SelectViewController () <UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -31,7 +34,7 @@
     self.carpoolPostsArray = [[NSMutableArray alloc] init];
     
     //Unhide Navigation bar
-    self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBarHidden = YES;
     
     //Delegate
     self.tableView.dataSource = self;
@@ -54,18 +57,47 @@
     //Call Geoquery
     [self loadAllDriversPostsUsingGeofireWithLocation:self.userLocation];
 }
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = YES;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - IBActions
+
+- (IBAction)homeButtonPressed:(UIButton *)sender {
+    RideLogViewController *rideLogVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RideLogVC"];
+    [self presentViewController:rideLogVC animated:YES completion:nil];
+}
+
 #pragma mark - Table View Delegate Functions
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DriverPost *currentDriverPost = self.carpoolPostsArray[indexPath.row];
     static NSString *cellIdentifier = @"CarpoolPostCell";
+    
     DriverPostTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     [cell configureCellWithDriverPost:currentDriverPost];
+    
+    if (self.isSelectingRiders) {
+        //Make it Red
+        for (UIStackView * stackView in cell.stackViewCollection) {
+            stackView.hidden = YES;
+        }
+        cell.sendButton.hidden = NO;
+        cell.sendButton.tag = indexPath.row;
+        [cell.sendButton addTarget:self action:@selector(sendRequest:) forControlEvents:UIControlEventTouchUpInside];
+    }else {
+        //Make it Green
+        for (UIStackView * stackView in cell.stackViewCollection) {
+            stackView.hidden = NO;
+        }
+        cell.sendButton.hidden = YES;
+    }
     return cell;
 }
 
@@ -75,6 +107,19 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.carpoolPostsArray.count;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"%d", self.isSelectingRiders);
+    NSLog(@"Did Select Row at %ld", (long)indexPath.row);
+    
+    DriverPost *currentDriverPost = self.carpoolPostsArray[indexPath.row];
+    if (!self.isSelectingRiders) {
+        NSLog(@"Selecting Drivers");
+        CarpoolPostViewController *carpoolPostVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CarpoolPostVC"];
+        carpoolPostVC.currentDriverPost = currentDriverPost;
+        [self.navigationController pushViewController:carpoolPostVC animated:YES];
+    }
 }
 
 #pragma mark - Geofire Query
@@ -100,7 +145,7 @@
             driverPostDictionary[@"miles"] = [NSString stringWithFormat:@"%.2f miles",[userLocation distanceFromLocation:location] * metersToMilesConverter];
             
             NSLog(@"Distance from Location in meters %f", [userLocation distanceFromLocation:location]);
-            NSLog(@"Driver Post - %@", driverPostDictionary);
+            NSLog(@"Driver Post - Post Key %@ - %@",key, driverPostDictionary);
             DriverPost *driverPost = [[[DriverPost alloc] init] initWithDict:driverPostDictionary andKey:snapshot.key];
             
             if (self.isSelectingRiders) {
@@ -123,9 +168,9 @@
 #pragma mark - MapKit Functions
 
 - (void)reloadLocations {
-//    for (id<MKAnnotation> annotation in self.mapView.annotations) {
-//        [self.mapView removeAnnotation:annotation];
-//    }
+    //    for (id<MKAnnotation> annotation in self.mapView.annotations) {
+    //        [self.mapView removeAnnotation:annotation];
+    //    }
     
     FIRDatabaseReference *endingLocationReference = [[DataService ds] endingLocationsReference];
     GeoFire *endingLocationsGeofire = [[GeoFire alloc] initWithFirebaseRef:endingLocationReference];
@@ -151,9 +196,7 @@
     }
 }
 
--(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
-    NSLog(@"Did we get here");
-    
+-(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{    
     static NSString *identifer = @"MKMapView";
     if ([annotation isKindOfClass:[MKPointAnnotation class]]) {
         
@@ -167,10 +210,36 @@
         annotationView.enabled = YES;
         annotationView.image = [UIImage imageNamed:@"userLocationPin"];
         annotationView.canShowCallout = YES;
-        
-        
         return annotationView;
     }
     return nil;
+}
+#pragma mark - Push Notifications 
+- (void)sendRequest:(UIButton *)button {
+    NSLog(@"Send Request");
+    CGPoint touchPoint = [button convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *clickedButtonIndexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
+    NSLog(@"NSIndex Path Row %ld", (long) clickedButtonIndexPath.row );
+
+    //Create an alert
+    FCAlertView *alert = [[FCAlertView alloc] init];
+    [alert makeAlertTypeSuccess];
+    
+    [alert showAlertInView:self
+                 withTitle:@"Success"
+              withSubtitle:[NSString stringWithFormat:@"Request to passenger to ride with you have been sent! 🚗"]
+           withCustomImage:nil
+       withDoneButtonTitle:@"OK"
+                andButtons:nil];
+    [alert doneActionBlock:^{
+        // Put your action here
+        NSLog(@"Request Done Done");
+        [self.carpoolPostsArray removeObjectAtIndex:clickedButtonIndexPath.row];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:clickedButtonIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }];
+    
+    
+    // TODO: Send a push notification to passenger
+    
 }
 @end

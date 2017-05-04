@@ -23,6 +23,9 @@
 }
 
 - (void)configureCellWithDriverPost:(DriverPost *)driverPost {
+    
+    self.currentDriverPost = driverPost;
+    
     //Assign labels based on model
     self.startingAddressLabel.text = driverPost.startingAddress;
     self.endingAddressLabel.text = driverPost.endingAddress;
@@ -37,7 +40,7 @@
         UIColor *redColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
         self.sideBackgroundView.backgroundColor = redColor;
         self.isDriverLabel.textColor = redColor;
-        self.isDriverLabel.text = @"Rider";
+        self.isDriverLabel.text = @"Passenger";
         self.destinationLogoImageView.image = [UIImage imageNamed:@"redDestinationLogo"];
     }else {
         //Green Color for side view
@@ -51,11 +54,7 @@
         self.destinationLogoImageView.image = [UIImage imageNamed:@"destinationLogo"];
         
     }
-    
-    
-    
-    
-    
+
     //Load up user name and image
     //Load user image and text
     [[[[[DataService ds] rootReference] child:@"publicUsers"] child:driverPost.ownerKey] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
@@ -80,7 +79,5 @@
     } withCancelBlock:^(NSError * _Nonnull error) {
         NSLog(@"%@", error.localizedDescription);
     }];
-    
 }
-
 @end

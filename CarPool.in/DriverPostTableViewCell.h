@@ -23,7 +23,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *isDriverLabel;
 @property (weak, nonatomic) IBOutlet UILabel *distanceInMilesLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *destinationLogoImageView;
+@property (strong, nonatomic) IBOutletCollection(UIStackView) NSArray *stackViewCollection;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
 
+//Current Model
+
+@property (strong, nonatomic) DriverPost *currentDriverPost;
 
 - (void)configureCellWithDriverPost:(DriverPost *)driverPost;
 @end

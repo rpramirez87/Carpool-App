@@ -27,6 +27,8 @@
 @property (strong, nonatomic) FIRDatabaseReference *startingLocationsReference;
 @property (strong, nonatomic) FIRDatabaseReference *endingLocationsReference;
 
+//Push Notification Storage
+@property (strong, nonatomic) FIRDatabaseReference *pushNotificationsReference;
 
 //Database storage
 @property (strong, nonatomic) FIRStorageReference *storageRefence;
