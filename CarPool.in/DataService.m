@@ -28,6 +28,7 @@ static DataService *ds;
         
         //Push Notifications
         ds.pushNotificationsReference = [ds.rootReference child:@"notificationRequests"];
+        ds.pendingRequestsReference = [ds.rootReference child:@"notifications"];
     
         
        

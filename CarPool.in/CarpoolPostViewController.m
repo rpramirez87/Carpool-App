@@ -26,13 +26,20 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
 //Driver Information
+
 @property (strong, nonatomic) NSString *currentDriverName;
-@property (strong, nonatomic) NSString *currentUserPushID;
+@property (strong, nonatomic) NSString *currentDriverPushID;
+
+//Passenger Information
+@property (strong, nonatomic) NSString *currentPassengerName;
 
 
 @end
 
 @implementation CarpoolPostViewController
+
+
+#pragma mark - View Controller Life Cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,36 +49,11 @@
     self.endingAddressLabel.text = self.currentDriverPost.endingAddress;
     self.timeLabel.text = self.currentDriverPost.time;
     
-    //Update values from Firebase
-    //Load user image and text
-    [[[[[DataService ds] rootReference] child:@"publicUsers"] child:self.currentDriverPost.ownerKey] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
-        //Access image
-        if ([snapshot exists]) {
-            NSString *firebaseImageURL = snapshot.value[@"image"];
-            
-            if (firebaseImageURL != nil) {
-                [self.driverImageView sd_setImageWithURL:[NSURL URLWithString:firebaseImageURL]
-                                        placeholderImage:[UIImage imageNamed:@"userCircle.png"]
-                                                 options:SDWebImageRefreshCached];
-                
-                //NSLog(@"%@Profile Image URL", firebaseImageURL);
-            }
-            //Access user name
-            NSString *currentUserName = snapshot.value[@"name"];
-            if (currentUserName != nil) {
-                self.driverNameLabel.text = currentUserName;
-                self.currentDriverName = currentUserName;
-            }
-            
-            NSString *pushID = snapshot.value[@"pushMessageID"];
-            if (pushID != nil) {
-                self.currentUserPushID = pushID;
-            }
-        }
-    } withCancelBlock:^(NSError * _Nonnull error) {
-        NSLog(@"%@", error.localizedDescription);
-    }];
+    
+    //Call Firebase
+    [self loadCurrentUserInfo];
+    [self loadCurrentDriversInfo];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -85,19 +67,43 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+
+#pragma mark - IBAction
+
 - (IBAction)RequestButtonPressed:(id)sender {
     
-//   NSString *sampleFireInstanceToken = @"fs97oPrvEDI:APA91bG71PzQOem2B4jRot9S5fQT0JL-4ta1cQ_pBzZBcKzc6NAhPGgLolQ8bwUTjNbdE4InArdKhgeagajeGag1YHCATgybGVsEBBy2a1jpDCdeub4vNQm-P6hD-J0PeCK1holw-qEk";
     
-    NSLog(@"Notification Sent to %@", self.currentUserPushID);
+    NSString *currentUID = [FIRAuth auth].currentUser.uid;
+    
+    //   NSString *sampleFireInstanceToken = @"fs97oPrvEDI:APA91bG71PzQOem2B4jRot9S5fQT0JL-4ta1cQ_pBzZBcKzc6NAhPGgLolQ8bwUTjNbdE4InArdKhgeagajeGag1YHCATgybGVsEBBy2a1jpDCdeub4vNQm-P6hD-J0PeCK1holw-qEk";
+    
+    NSLog(@"Notification Sent to %@", self.currentDriverPushID);
+    
+    NSDictionary *pushNotificationDict = @{
+                                           @"username": self.currentDriverPushID,
+                                           @"message" : [NSString stringWithFormat:@"%@ wants to ride with you!", self.currentDriverName],
+                                           @"rideinfo" : self.currentDriverPost.drivePostID
+                                           };
+    
+    //Send a notification using node
+    [[[[DataService ds] pushNotificationsReference] childByAutoId] updateChildValues:pushNotificationDict];
+    
+    //TODO: save notification to drivers pending notifications
+    FIRDatabaseReference *notificationRef = [[[[[DataService ds] publicUserReference] child:self.currentDriverPost.ownerKey] child: @"pendingRequests"] childByAutoId] ;
+    
+    //Update values
+    [notificationRef setValue:@YES];
+    NSString *notificationKey = notificationRef.key;
     
     NSDictionary *notificationDict = @{
-                                       @"username": self.currentUserPushID,
-                                       @"message" : [NSString stringWithFormat:@"%@ wants to ride with you!", self.currentDriverName],
-                                       @"rideinfo" : self.currentDriverPost.drivePostID
+                                       @"senderKey": currentUID,
+                                       @"message" : [NSString stringWithFormat:@"%@ wants to ride with you!", self.currentPassengerName]
                                        };
     
-    [[[[DataService ds] pushNotificationsReference] childByAutoId] updateChildValues:notificationDict];
+    //Add notification to notifications child
+    [[[[DataService ds] pendingRequestsReference] child: notificationKey] updateChildValues:notificationDict];
     
     //Alert User
     //Create an alert
@@ -114,7 +120,58 @@
         // Put your action here
         NSLog(@"Request Done");
     }];
+}
 
+#pragma mark - Firebase Request
+
+
+- (void)loadCurrentUserInfo {
+    
+    //Current User ID
+    NSString *currentUID = [FIRAuth auth].currentUser.uid;
+    [[[[DataService ds] publicUserReference] child:currentUID] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+        NSLog(@"Current User Name");
+        
+        if ([snapshot exists]) {
+            NSString *currentUserName = snapshot.value[@"name"];
+            if (currentUserName != nil) {
+                self.currentPassengerName = currentUserName;
+            }
+        }
+    }];
+}
+- (void)loadCurrentDriversInfo {
+    //Update values from Firebase
+    
+    //Load user image and text
+    [[[[[DataService ds] rootReference] child:@"publicUsers"] child:self.currentDriverPost.ownerKey] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        
+        //Access image
+        if ([snapshot exists]) {
+            NSString *firebaseImageURL = snapshot.value[@"image"];
+            
+            if (firebaseImageURL != nil) {
+                [self.driverImageView sd_setImageWithURL:[NSURL URLWithString:firebaseImageURL]
+                                        placeholderImage:[UIImage imageNamed:@"userCircle.png"]
+                                                 options:SDWebImageRefreshCached];
+                
+                //NSLog(@"%@Profile Image URL", firebaseImageURL);
+            }
+            //Access user name
+            NSString *currentDriverName = snapshot.value[@"name"];
+            if (currentDriverName != nil) {
+                self.driverNameLabel.text = currentDriverName;
+                self.currentDriverName = currentDriverName;
+            }
+            
+            NSString *pushID = snapshot.value[@"pushMessageID"];
+            if (pushID != nil) {
+                self.currentDriverPushID = pushID;
+            }
+        }
+    } withCancelBlock:^(NSError * _Nonnull error) {
+        NSLog(@"%@", error.localizedDescription);
+    }];
 }
 
 

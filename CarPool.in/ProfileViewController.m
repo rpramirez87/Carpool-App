@@ -10,11 +10,16 @@
 #import "BorderedCircleImageView.h"
 #import "DataService.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "NotificationCell.h"
 
 @interface ProfileViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet BorderedCircleImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *profileNameLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+//Array of notifications
+
+@property (strong, nonatomic) NSMutableArray *notificationDictionaryKeysArray;
 
 @end
 
@@ -24,11 +29,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-     [self loadCurrentUserInfo];
+    
+    //Initial setup
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.navigationController.navigationBar.hidden = YES;
+    self.notificationDictionaryKeysArray = [[NSMutableArray alloc] init];
+    
+    //Load current user info
+    [self loadCurrentUserInfo];
+    [self loadAllNotifications];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,22 +82,43 @@
             self.profileImageView.image = [UIImage imageNamed:@"userCircle"];
         }
         
-            }];
+    }];
 }
 
-
+- (void)loadAllNotifications {
+    //Current User ID
+    NSString *currentUID = [FIRAuth auth].currentUser.uid;
+    // Load all loadAllNotifications from current user
+    [[[[[DataService ds] publicUserReference] child: currentUID] child:@"pendingRequests" ]
+     observeEventType:FIRDataEventTypeValue
+     withBlock:^(FIRDataSnapshot *snapshot) {
+         //Clear Array
+         [self.notificationDictionaryKeysArray removeAllObjects];
+         
+         // Loop over children
+         NSEnumerator *children = [snapshot children];
+         FIRDataSnapshot *child;
+         while (child = [children nextObject]) {
+             NSString *notificationKey = child.key;
+             NSLog(@"Notification Key - %@", notificationKey);
+             [self.notificationDictionaryKeysArray addObject:notificationKey];
+         }
+         NSLog(@"Array Count %lu", (unsigned long)[self.notificationDictionaryKeysArray count]);
+         [self.tableView reloadData];
+     }];
+}
 
 # pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *currentNotificationKey = self.notificationDictionaryKeysArray[indexPath.row];
     static NSString *cellIdentifier = @"NotificationCell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    NotificationCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    [cell configureCellWithNotificationKey:currentNotificationKey];
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.notificationDictionaryKeysArray.count;
 }
-
 @end

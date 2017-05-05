@@ -148,6 +148,7 @@
             NSLog(@"Driver Post - Post Key %@ - %@",key, driverPostDictionary);
             DriverPost *driverPost = [[[DriverPost alloc] init] initWithDict:driverPostDictionary andKey:snapshot.key];
             
+            
             if (self.isSelectingRiders) {
                 //Add all the riders to array
                 if ([driverPost.isDriver isEqualToString:@"NO"]) {

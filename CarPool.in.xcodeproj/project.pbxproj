@@ -31,6 +31,7 @@
 		D9F02A481EB4352C007EB6EB /* MaterialView.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F02A471EB4352C007EB6EB /* MaterialView.m */; };
 		D9F9D8961EBBC97400426B9F /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F9D8951EBBC97400426B9F /* ProfileViewController.m */; };
 		D9F9D8991EBBCC3D00426B9F /* BorderedCircleImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F9D8981EBBCC3D00426B9F /* BorderedCircleImageView.m */; };
+		D9F9D89C1EBCD42800426B9F /* NotificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F9D89B1EBCD42800426B9F /* NotificationCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,8 @@
 		D9F9D8951EBBC97400426B9F /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		D9F9D8971EBBCC3D00426B9F /* BorderedCircleImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BorderedCircleImageView.h; sourceTree = "<group>"; };
 		D9F9D8981EBBCC3D00426B9F /* BorderedCircleImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BorderedCircleImageView.m; sourceTree = "<group>"; };
+		D9F9D89A1EBCD42800426B9F /* NotificationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationCell.h; sourceTree = "<group>"; };
+		D9F9D89B1EBCD42800426B9F /* NotificationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationCell.m; sourceTree = "<group>"; };
 		FEB60DCAA4804DE4E6235A6C /* libPods-CarPool.in.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CarPool.in.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -223,6 +226,8 @@
 			children = (
 				D922AA6F1EB642190004A1A7 /* DriverPostTableViewCell.h */,
 				D922AA701EB642190004A1A7 /* DriverPostTableViewCell.m */,
+				D9F9D89A1EBCD42800426B9F /* NotificationCell.h */,
+				D9F9D89B1EBCD42800426B9F /* NotificationCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -384,6 +389,7 @@
 				D9F02A481EB4352C007EB6EB /* MaterialView.m in Sources */,
 				D922AA711EB642190004A1A7 /* DriverPostTableViewCell.m in Sources */,
 				D9F9D8991EBBCC3D00426B9F /* BorderedCircleImageView.m in Sources */,
+				D9F9D89C1EBCD42800426B9F /* NotificationCell.m in Sources */,
 				D9F02A451EB42ADB007EB6EB /* RideLogViewController.m in Sources */,
 				D920DB1A1EB268A60087EB95 /* main.m in Sources */,
 				D9541B331EBA246500D28903 /* FlatImageView.m in Sources */,

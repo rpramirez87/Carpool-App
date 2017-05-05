@@ -1349,7 +1349,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotificationCell" rowHeight="100" id="w8Z-Lq-Bik">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotificationCell" rowHeight="100" id="w8Z-Lq-Bik" customClass="NotificationCell">
                                         <rect key="frame" x="0.0" y="72" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="w8Z-Lq-Bik" id="l1T-yU-Af6">
@@ -1416,6 +1416,10 @@
                                                 <constraint firstItem="ywy-VQ-Bfi" firstAttribute="leading" secondItem="Wyx-hJ-0so" secondAttribute="trailing" constant="8" id="zVH-IK-hsN"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="notificationMessageLabel" destination="ZoP-hU-f5Z" id="YWu-M7-Mgb"/>
+                                            <outlet property="notificationSenderImageView" destination="Wyx-hJ-0so" id="LJL-VL-GYq"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
