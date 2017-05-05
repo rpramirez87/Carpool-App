@@ -11,6 +11,7 @@
 #import "DriverPost.h"
 #import "DriverPostTableViewCell.h"
 #import "CoreLocation/CoreLocation.h"
+#import "ProfileViewController.h"
 
 @interface RideLogViewController ()<UISearchResultsUpdating,UISearchBarDelegate,UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -72,6 +73,15 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.driverPostsArray.count;
 }
+
+#pragma mark - IBActions
+
+- (IBAction)profileButtonPressed:(UIBarButtonItem *)sender {
+    ProfileViewController *profileVC = [self.storyboard instantiateViewControllerWithIdentifier:@"profileVC"];
+    [self presentViewController:profileVC animated:YES completion:nil];
+}
+
+
 #pragma mark - UISearchResultController/UISearchBarDelegate Delegate Functions
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     NSString *searchtext = searchController.searchBar.text;
