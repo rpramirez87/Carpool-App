@@ -129,6 +129,9 @@
     //Clear all objects
     [self.carpoolPostsArray removeAllObjects];
     
+    //Current User ID
+    NSString *currentUID = [FIRAuth auth].currentUser.uid;
+    
     //Setup Location and Geoquery
     FIRDatabaseReference *endingLocationReference = [[DataService ds] endingLocationsReference];
     GeoFire *endingLocationGeofire = [[GeoFire alloc] initWithFirebaseRef:endingLocationReference];
@@ -148,15 +151,17 @@
             NSLog(@"Driver Post - Post Key %@ - %@",key, driverPostDictionary);
             DriverPost *driverPost = [[[DriverPost alloc] init] initWithDict:driverPostDictionary andKey:snapshot.key];
             
-            if (self.isSelectingRiders) {
-                //Add all the riders to array
-                if ([driverPost.isDriver isEqualToString:@"NO"]) {
-                    [self.carpoolPostsArray addObject:driverPost];
-                }
-            }else{
-                //Add all drivers to array
-                if ([driverPost.isDriver isEqualToString:@"YES"]) {
-                    [self.carpoolPostsArray addObject:driverPost];
+            if (![driverPost.ownerKey isEqualToString:currentUID]) {
+                if (self.isSelectingRiders) {
+                    //Add all the riders to array
+                    if ([driverPost.isDriver isEqualToString:@"NO"]) {
+                        [self.carpoolPostsArray addObject:driverPost];
+                    }
+                }else{
+                    //Add all drivers to array
+                    if ([driverPost.isDriver isEqualToString:@"YES"]) {
+                        [self.carpoolPostsArray addObject:driverPost];
+                    }
                 }
             }
             [self.tableView reloadData];

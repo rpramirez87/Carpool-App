@@ -154,7 +154,6 @@
             //Remove notification from tableview
             
             
-            
         }
     }];
 }
