@@ -108,7 +108,7 @@
     [self.mapView setRegion:region animated:YES];
     
     //Save to Firebase
-//    [self saveStartingLocationToFirebase:&startingAddressLocation andEndingLocation:&endingAddressLocation];
+    //    [self saveStartingLocationToFirebase:&startingAddressLocation andEndingLocation:&endingAddressLocation];
 }
 
 
@@ -134,7 +134,7 @@
     //Current Time
     [dateFormatter setDateFormat:@"h:mm a"];
     NSString *dateString = [dateFormatter stringFromDate:date];
-
+    
     //Driver Post Dictionary to save
     NSDictionary *driverPostDict = @{@"ownerKey": currentUID,
                                      @"startingAddress": self.startingAddressTextField.text,
@@ -185,13 +185,12 @@
     if (![self.endingAddressTextField.text isEqualToString:@""] && ![self.startingAddressTextField.text isEqualToString:@""]) {
         
         SelectViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"SelectVC"];
-        [self.navigationController pushViewController:controller animated:YES];
         [controller setIsSelectingRiders:YES];
-        
+        [controller setUserLocation:self.endingLocation];
+        [self.navigationController pushViewController:controller animated:YES];
         //Save to Firebase
         [self saveStartingLocationToFirebase:self.startingLocation andEndingLocation:self.endingLocation];
         
-        [controller setUserLocation:self.endingLocation];
     }else {
         //Create an alert
         FCAlertView *alert = [[FCAlertView alloc] init];
@@ -215,10 +214,8 @@
         
         self.mapFillerImageView.hidden = YES;
         
-        NSLog(@"Run the code");
         //Set up Address
         [self calculateAddressInMap];
-        
     }
     return YES;
 }

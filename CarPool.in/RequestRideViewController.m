@@ -150,17 +150,19 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 - (IBAction)requestButtonPressed:(UIButton *)sender {
     if (![self.endingAddressTextField.text isEqualToString:@""] && ![self.startingAddressTextField.text isEqualToString:@""]) {
         
+        //TODO Handle Situation if query returns 0
         SelectViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"SelectVC"];
-        [self.navigationController pushViewController:controller animated:YES];
         [controller setIsSelectingRiders:NO];
-        
+        [controller setUserLocation:self.endingLocation];
+        [self.navigationController pushViewController:controller animated:YES];
         //Save to Firebase
         [self saveStartingLocationToFirebase:self.startingLocation andEndingLocation:self.endingLocation];
         
-        [controller setUserLocation:self.endingLocation];
+
     }else {
         //Create an alert
         FCAlertView *alert = [[FCAlertView alloc] init];

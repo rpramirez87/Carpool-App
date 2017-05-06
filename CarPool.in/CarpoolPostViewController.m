@@ -13,8 +13,9 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "FCAlertView.h"
 #import "RideLogViewController.h"
+#import "PassengerRequestCell.h"
 
-@interface CarpoolPostViewController ()
+@interface CarpoolPostViewController () <UITableViewDelegate, UITableViewDataSource>
 
 //User Interface
 @property (weak, nonatomic) IBOutlet FlatImageView *driverImageView;
@@ -33,6 +34,10 @@
 //Passenger Information
 @property (strong, nonatomic) NSString *currentPassengerName;
 
+
+//Current Requests
+@property (weak, nonatomic) IBOutlet UITableView *requestsTableView;
+@property (strong, nonatomic) NSMutableArray *drivePostRequestsArray;
 
 @end
 
@@ -53,7 +58,10 @@
     //Call Firebase
     [self loadCurrentUserInfo];
     [self loadCurrentDriversInfo];
+    [self loadAllPendingRequests];
     
+    //Initialize values
+    self.drivePostRequestsArray = [[NSMutableArray alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -68,7 +76,25 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - UITableView Delegate
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.drivePostRequestsArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *currentPassengerRequestDict = self.drivePostRequestsArray[indexPath.row];
+    static NSString *cellIdentifier = @"PassengerRequestCell";
+    PassengerRequestCell *cell = [self.requestsTableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    [cell configureCellWithUserKey:[currentPassengerRequestDict valueForKey:@"userKey"]
+                  andRequestStatus:[currentPassengerRequestDict valueForKey:@"requestStatus"]
+     ];
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 75.0;
+}
 
 #pragma mark - IBAction
 
@@ -83,14 +109,14 @@
     
     NSDictionary *pushNotificationDict = @{
                                            @"username": self.currentDriverPushID,
-                                           @"message" : [NSString stringWithFormat:@"%@ wants to ride with you!", self.currentDriverName],
+                                           @"message" : [NSString stringWithFormat:@"%@ wants to ride with you!", self.currentPassengerName],
                                            @"rideinfo" : self.currentDriverPost.drivePostID
                                            };
     
-    //Send a notification using node
+    //Send a notification using nodeJS
     [[[[DataService ds] pushNotificationsReference] childByAutoId] updateChildValues:pushNotificationDict];
     
-    //TODO: save notification to drivers pending notifications
+    //Save notification to drivers pending notifications
     FIRDatabaseReference *notificationRef = [[[[[DataService ds] publicUserReference] child:self.currentDriverPost.ownerKey] child: @"pendingRequests"] childByAutoId] ;
     
     //Update values
@@ -99,11 +125,15 @@
     
     NSDictionary *notificationDict = @{
                                        @"senderKey": currentUID,
-                                       @"message" : [NSString stringWithFormat:@"%@ wants to ride with you!", self.currentPassengerName]
+                                       @"message" : [NSString stringWithFormat:@"%@ wants to ride with you!", self.currentPassengerName],
+                                       @"drivePostID" : self.currentDriverPost.drivePostID
                                        };
     
     //Add notification to notifications child
-    [[[[DataService ds] pendingRequestsReference] child: notificationKey] updateChildValues:notificationDict];
+    [[[[DataService ds] notificationsReference] child: notificationKey] updateChildValues:notificationDict];
+    
+    //Create a pending request inside the drive post key
+    [[[[[[DataService ds] driverPostsReference] child:self.currentDriverPost.drivePostID] child:@"driverRequests"] child:currentUID] setValue:@"Requested"];
     
     //Alert User
     //Create an alert
@@ -124,7 +154,6 @@
 
 #pragma mark - Firebase Request
 
-
 - (void)loadCurrentUserInfo {
     
     //Current User ID
@@ -140,6 +169,7 @@
         }
     }];
 }
+
 - (void)loadCurrentDriversInfo {
     //Update values from Firebase
     
@@ -154,8 +184,6 @@
                 [self.driverImageView sd_setImageWithURL:[NSURL URLWithString:firebaseImageURL]
                                         placeholderImage:[UIImage imageNamed:@"userCircle.png"]
                                                  options:SDWebImageRefreshCached];
-                
-                //NSLog(@"%@Profile Image URL", firebaseImageURL);
             }
             //Access user name
             NSString *currentDriverName = snapshot.value[@"name"];
@@ -174,6 +202,29 @@
     }];
 }
 
+- (void)loadAllPendingRequests {
+    [[[[[DataService ds] driverPostsReference] child:self.currentDriverPost.drivePostID] child:@"driverRequests"] observeEventType:FIRDataEventTypeValue
+withBlock:^(FIRDataSnapshot *snapshot) {
+    //Clear Array
+    [self.drivePostRequestsArray removeAllObjects];
+    
+    // Loop over children
+    NSEnumerator *children = [snapshot children];
+    FIRDataSnapshot *child;
+    while (child = [children nextObject]) {
+        NSString *passengerKey = child.key;
+        NSString *status = child.value;
+        
+        NSDictionary *passengerDict = @{@"userKey" : passengerKey,
+                                        @"requestStatus" : status};
+        
+        NSLog(@"PassengerRequest - %@ with status - %@", passengerKey, passengerKey);
+        [self.drivePostRequestsArray addObject:passengerDict];
+    }
+    NSLog(@"Array Count %lu", (unsigned long)[self.drivePostRequestsArray count]);
+    [self.requestsTableView reloadData];
+}];
+}
 
 
 @end

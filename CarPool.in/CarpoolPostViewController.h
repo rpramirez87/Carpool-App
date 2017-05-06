@@ -10,5 +10,4 @@
 #import "DriverPost.h"
 @interface CarpoolPostViewController : UIViewController
 @property (strong, nonatomic) DriverPost *currentDriverPost;
-
 @end

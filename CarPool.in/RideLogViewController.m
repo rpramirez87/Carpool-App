@@ -12,6 +12,7 @@
 #import "DriverPostTableViewCell.h"
 #import "CoreLocation/CoreLocation.h"
 #import "ProfileViewController.h"
+#import "JSBadgeView.h"
 
 @interface RideLogViewController ()<UISearchResultsUpdating,UISearchBarDelegate,UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -41,6 +42,9 @@
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.definesPresentationContext = YES;
     self.searchController.searchBar.placeholder = @"Enter destination";
+    
+    //Initialize Badge View
+    // TODO: Add JSBadgeView
 }
 
 - (void)viewWillAppear:(BOOL)animated {

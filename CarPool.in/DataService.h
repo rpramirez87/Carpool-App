@@ -29,7 +29,7 @@
 
 //Push Notification Storage
 @property (strong, nonatomic) FIRDatabaseReference *pushNotificationsReference;
-@property (strong, nonatomic) FIRDatabaseReference *pendingRequestsReference;
+@property (strong, nonatomic) FIRDatabaseReference *notificationsReference;
 
 //Database storage
 @property (strong, nonatomic) FIRStorageReference *storageRefence;

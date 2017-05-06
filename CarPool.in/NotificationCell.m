@@ -13,7 +13,7 @@
 
 - (void)configureCellWithNotificationKey:(NSString *)key {
     
-    [[[[DataService ds] pendingRequestsReference] child:key] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+    [[[[DataService ds] notificationsReference] child:key] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
     
         NSLog(@"%@", snapshot.value);
         NSString *message = snapshot.value[@"message"];

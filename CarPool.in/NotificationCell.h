@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet CircleImageView *notificationSenderImageView;
 @property (weak, nonatomic) IBOutlet UILabel *notificationMessageLabel;
 
+@property (weak, nonatomic) IBOutlet UIButton *acceptButton;
+@property (weak, nonatomic) IBOutlet UIButton *rejectButton;
 
 - (void)configureCellWithNotificationKey:(NSString *)key;
 

@@ -11,14 +11,15 @@
 #import "DataService.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "NotificationCell.h"
+#import "FCAlertView.h"
+#import "CarpoolPostViewController.h"
 
-@interface ProfileViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface ProfileViewController () <UITableViewDelegate, UITableViewDataSource, FCAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet BorderedCircleImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *profileNameLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 //Array of notifications
-
 @property (strong, nonatomic) NSMutableArray *notificationDictionaryKeysArray;
 
 @end
@@ -81,7 +82,6 @@
             //Assign empty image
             self.profileImageView.image = [UIImage imageNamed:@"userCircle"];
         }
-        
     }];
 }
 
@@ -114,11 +114,81 @@
     NSString *currentNotificationKey = self.notificationDictionaryKeysArray[indexPath.row];
     static NSString *cellIdentifier = @"NotificationCell";
     NotificationCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    //Configure Cell
     [cell configureCellWithNotificationKey:currentNotificationKey];
+    
+    //Add target-action for buttons
+    cell.acceptButton.tag = indexPath.row;
+    cell.rejectButton.tag = indexPath.row;
+
+    [cell.acceptButton addTarget:self action:@selector(notificationAccepted:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.rejectButton addTarget:self action:@selector(notificationRejected:) forControlEvents:UIControlEventTouchUpInside];
+
+
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.notificationDictionaryKeysArray.count;
 }
+
+#pragma mark - Target Actions 
+
+- (void) notificationAccepted:(UIButton *)acceptButton{
+    CGPoint touchPoint = [acceptButton convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *clickedButtonIndexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
+    NSLog(@"Accept Button - NSIndex Path Row %ld", (long) clickedButtonIndexPath.row);
+    
+    NSString *currentDictionaryKey = self.notificationDictionaryKeysArray[clickedButtonIndexPath.row];
+    
+    [[[[DataService ds] notificationsReference] child:currentDictionaryKey] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+        if ([snapshot exists]) {
+            NSString *drivePostID = snapshot.value[@"drivePostID"];
+            
+           
+            NSString *senderkey = snapshot.value[@"senderKey"];
+            
+            [[[[[[DataService ds] driverPostsReference] child: drivePostID] child: @"driverRequests"] child:senderkey] setValue: @"Accepted"];
+            
+            //Remove notification from tableview
+            
+            
+            
+            
+            
+            
+        }
+    }];
+}
+
+- (void) notificationRejected:(UIButton *)rejectButton {
+    CGPoint touchPoint = [rejectButton convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *clickedButtonIndexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
+    NSLog(@"Reject Button - NSIndex Path Row %ld", (long) clickedButtonIndexPath.row );
+    
+    //Create Alert View to warn user
+    
+    //Create an alert
+    FCAlertView *alert = [[FCAlertView alloc] init];
+    [alert makeAlertTypeWarning];
+    
+    [alert showAlertInView:self
+                 withTitle:@"Warning"
+              withSubtitle:[NSString stringWithFormat:@"Are you sure you want to reject this passenger?"]
+           withCustomImage:nil
+       withDoneButtonTitle:@"Reject"
+                andButtons:nil];
+    [alert doneActionBlock:^{
+        NSLog(@"Reject Done");
+        [self.notificationDictionaryKeysArray removeObjectAtIndex:clickedButtonIndexPath.row];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:clickedButtonIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        //TODO: Delete this notification in the database
+        
+    }];
+    [alert addButton:@"No" withActionBlock:^{
+    }];
+}
+
 @end
