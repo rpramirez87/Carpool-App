@@ -25,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *startingAddressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *endingAddressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *requestButton;
+
 
 //Driver Information
 
@@ -203,8 +205,16 @@
 }
 
 - (void)loadAllPendingRequests {
+    
+    //Current User ID
+    NSString *currentUID = [FIRAuth auth].currentUser.uid;
+    
     [[[[[DataService ds] driverPostsReference] child:self.currentDriverPost.drivePostID] child:@"driverRequests"] observeEventType:FIRDataEventTypeValue
 withBlock:^(FIRDataSnapshot *snapshot) {
+    
+    
+ 
+    
     //Clear Array
     [self.drivePostRequestsArray removeAllObjects];
     
@@ -215,9 +225,17 @@ withBlock:^(FIRDataSnapshot *snapshot) {
         NSString *passengerKey = child.key;
         NSString *status = child.value;
         
+        
+        //Check if current user already requested - (disable button) (change name)
+        if ([passengerKey isEqualToString:currentUID]) {
+            NSLog(@"Request Button Disabled!");
+            self.requestButton.enabled = NO;
+            self.requestButton.hidden = YES;
+        }
+        
+        //Create a dictionary to save values and save to array
         NSDictionary *passengerDict = @{@"userKey" : passengerKey,
                                         @"requestStatus" : status};
-        
         NSLog(@"PassengerRequest - %@ with status - %@", passengerKey, passengerKey);
         [self.drivePostRequestsArray addObject:passengerDict];
     }

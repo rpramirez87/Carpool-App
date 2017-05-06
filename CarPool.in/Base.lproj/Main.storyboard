@@ -404,7 +404,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i38-NF-jrN">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i38-NF-jrN">
                                 <rect key="frame" x="16" y="607" width="343" height="40"/>
                                 <color key="backgroundColor" red="0.35686274509803922" green="0.74117647058823533" blue="0.43137254901960786" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
@@ -788,6 +788,7 @@
                         <outlet property="driverImageView" destination="Svj-j6-aEK" id="Y6D-IP-ecK"/>
                         <outlet property="driverNameLabel" destination="ZsB-on-8RK" id="S5K-TQ-ZMs"/>
                         <outlet property="endingAddressLabel" destination="a0p-Vo-M2N" id="grA-vh-gX3"/>
+                        <outlet property="requestButton" destination="i38-NF-jrN" id="h0h-jk-GPv"/>
                         <outlet property="requestsTableView" destination="Vos-eo-NGt" id="Ovq-6N-j12"/>
                         <outlet property="startingAddressLabel" destination="PUl-LR-iQ0" id="EWR-k7-aRa"/>
                         <outlet property="timeLabel" destination="Wg4-xG-Hrf" id="oY8-fO-T2T"/>
