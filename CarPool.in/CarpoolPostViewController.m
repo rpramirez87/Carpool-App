@@ -25,11 +25,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *startingAddressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *endingAddressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-@property (weak, nonatomic) IBOutlet UIButton *requestButton;
 
+//Buttons
+@property (weak, nonatomic) IBOutlet UIButton *requestButton;
+@property (weak, nonatomic) IBOutlet UIButton *messageButton;
 
 //Driver Information
-
 @property (strong, nonatomic) NSString *currentDriverName;
 @property (strong, nonatomic) NSString *currentDriverPushID;
 
@@ -211,10 +212,7 @@
     
     [[[[[DataService ds] driverPostsReference] child:self.currentDriverPost.drivePostID] child:@"driverRequests"] observeEventType:FIRDataEventTypeValue
 withBlock:^(FIRDataSnapshot *snapshot) {
-    
-    
- 
-    
+
     //Clear Array
     [self.drivePostRequestsArray removeAllObjects];
     
@@ -225,12 +223,19 @@ withBlock:^(FIRDataSnapshot *snapshot) {
         NSString *passengerKey = child.key;
         NSString *status = child.value;
         
-        
         //Check if current user already requested - (disable button) (change name)
         if ([passengerKey isEqualToString:currentUID]) {
             NSLog(@"Request Button Disabled!");
             self.requestButton.enabled = NO;
             self.requestButton.hidden = YES;
+            
+            //Check if my status is accepted
+            if ([status isEqualToString:@"Accepted"]) {
+                
+                //Unhide message button
+                self.messageButton.hidden = NO;
+                
+            }
         }
         
         //Create a dictionary to save values and save to array

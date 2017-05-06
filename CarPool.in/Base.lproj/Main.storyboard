@@ -664,7 +664,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XA2-7E-C0C">
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XA2-7E-C0C">
                                                 <rect key="frame" x="239.5" y="0.0" width="119.5" height="45.5"/>
                                                 <color key="backgroundColor" red="0.35773274300000002" green="0.74026042219999999" blue="0.4313978255" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <color key="tintColor" red="0.35686274509999999" green="0.74117647060000003" blue="0.43137254899999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -788,6 +788,7 @@
                         <outlet property="driverImageView" destination="Svj-j6-aEK" id="Y6D-IP-ecK"/>
                         <outlet property="driverNameLabel" destination="ZsB-on-8RK" id="S5K-TQ-ZMs"/>
                         <outlet property="endingAddressLabel" destination="a0p-Vo-M2N" id="grA-vh-gX3"/>
+                        <outlet property="messageButton" destination="XA2-7E-C0C" id="Dgr-y1-ggr"/>
                         <outlet property="requestButton" destination="i38-NF-jrN" id="h0h-jk-GPv"/>
                         <outlet property="requestsTableView" destination="Vos-eo-NGt" id="Ovq-6N-j12"/>
                         <outlet property="startingAddressLabel" destination="PUl-LR-iQ0" id="EWR-k7-aRa"/>
