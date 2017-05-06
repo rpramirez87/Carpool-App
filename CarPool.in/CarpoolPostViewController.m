@@ -14,6 +14,7 @@
 #import "FCAlertView.h"
 #import "RideLogViewController.h"
 #import "PassengerRequestCell.h"
+#import "CarpoolMessagesViewController.h"
 
 @interface CarpoolPostViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -78,6 +79,19 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - UIStoryboard
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString: @"goToCarpoolMessagesVC"]) {
+        CarpoolMessagesViewController *carpoolMessagesVC = [segue destinationViewController];
+        carpoolMessagesVC.currentDriverPost = self.currentDriverPost;
+    }
+    
+}
+
+
 
 #pragma mark - UITableView Delegate
 
@@ -154,6 +168,12 @@
         NSLog(@"Request Done");
     }];
 }
+
+
+- (IBAction)messageButtonPressed:(UIButton *)sender {
+    [self performSegueWithIdentifier:@"goToCarpoolMessagesVC" sender:nil];
+}
+
 
 #pragma mark - Firebase Request
 

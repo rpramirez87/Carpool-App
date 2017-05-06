@@ -33,6 +33,8 @@
 		D9F9D8991EBBCC3D00426B9F /* BorderedCircleImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F9D8981EBBCC3D00426B9F /* BorderedCircleImageView.m */; };
 		D9F9D89C1EBCD42800426B9F /* NotificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F9D89B1EBCD42800426B9F /* NotificationCell.m */; };
 		D9F9D89F1EBCF3C300426B9F /* PassengerRequestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F9D89E1EBCF3C300426B9F /* PassengerRequestCell.m */; };
+		D9F9D8A51EBE4BEE00426B9F /* CarpoolMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F9D8A41EBE4BEE00426B9F /* CarpoolMessagesViewController.m */; };
+		D9F9D8A81EBE613B00426B9F /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F9D8A71EBE613B00426B9F /* Message.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +88,10 @@
 		D9F9D89B1EBCD42800426B9F /* NotificationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationCell.m; sourceTree = "<group>"; };
 		D9F9D89D1EBCF3C300426B9F /* PassengerRequestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassengerRequestCell.h; sourceTree = "<group>"; };
 		D9F9D89E1EBCF3C300426B9F /* PassengerRequestCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassengerRequestCell.m; sourceTree = "<group>"; };
+		D9F9D8A31EBE4BEE00426B9F /* CarpoolMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarpoolMessagesViewController.h; sourceTree = "<group>"; };
+		D9F9D8A41EBE4BEE00426B9F /* CarpoolMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarpoolMessagesViewController.m; sourceTree = "<group>"; };
+		D9F9D8A61EBE613B00426B9F /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		D9F9D8A71EBE613B00426B9F /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		FEB60DCAA4804DE4E6235A6C /* libPods-CarPool.in.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CarPool.in.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -171,6 +177,8 @@
 				D92176EC1EB83BA0001249EE /* UserDestination.m */,
 				D922AA6A1EB63DED0004A1A7 /* DriverPost.h */,
 				D922AA6B1EB63DED0004A1A7 /* DriverPost.m */,
+				D9F9D8A61EBE613B00426B9F /* Message.h */,
+				D9F9D8A71EBE613B00426B9F /* Message.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -203,6 +211,8 @@
 				D98655331EBA7EF400C07EEE /* CarpoolPostViewController.m */,
 				D9F9D8941EBBC97400426B9F /* ProfileViewController.h */,
 				D9F9D8951EBBC97400426B9F /* ProfileViewController.m */,
+				D9F9D8A31EBE4BEE00426B9F /* CarpoolMessagesViewController.h */,
+				D9F9D8A41EBE4BEE00426B9F /* CarpoolMessagesViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -384,11 +394,13 @@
 				D95E97FD1EB559E6004F41EE /* DataService.m in Sources */,
 				D9BD7BA11EB7BCF90011591A /* RequestRideViewController.m in Sources */,
 				D920DB1D1EB268A60087EB95 /* AppDelegate.m in Sources */,
+				D9F9D8A81EBE613B00426B9F /* Message.m in Sources */,
 				D98655341EBA7EF400C07EEE /* CarpoolPostViewController.m in Sources */,
 				D920DB311EB2690B0087EB95 /* TitleViewController.m in Sources */,
 				D94341DB1EB4449700AF6336 /* CircleImageView.m in Sources */,
 				D920DB3B1EB288F90087EB95 /* SignUpViewController.m in Sources */,
 				D9F9D8961EBBC97400426B9F /* ProfileViewController.m in Sources */,
+				D9F9D8A51EBE4BEE00426B9F /* CarpoolMessagesViewController.m in Sources */,
 				D94341DE1EB5076700AF6336 /* PostRideViewController.m in Sources */,
 				D922AA6C1EB63DED0004A1A7 /* DriverPost.m in Sources */,
 				D9F02A481EB4352C007EB6EB /* MaterialView.m in Sources */,

@@ -672,7 +672,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="z2u-hr-gh5" kind="show" id="4oQ-Ts-W13"/>
+                                                    <action selector="messageButtonPressed:" destination="YKJ-CI-4cM" eventType="touchUpInside" id="gdE-KF-Ka6"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -793,16 +793,17 @@
                         <outlet property="requestsTableView" destination="Vos-eo-NGt" id="Ovq-6N-j12"/>
                         <outlet property="startingAddressLabel" destination="PUl-LR-iQ0" id="EWR-k7-aRa"/>
                         <outlet property="timeLabel" destination="Wg4-xG-Hrf" id="oY8-fO-T2T"/>
+                        <segue destination="z2u-hr-gh5" kind="show" identifier="goToCarpoolMessagesVC" id="O7n-MW-7aZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JDj-3Z-kwe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2980" y="2234.9325337331338"/>
         </scene>
-        <!--View Controller-->
+        <!--Carpool Messages View Controller-->
         <scene sceneID="mQp-Jm-3Jq">
             <objects>
-                <viewController id="z2u-hr-gh5" sceneMemberID="viewController">
+                <viewController id="z2u-hr-gh5" customClass="CarpoolMessagesViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZKU-xB-pfF"/>
                         <viewControllerLayoutGuide type="bottom" id="lDn-kQ-lYK"/>
@@ -815,7 +816,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VH7-Bk-4T5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3956" y="2223"/>
+            <point key="canvasLocation" x="3782" y="2235"/>
         </scene>
         <!--Select View Controller-->
         <scene sceneID="3fN-oY-sik">
