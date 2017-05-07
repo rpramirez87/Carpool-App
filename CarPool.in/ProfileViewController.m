@@ -90,7 +90,7 @@
     NSString *currentUID = [FIRAuth auth].currentUser.uid;
     // Load all loadAllNotifications from current user
     [[[[[DataService ds] publicUserReference] child: currentUID] child:@"pendingRequests" ]
-     observeEventType:FIRDataEventTypeValue
+     observeSingleEventOfType:FIRDataEventTypeValue
      withBlock:^(FIRDataSnapshot *snapshot) {
          //Clear Array
          [self.notificationDictionaryKeysArray removeAllObjects];
@@ -121,11 +121,11 @@
     //Add target-action for buttons
     cell.acceptButton.tag = indexPath.row;
     cell.rejectButton.tag = indexPath.row;
-
+    
     [cell.acceptButton addTarget:self action:@selector(notificationAccepted:) forControlEvents:UIControlEventTouchUpInside];
     [cell.rejectButton addTarget:self action:@selector(notificationRejected:) forControlEvents:UIControlEventTouchUpInside];
-
-
+    
+    
     return cell;
 }
 
@@ -133,7 +133,7 @@
     return self.notificationDictionaryKeysArray.count;
 }
 
-#pragma mark - Target Actions 
+#pragma mark - Target Actions
 
 - (void) notificationAccepted:(UIButton *)acceptButton{
     CGPoint touchPoint = [acceptButton convertPoint:CGPointZero toView:self.tableView];
@@ -142,28 +142,55 @@
     
     NSString *currentDictionaryKey = self.notificationDictionaryKeysArray[clickedButtonIndexPath.row];
     
-    [[[[DataService ds] notificationsReference] child:currentDictionaryKey] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
-        if ([snapshot exists]) {
-            NSString *drivePostID = snapshot.value[@"drivePostID"];
-            NSString *senderkey = snapshot.value[@"senderKey"];
-            
-            //Change value to true
-            [[[[[[DataService ds] driverPostsReference] child: drivePostID] child: @"driverRequests"] child:senderkey] setValue: @"Accepted"];
-            
-            //Remove notification from tableview/database
-            
-            [[[[DataService ds] driverPostsReference] child:drivePostID] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
-                        if ([snapshot exists]) {
-                            NSDictionary *drivePostDict = snapshot.value;
-                            DriverPost *currentDrivePost = [[DriverPost alloc] initWithDict:drivePostDict andKey:snapshot.key];
-                            
-                            //Show current drive post accepted
-                            CarpoolPostViewController *carpoolPostVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CarpoolPostVC"];
-                            carpoolPostVC.currentDriverPost = currentDrivePost;
-                            [self.navigationController pushViewController:carpoolPostVC animated:YES];
-                        }
+    //Create an alert
+    FCAlertView *alert = [[FCAlertView alloc] init];
+    [alert makeAlertTypeSuccess];
+    
+    [alert showAlertInView:self
+                 withTitle:@"Notice"
+              withSubtitle:[NSString stringWithFormat:@"Are you sure you want to accept this passenger?"]
+           withCustomImage:nil
+       withDoneButtonTitle:@"Accept"
+                andButtons:nil];
+    [alert doneActionBlock:^{
+        NSLog(@"Accept Done");
+        [self.notificationDictionaryKeysArray removeObjectAtIndex:clickedButtonIndexPath.row];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:clickedButtonIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        NSString *currentUID = [FIRAuth auth].currentUser.uid;
+        
+        [[[[DataService ds] notificationsReference] child:currentDictionaryKey] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+            if ([snapshot exists]) {
+                NSString *drivePostID = snapshot.value[@"drivePostID"];
+                NSString *senderkey = snapshot.value[@"senderKey"];
+                
+                //Change value to true
+                [[[[[[DataService ds] driverPostsReference] child: drivePostID] child: @"driverRequests"] child:senderkey] setValue: @"Accepted"];
+                
+                //Segue to Carpool VC
+                [[[[DataService ds] driverPostsReference] child:drivePostID] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+                    if ([snapshot exists]) {
+                        NSDictionary *drivePostDict = snapshot.value;
+                        DriverPost *currentDrivePost = [[DriverPost alloc] initWithDict:drivePostDict andKey:snapshot.key];
+                        
+                        //Show current drive post accepted
+                        CarpoolPostViewController *carpoolPostVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CarpoolPostVC"];
+                        carpoolPostVC.currentDriverPost = currentDrivePost;
+                        
+                        //Delete this notification in the database
+                        [[[[DataService ds] notificationsReference] child:currentDictionaryKey] removeValue];
+                        
+                        //Delete notifications from public user
+                        [[[[[[DataService ds] publicUserReference] child:currentUID] child:@"pendingRequests"] child:currentDictionaryKey] removeValue];
+                        
+                        [self.navigationController pushViewController:carpoolPostVC animated:YES];
+                    }
                 }];
-        }
+            }
+        }];
+    }];
+    [alert addButton:@"No" withActionBlock:^{
+        
     }];
 }
 
@@ -171,7 +198,7 @@
     CGPoint touchPoint = [rejectButton convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *clickedButtonIndexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
     NSLog(@"Reject Button - NSIndex Path Row %ld", (long) clickedButtonIndexPath.row );
-    
+    NSString *currentDictionaryKey = self.notificationDictionaryKeysArray[clickedButtonIndexPath.row];
     //Create Alert View to warn user
     
     //Create an alert
@@ -189,7 +216,18 @@
         [self.notificationDictionaryKeysArray removeObjectAtIndex:clickedButtonIndexPath.row];
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:clickedButtonIndexPath] withRowAnimation:UITableViewRowAnimationFade];
         
-        //TODO: Delete this notification in the database
+        NSString *currentUID = [FIRAuth auth].currentUser.uid;
+        
+        NSLog(@"%@ - Dictionary Key", currentDictionaryKey);
+        //Delete this notification in the database
+        [[[[DataService ds] notificationsReference] child:currentDictionaryKey] removeValue];
+        
+        //Delete notifications from public user
+        [[[[[[DataService ds] publicUserReference] child:currentUID] child:@"pendingRequests"] child:currentDictionaryKey] removeValue];
+        
+        //TODO: Set child to rejected
+        
+        
     }];
     [alert addButton:@"No" withActionBlock:^{
     }];
