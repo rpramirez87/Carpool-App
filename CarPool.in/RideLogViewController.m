@@ -45,6 +45,8 @@
     
     //Initialize Badge View
     // TODO: Add JSBadgeView
+    
+    self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -82,7 +84,6 @@
 
 - (IBAction)profileButtonPressed:(UIBarButtonItem *)sender {
     ProfileViewController *profileVC = [self.storyboard instantiateViewControllerWithIdentifier:@"profileVC"];
-    //[self presentViewController:profileVC animated:YES completion:nil];
     [self.navigationController pushViewController:profileVC animated:YES];
 }
 

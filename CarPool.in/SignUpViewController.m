@@ -350,10 +350,11 @@ didDisconnectWithUser:(GIDGoogleUser *)user
                                                                                   [[[[DataService ds] userReference]child:user.uid] updateChildValues:userDict];
                                                                                   
                                                                                   //Load up Main VC
-                                                                                  //                                                                                  RideLogViewController *rideLogVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RideLogVC"];
-                                                                                  //                                                                                  [self presentViewController:rideLogVC animated:YES completion:nil];
+                                                                                RideLogViewController *rideLogVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RideLogVC"];
+                                                                                  [self.navigationController pushViewController:rideLogVC animated:YES];
                                                                                   
-                                                                                  [self performSegueWithIdentifier:@"showRiderLogVC" sender:nil];
+                                                                                  
+                                                                                
                                                                                   
                                                                               }];
                                       }
@@ -378,11 +379,9 @@ didDisconnectWithUser:(GIDGoogleUser *)user
                                   //[self keychainSaveWithUID:user.uid];
                                   
                                   //Load up Main View Controller
-                                  //RideLogViewController *rideLogVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RideLogVC"];
+                                  RideLogViewController *rideLogVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RideLogVC"];
+                                  [self.navigationController pushViewController:rideLogVC animated:YES];
                                   
-                                  //[self presentViewController:rideLogVC animated:YES completion:nil];
-                                  
-                                  [self performSegueWithIdentifier:@"showRiderLogVC" sender:nil];
                               }];
 }
 @end

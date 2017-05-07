@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "ProfileViewController.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 @import UserNotifications;
 
@@ -146,10 +147,14 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     // Print full message.
     NSLog(@"Full Message%@", userInfo);
     
+    
     //Extract the rideInfo key from userInfo, Display the appropriate VC with information based on the rideInfo key
-    //[self.window.rootViewController presentViewController:dummyVC animated:YES completion:nil];
+    UINavigationController *rootViewController = (UINavigationController *)self.window.rootViewController;
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ProfileViewController *profileVC = [storyboard instantiateViewControllerWithIdentifier:@"profileVC"];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:profileVC];
+    [rootViewController.visibleViewController presentViewController:navigationController animated:YES completion:nil];
 }
-
 
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
     NSLog(@"Remote Notification Error %@", error.localizedDescription);
@@ -186,9 +191,6 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     
     // TODO: If necessary send token to application server.
 }
-
-
-
 
 #pragma mark - Firebase Messaging Delegate Functions
 - (void)applicationReceivedRemoteMessage:(nonnull FIRMessagingRemoteMessage *)remoteMessage {

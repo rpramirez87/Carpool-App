@@ -147,7 +147,6 @@
 
 #pragma mark - IBAction
 - (IBAction)backButtonPressed:(UIButton *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

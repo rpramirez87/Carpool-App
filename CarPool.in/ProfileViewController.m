@@ -12,6 +12,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "NotificationCell.h"
 #import "FCAlertView.h"
+#import "RideLogViewController.h"
 #import "CarpoolPostViewController.h"
 
 @interface ProfileViewController () <UITableViewDelegate, UITableViewDataSource, FCAlertViewDelegate>
@@ -21,7 +22,6 @@
 
 //Array of notifications
 @property (strong, nonatomic) NSMutableArray *notificationDictionaryKeysArray;
-
 @end
 
 @implementation ProfileViewController
@@ -55,7 +55,14 @@
 #pragma mark - IBActions
 
 - (IBAction)profileButtonPressed:(UIButton *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+//    self.navigationController.navigationBar.hidden = NO;
+//    [self.navigationController popViewControllerAnimated:YES];
+    
+    
+    //Only for remote notifications
+    RideLogViewController *rideLogVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RideLogVC"];
+    self.navigationController.navigationBar.hidden = NO;
+    [self.navigationController pushViewController:rideLogVC animated:YES];
 }
 
 #pragma mark - Firebase
@@ -124,8 +131,6 @@
     
     [cell.acceptButton addTarget:self action:@selector(notificationAccepted:) forControlEvents:UIControlEventTouchUpInside];
     [cell.rejectButton addTarget:self action:@selector(notificationRejected:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
     return cell;
 }
 
@@ -175,7 +180,8 @@
                         
                         //Show current drive post accepted
                         CarpoolPostViewController *carpoolPostVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CarpoolPostVC"];
-                        carpoolPostVC.currentDriverPost = currentDrivePost;                        
+                        carpoolPostVC.currentDriverPost = currentDrivePost;
+                        self.navigationController.navigationBarHidden = YES;
                         [self.navigationController pushViewController:carpoolPostVC animated:YES];
                         
                         
@@ -184,7 +190,6 @@
                         
                         //Delete notifications from public user
                         [[[[[[DataService ds] publicUserReference] child:currentUID] child:@"pendingRequests"] child:currentDictionaryKey] removeValue];
-                        
                     }
                 }];
             }

@@ -71,7 +71,8 @@
 
 - (IBAction)homeButtonPressed:(UIButton *)sender {
     RideLogViewController *rideLogVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RideLogVC"];
-    [self presentViewController:rideLogVC animated:YES completion:nil];
+    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController pushViewController:rideLogVC animated:YES];;
 }
 
 #pragma mark - Table View Delegate Functions
@@ -242,7 +243,6 @@
         [self.carpoolPostsArray removeObjectAtIndex:clickedButtonIndexPath.row];
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:clickedButtonIndexPath] withRowAnimation:UITableViewRowAnimationFade];
     }];
-    
     
     // TODO: Send a push notification to passenger
     
