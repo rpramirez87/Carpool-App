@@ -175,7 +175,9 @@
                         
                         //Show current drive post accepted
                         CarpoolPostViewController *carpoolPostVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CarpoolPostVC"];
-                        carpoolPostVC.currentDriverPost = currentDrivePost;
+                        carpoolPostVC.currentDriverPost = currentDrivePost;                        
+                        [self.navigationController pushViewController:carpoolPostVC animated:YES];
+                        
                         
                         //Delete this notification in the database
                         [[[[DataService ds] notificationsReference] child:currentDictionaryKey] removeValue];
@@ -183,7 +185,6 @@
                         //Delete notifications from public user
                         [[[[[[DataService ds] publicUserReference] child:currentUID] child:@"pendingRequests"] child:currentDictionaryKey] removeValue];
                         
-                        [self.navigationController pushViewController:carpoolPostVC animated:YES];
                     }
                 }];
             }

@@ -73,6 +73,7 @@
     
     NSLog(@"View will appear");
     self.navigationController.navigationBarHidden = NO;
+    [self loadAllPendingRequests];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -226,8 +227,6 @@
 
 - (void)loadAllPendingRequests {
     
-   
-    
     //Current User ID
     NSString *currentUID = [FIRAuth auth].currentUser.uid;
     
@@ -255,28 +254,47 @@ withBlock:^(FIRDataSnapshot *snapshot) {
             //Check if my status is accepted
             if ([status isEqualToString:@"Accepted"]) {
                 
+                //If current user is the passenger and is accepted
                 //Unhide message button
                 self.messageButton.hidden = NO;
-                
-                //Someone is accepted change boolean
-                isAccepted = YES;
             }
+        }
+        //Check if anyone's status is accepted for the driver
+        if ([status isEqualToString:@"Accepted"]) {
+              isAccepted = YES;
         }
         
         //Create a dictionary to save values and save to array
         NSDictionary *passengerDict = @{@"userKey" : passengerKey,
                                         @"requestStatus" : status};
-        NSLog(@"PassengerRequest - %@ with status - %@", passengerKey, passengerKey);
+        NSLog(@"PassengerRequest - %@ with status - %@", passengerKey, status);
         [self.drivePostRequestsArray addObject:passengerDict];
     }
     
-    // Allow messages if current user is the driver and someone have been accepted to carpool
-    if (isAccepted && [self.currentDriverPost.ownerKey isEqualToString:currentUID]) {
-        
-        //Allow message button
-        self.messageButton.hidden = NO;
-    }
+    //Current User ID
+    NSString *currentUID = [FIRAuth auth].currentUser.uid;
     
+    // Allow messages if current user is the driver and someone have been accepted to carpool
+    if ([self.currentDriverPost.ownerKey isEqualToString:currentUID]) {
+        
+        //Hide request button if current user is the driver.
+        self.requestButton.hidden = YES;
+        
+        if (isAccepted) {
+            //Allow message button if someone is accepted and if current user is the driver
+            NSLog(@"Driver Messages PASSED!!!");
+            self.messageButton.hidden = NO;
+        }else {
+            NSLog(@"No one is accepted");
+            
+        }
+    }else {
+        NSLog(@"Boolean - %d", isAccepted);
+        NSLog(@"Boolean - %d", isAccepted);
+        NSLog(@"Current Owner Key - %@", self.currentDriverPost.ownerKey);
+        NSLog(@"Current UID - %@", currentUID);
+        NSLog(@"Boolean Failed");
+    }
     NSLog(@"Array Count %lu", (unsigned long)[self.drivePostRequestsArray count]);
     [self.requestsTableView reloadData];
 }];

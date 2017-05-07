@@ -201,7 +201,7 @@
     }
 }
 
--(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{    
+-(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
     static NSString *identifer = @"MKMapView";
     if ([annotation isKindOfClass:[MKPointAnnotation class]]) {
         
@@ -219,13 +219,13 @@
     }
     return nil;
 }
-#pragma mark - Push Notifications 
+#pragma mark - Push Notifications
 - (void)sendRequest:(UIButton *)button {
     NSLog(@"Send Request");
     CGPoint touchPoint = [button convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *clickedButtonIndexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
     NSLog(@"NSIndex Path Row %ld", (long) clickedButtonIndexPath.row );
-
+    
     //Create an alert
     FCAlertView *alert = [[FCAlertView alloc] init];
     [alert makeAlertTypeSuccess];
