@@ -82,7 +82,8 @@
 
 - (IBAction)profileButtonPressed:(UIBarButtonItem *)sender {
     ProfileViewController *profileVC = [self.storyboard instantiateViewControllerWithIdentifier:@"profileVC"];
-    [self presentViewController:profileVC animated:YES completion:nil];
+    //[self presentViewController:profileVC animated:YES completion:nil];
+    [self.navigationController pushViewController:profileVC animated:YES];
 }
 
 

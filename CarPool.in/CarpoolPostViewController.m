@@ -88,7 +88,6 @@
         CarpoolMessagesViewController *carpoolMessagesVC = [segue destinationViewController];
         carpoolMessagesVC.currentDriverPost = self.currentDriverPost;
     }
-    
 }
 
 
@@ -227,12 +226,16 @@
 
 - (void)loadAllPendingRequests {
     
+   
+    
     //Current User ID
     NSString *currentUID = [FIRAuth auth].currentUser.uid;
     
     [[[[[DataService ds] driverPostsReference] child:self.currentDriverPost.drivePostID] child:@"driverRequests"] observeEventType:FIRDataEventTypeValue
 withBlock:^(FIRDataSnapshot *snapshot) {
 
+     BOOL isAccepted = NO;
+    
     //Clear Array
     [self.drivePostRequestsArray removeAllObjects];
     
@@ -255,6 +258,8 @@ withBlock:^(FIRDataSnapshot *snapshot) {
                 //Unhide message button
                 self.messageButton.hidden = NO;
                 
+                //Someone is accepted change boolean
+                isAccepted = YES;
             }
         }
         
@@ -264,6 +269,14 @@ withBlock:^(FIRDataSnapshot *snapshot) {
         NSLog(@"PassengerRequest - %@ with status - %@", passengerKey, passengerKey);
         [self.drivePostRequestsArray addObject:passengerDict];
     }
+    
+    // Allow messages if current user is the driver and someone have been accepted to carpool
+    if (isAccepted && [self.currentDriverPost.ownerKey isEqualToString:currentUID]) {
+        
+        //Allow message button
+        self.messageButton.hidden = NO;
+    }
+    
     NSLog(@"Array Count %lu", (unsigned long)[self.drivePostRequestsArray count]);
     [self.requestsTableView reloadData];
 }];

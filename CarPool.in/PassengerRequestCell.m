@@ -25,8 +25,7 @@
 
 - (void)configureCellWithUserKey:(NSString *)userKey andRequestStatus:(NSString *)status {
     
-    NSString *currentUID = [FIRAuth auth].currentUser.uid;
-    [[[[DataService ds] publicUserReference] child:currentUID] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+    [[[[DataService ds] publicUserReference] child:userKey] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
         NSLog(@"Current User Image");
         if ([snapshot exists]) {
             NSString *firebaseImageURL = snapshot.value[@"image"];

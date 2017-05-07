@@ -55,7 +55,7 @@
 #pragma mark - IBActions
 
 - (IBAction)profileButtonPressed:(UIButton *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Firebase
@@ -145,15 +145,24 @@
     [[[[DataService ds] notificationsReference] child:currentDictionaryKey] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
         if ([snapshot exists]) {
             NSString *drivePostID = snapshot.value[@"drivePostID"];
-            
-           
             NSString *senderkey = snapshot.value[@"senderKey"];
             
+            //Change value to true
             [[[[[[DataService ds] driverPostsReference] child: drivePostID] child: @"driverRequests"] child:senderkey] setValue: @"Accepted"];
             
-            //Remove notification from tableview
+            //Remove notification from tableview/database
             
-            
+            [[[[DataService ds] driverPostsReference] child:drivePostID] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+                        if ([snapshot exists]) {
+                            NSDictionary *drivePostDict = snapshot.value;
+                            DriverPost *currentDrivePost = [[DriverPost alloc] initWithDict:drivePostDict andKey:snapshot.key];
+                            
+                            //Show current drive post accepted
+                            CarpoolPostViewController *carpoolPostVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CarpoolPostVC"];
+                            carpoolPostVC.currentDriverPost = currentDrivePost;
+                            [self.navigationController pushViewController:carpoolPostVC animated:YES];
+                        }
+                }];
         }
     }];
 }
@@ -181,7 +190,6 @@
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:clickedButtonIndexPath] withRowAnimation:UITableViewRowAnimationFade];
         
         //TODO: Delete this notification in the database
-        
     }];
     [alert addButton:@"No" withActionBlock:^{
     }];
