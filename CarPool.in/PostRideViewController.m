@@ -124,7 +124,6 @@
     
     NSString *driverPostID = driverRef.key;
     
-    
     //SAVE TO DRIVERS POSTS
     
     //Date formatter with current date

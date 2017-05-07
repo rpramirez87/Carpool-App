@@ -152,7 +152,7 @@
             NSLog(@"Driver Post - Post Key %@ - %@",key, driverPostDictionary);
             DriverPost *driverPost = [[[DriverPost alloc] init] initWithDict:driverPostDictionary andKey:snapshot.key];
             
-            if (![driverPost.ownerKey isEqualToString:currentUID]) {
+            //if (![driverPost.ownerKey isEqualToString:currentUID]) {
                 if (self.isSelectingRiders) {
                     //Add all the riders to array
                     if ([driverPost.isDriver isEqualToString:@"NO"]) {
@@ -164,7 +164,7 @@
                         [self.carpoolPostsArray addObject:driverPost];
                     }
                 }
-            }
+            //}
             [self.tableView reloadData];
             [self reloadLocations];
         }];

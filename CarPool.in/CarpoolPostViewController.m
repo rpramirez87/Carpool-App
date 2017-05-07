@@ -152,6 +152,9 @@
     //Create a pending request inside the drive post key
     [[[[[[DataService ds] driverPostsReference] child:self.currentDriverPost.drivePostID] child:@"driverRequests"] child:currentUID] setValue:@"Requested"];
     
+    //Add to current drive post
+    [[[[[[DataService ds] publicUserReference] child:currentUID] child: @"driverPosts"] child:self.currentDriverPost.drivePostID] setValue:@YES];
+    
     //Alert User
     //Create an alert
     FCAlertView *alert = [[FCAlertView alloc] init];
@@ -278,7 +281,7 @@ withBlock:^(FIRDataSnapshot *snapshot) {
     if ([self.currentDriverPost.ownerKey isEqualToString:currentUID]) {
         
         //Hide request button if current user is the driver.
-        self.requestButton.hidden = YES;
+        //self.requestButton.hidden = YES;
         
         if (isAccepted) {
             //Allow message button if someone is accepted and if current user is the driver
@@ -286,7 +289,6 @@ withBlock:^(FIRDataSnapshot *snapshot) {
             self.messageButton.hidden = NO;
         }else {
             NSLog(@"No one is accepted");
-            
         }
     }else {
         NSLog(@"Boolean - %d", isAccepted);
