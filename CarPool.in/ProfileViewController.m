@@ -30,6 +30,7 @@
 //Buttons
 @property (weak, nonatomic) IBOutlet UIButton *notificationButton;
 @property (weak, nonatomic) IBOutlet UIButton *carpoolPostsButton;
+
 @end
 
 @implementation ProfileViewController
@@ -157,7 +158,7 @@
     
     // Load all loadAllNotifications from current user
     [[[[[DataService ds] publicUserReference] child: currentUID] child:@"pendingRequests" ]
-     observeSingleEventOfType:FIRDataEventTypeValue
+     observeEventType:FIRDataEventTypeValue
      withBlock:^(FIRDataSnapshot *snapshot) {
          //Clear Array
          [self.notificationDictionaryKeysArray removeAllObjects];
@@ -197,7 +198,7 @@
              
              // Load all loadAllNotifications from current user
              [[[[DataService ds] driverPostsReference] child: drivePostKey]
-              observeEventType:FIRDataEventTypeValue
+              observeSingleEventOfType:FIRDataEventTypeValue
               withBlock:^(FIRDataSnapshot *snapshot) {
                   if ([snapshot exists]) {
                       NSDictionary *driverPostDictionary = snapshot.value;

@@ -30,6 +30,7 @@
 //Buttons
 @property (weak, nonatomic) IBOutlet UIButton *requestButton;
 @property (weak, nonatomic) IBOutlet UIButton *messageButton;
+@property (weak, nonatomic) IBOutlet UIButton *endTripButton;
 
 //Driver Information
 @property (strong, nonatomic) NSString *currentDriverName;
@@ -37,7 +38,6 @@
 
 //Passenger Information
 @property (strong, nonatomic) NSString *currentPassengerName;
-
 
 //Current Requests
 @property (weak, nonatomic) IBOutlet UITableView *requestsTableView;
@@ -114,6 +114,99 @@
 }
 
 #pragma mark - IBAction
+- (IBAction)endTripButtonPressed:(UIButton *)sender {
+    
+    NSString *currentDriverUID = [FIRAuth auth].currentUser.uid;
+    NSLog(@"Current Driver UID - %@", currentDriverUID);
+   
+    
+    NSLog(@"Passenger Array - %@", self.drivePostRequestsArray);
+    
+    //Send notifications to accepted passengers
+    for (NSDictionary *requestDict in self.drivePostRequestsArray) {
+        NSString *passengerKey = [requestDict valueForKey:@"userKey"];
+        NSString *passengerStatus = [requestDict valueForKey:@"requestStatus"];
+        
+        if ([passengerStatus isEqualToString:@"Accepted"]) {
+            NSLog(@"Send notification to this passenger");
+            NSLog(@"Passenger Key - %@", passengerKey);
+            
+            [[[[DataService ds] publicUserReference] child:passengerKey] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+                
+                if ([snapshot exists]) {
+                    NSString *currentUserName = snapshot.value[@"name"];
+                    NSString *pushID = snapshot.value[@"pushMessageID"];
+                    if (currentUserName != nil && pushID != nil) {
+                        NSLog(@"Passenger name - %@", currentUserName);
+                        
+                        //Send to myself
+                        NSDictionary *notificationToDriverDict = @{
+                                                                   @"senderKey": passengerKey,
+                                                                   @"message" : [NSString stringWithFormat:@"Please rate your carpool experience with %@", currentUserName],
+                                                                   @"isRateNotification" : @"YES"
+                                                                   };
+                        //Save notification to drivers pending notifications
+                        FIRDatabaseReference *notificationToDriverRef = [[[[[DataService ds] publicUserReference] child:self.currentDriverPost.ownerKey] child: @"pendingRequests"] childByAutoId] ;
+                        
+                        //Update values in public user dict
+                        [notificationToDriverRef setValue:@YES];
+                        NSString *notificationKey = notificationToDriverRef.key;
+                        
+                        //Add notification to notifications child
+                        [[[[DataService ds] notificationsReference] child: notificationKey] updateChildValues:notificationToDriverDict];
+                        
+                        
+                        //-------------------------------------------------------------------------------------
+                        
+                        //Send to passenger
+                        NSDictionary *notificationToPassengerDict = @{
+                                                                   @"senderKey": self.currentDriverPost.ownerKey,
+                                                                   @"message" : [NSString stringWithFormat:@"Please rate your carpool experience with your driver %@", self.currentDriverName],
+                                                                   @"isRateNotification" : @"YES"
+                                                                   };
+                        
+                        NSLog(@"Passenger Key - %@", passengerKey);
+                        
+                        //Save notification to drivers pending notifications
+                        FIRDatabaseReference *notificationToPassengerRef = [[[[[DataService ds] publicUserReference] child:passengerKey] child: @"pendingRequests"] childByAutoId] ;
+                        
+                        //Update values in public user dict
+                        [notificationToPassengerRef setValue:@YES];
+                        notificationKey = notificationToPassengerRef.key;
+                        
+                        //Add notification to notifications child
+                        [[[[DataService ds] notificationsReference] child: notificationKey] updateChildValues:notificationToPassengerDict];
+                        
+                        
+                        //Send a push notification about rating
+                        NSDictionary *pushNotificationDict = @{
+                                                               @"username": pushID,
+                                                               @"message" : [NSString stringWithFormat:@"Please rate your carpool experience with your driver %@", self.currentDriverName],
+                                                               @"rideinfo" : self.currentDriverPost.drivePostID
+                                                               };
+                        //Send a notification using nodeJS
+                        [[[[DataService ds] pushNotificationsReference] childByAutoId] updateChildValues:pushNotificationDict];
+                    }
+                }
+            }];
+     
+            
+            
+        }
+    }
+    
+
+    
+    //Send to myself to rate passengers
+    
+    
+    
+    
+    
+    
+    
+    
+}
 
 - (IBAction)RequestButtonPressed:(id)sender {
     
@@ -152,7 +245,7 @@
     //Create a pending request inside the drive post key
     [[[[[[DataService ds] driverPostsReference] child:self.currentDriverPost.drivePostID] child:@"driverRequests"] child:currentUID] setValue:@"Requested"];
     
-    //Add to current drive post
+    //Add to current drive post as requested
     [[[[[[DataService ds] publicUserReference] child:currentUID] child: @"driverPosts"] child:self.currentDriverPost.drivePostID] setValue:@YES];
     
     //Alert User
@@ -211,12 +304,26 @@
                                         placeholderImage:[UIImage imageNamed:@"userCircle.png"]
                                                  options:SDWebImageRefreshCached];
             }
+            
             //Access user name
             NSString *currentDriverName = snapshot.value[@"name"];
             if (currentDriverName != nil) {
                 self.driverNameLabel.text = currentDriverName;
                 self.currentDriverName = currentDriverName;
             }
+            
+            //Access car model
+            NSString *currentDriverCarModel = snapshot.value[@"carModel"];
+            if (currentDriverCarModel != nil) {
+                self.carModelLabel.text = currentDriverCarModel;
+            }
+            
+            //Access car color
+            NSString *currentDriverCarColor = snapshot.value[@"carColor"];
+            if (currentDriverCarColor != nil) {
+                self.carColorLabel.text = currentDriverCarColor;
+            }
+            
             
             NSString *pushID = snapshot.value[@"pushMessageID"];
             if (pushID != nil) {
@@ -281,7 +388,8 @@ withBlock:^(FIRDataSnapshot *snapshot) {
     if ([self.currentDriverPost.ownerKey isEqualToString:currentUID]) {
         
         //Hide request button if current user is the driver.
-        //self.requestButton.hidden = YES;
+        self.requestButton.hidden = YES;
+        self.endTripButton.hidden = NO;
         
         if (isAccepted) {
             //Allow message button if someone is accepted and if current user is the driver

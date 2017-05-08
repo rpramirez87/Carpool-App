@@ -12,12 +12,13 @@
 
 @interface NotificationCell : UITableViewCell
 
-
+@property (weak, nonatomic) IBOutlet UILabel *notificationTitleLabel;
 @property (weak, nonatomic) IBOutlet CircleImageView *notificationSenderImageView;
 @property (weak, nonatomic) IBOutlet UILabel *notificationMessageLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *acceptButton;
 @property (weak, nonatomic) IBOutlet UIButton *rejectButton;
+@property (weak, nonatomic) IBOutlet UIButton *rateButton;
 
 - (void)configureCellWithNotificationKey:(NSString *)key;
 

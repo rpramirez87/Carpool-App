@@ -226,7 +226,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="D7k-oB-w4N">
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="32.5"/>
                                                         <subviews>
-                                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1935 Wessel Ct" placeholder="START" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fnU-ii-gK1">
+                                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="START" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fnU-ii-gK1">
                                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="31.5"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -245,7 +245,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="icc-SQ-XYQ">
                                                 <rect key="frame" x="0.0" y="107" width="300" height="32.5"/>
                                                 <subviews>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="3809 Illinois Ave. Suite 100" placeholder="END" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KM6-Ej-x7a">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="END" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KM6-Ej-x7a">
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="31.5"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -272,7 +272,10 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="31.5"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="FBf-9P-lIL" id="ZJz-7L-CQc"/>
+                                                        </connections>
                                                     </textField>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="input line" translatesAutoresizingMaskIntoConstraints="NO" id="TOQ-rn-rcj">
                                                         <rect key="frame" x="0.0" y="31.5" width="300" height="1"/>
@@ -286,7 +289,10 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="31.5"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="FBf-9P-lIL" id="Bis-Rb-mw1"/>
+                                                        </connections>
                                                     </textField>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="input line" translatesAutoresizingMaskIntoConstraints="NO" id="blr-gc-E6e">
                                                         <rect key="frame" x="0.0" y="31.5" width="300" height="1"/>
@@ -404,6 +410,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JD3-3D-Qym" userLabel="End Trip Button">
+                                <rect key="frame" x="16" y="607" width="343" height="40"/>
+                                <color key="backgroundColor" red="0.73003472219999999" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="wZ5-7y-BYf"/>
+                                </constraints>
+                                <state key="normal" title="End Trip">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="endTripButtonPressed:" destination="YKJ-CI-4cM" eventType="touchUpInside" id="i2f-wG-0eF"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i38-NF-jrN">
                                 <rect key="frame" x="16" y="607" width="343" height="40"/>
                                 <color key="backgroundColor" red="0.35686274509803922" green="0.74117647058823533" blue="0.43137254901960786" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -712,7 +731,7 @@
                                                                         <constraint firstAttribute="width" secondItem="g8o-pM-cRC" secondAttribute="height" multiplier="1:1" id="0jI-wf-tFC"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Eric lu sent a request to ride with this driver." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XXB-5V-NX1">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Eric lu sent a request to ride with this driver." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="XXB-5V-NX1">
                                                                     <rect key="frame" x="91" y="8" width="164" height="67"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                     <nil key="textColor"/>
@@ -774,7 +793,11 @@
                             <constraint firstItem="i38-NF-jrN" firstAttribute="leading" secondItem="Nsc-03-Vvx" secondAttribute="leadingMargin" id="Daf-sk-6dJ"/>
                             <constraint firstAttribute="trailing" secondItem="Ijg-WV-y6F" secondAttribute="trailing" id="Dtb-C6-toT"/>
                             <constraint firstItem="JiH-aj-wwh" firstAttribute="top" secondItem="i38-NF-jrN" secondAttribute="bottom" constant="20" id="JrF-bx-g7T"/>
+                            <constraint firstItem="JD3-3D-Qym" firstAttribute="centerX" secondItem="i38-NF-jrN" secondAttribute="centerX" id="YNO-Ln-Wq0"/>
+                            <constraint firstItem="JD3-3D-Qym" firstAttribute="height" secondItem="i38-NF-jrN" secondAttribute="height" id="aMl-oa-FFH"/>
                             <constraint firstItem="i38-NF-jrN" firstAttribute="top" secondItem="P1r-BM-M2a" secondAttribute="bottom" constant="16" id="eCv-hT-45L"/>
+                            <constraint firstItem="JD3-3D-Qym" firstAttribute="centerY" secondItem="i38-NF-jrN" secondAttribute="centerY" id="ewp-Do-Msb"/>
+                            <constraint firstItem="JD3-3D-Qym" firstAttribute="width" secondItem="i38-NF-jrN" secondAttribute="width" id="f1y-vB-qqo"/>
                             <constraint firstItem="P1r-BM-M2a" firstAttribute="top" secondItem="Ijg-WV-y6F" secondAttribute="bottom" constant="8" id="pfp-h8-o2U"/>
                             <constraint firstItem="P1r-BM-M2a" firstAttribute="leading" secondItem="Nsc-03-Vvx" secondAttribute="leading" constant="8" id="t4Y-S5-3bJ"/>
                             <constraint firstItem="Ijg-WV-y6F" firstAttribute="leading" secondItem="Nsc-03-Vvx" secondAttribute="leading" id="umo-Ep-8mi"/>
@@ -786,6 +809,7 @@
                         <outlet property="carModelLabel" destination="o4s-Uy-P3U" id="X9G-ch-y2K"/>
                         <outlet property="driverImageView" destination="Svj-j6-aEK" id="Y6D-IP-ecK"/>
                         <outlet property="driverNameLabel" destination="ZsB-on-8RK" id="S5K-TQ-ZMs"/>
+                        <outlet property="endTripButton" destination="JD3-3D-Qym" id="Km0-a8-5eq"/>
                         <outlet property="endingAddressLabel" destination="a0p-Vo-M2N" id="grA-vh-gX3"/>
                         <outlet property="messageButton" destination="XA2-7E-C0C" id="Dgr-y1-ggr"/>
                         <outlet property="requestButton" destination="i38-NF-jrN" id="h0h-jk-GPv"/>
@@ -1254,7 +1278,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7Iu-BC-ui2">
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="59"/>
                                                         <subviews>
-                                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1935 Wessel Ct" placeholder="START" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pi7-hu-v6K">
+                                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="START" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pi7-hu-v6K">
                                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="58"/>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -1270,7 +1294,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="sD3-50-8oI">
                                                 <rect key="frame" x="0.0" y="160.5" width="300" height="59.5"/>
                                                 <subviews>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="3809 Illinois Ave. Suite 100" placeholder="END" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jsp-Yi-C2U">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="END" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jsp-Yi-C2U">
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="58.5"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -1436,7 +1460,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Azj-5g-Y6P">
-                                                    <rect key="frame" x="287" y="32.5" width="80" height="35"/>
+                                                    <rect key="frame" x="242" y="32.5" width="125" height="35"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cgG-35-LQo">
                                                             <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
@@ -1454,20 +1478,28 @@
                                                             </constraints>
                                                             <state key="normal" image="red-x"/>
                                                         </button>
+                                                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W6m-HY-3su">
+                                                            <rect key="frame" x="90" y="0.0" width="35" height="35"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="35" id="F8M-aR-q4q"/>
+                                                                <constraint firstAttribute="width" constant="35" id="ypf-D8-O9R"/>
+                                                            </constraints>
+                                                            <state key="normal" image="Rate Button"/>
+                                                        </button>
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ywy-VQ-Bfi">
-                                                    <rect key="frame" x="91" y="16" width="188" height="67.5"/>
+                                                    <rect key="frame" x="91" y="16" width="143" height="67.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Driver Request" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ueb-x1-Kgy">
-                                                            <rect key="frame" x="0.0" y="0.0" width="188" height="22.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="143" height="22.5"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Eric Lu wants to ride with you" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZoP-hU-f5Z">
-                                                            <rect key="frame" x="0.0" y="22.5" width="188" height="45"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <rect key="frame" x="0.0" y="22.5" width="143" height="45"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -1493,6 +1525,8 @@
                                             <outlet property="acceptButton" destination="cgG-35-LQo" id="8mI-xr-Ocb"/>
                                             <outlet property="notificationMessageLabel" destination="ZoP-hU-f5Z" id="YWu-M7-Mgb"/>
                                             <outlet property="notificationSenderImageView" destination="Wyx-hJ-0so" id="LJL-VL-GYq"/>
+                                            <outlet property="notificationTitleLabel" destination="ueb-x1-Kgy" id="gj5-XJ-AoX"/>
+                                            <outlet property="rateButton" destination="W6m-HY-3su" id="fSh-r0-fGI"/>
                                             <outlet property="rejectButton" destination="g2Z-Uu-Amm" id="NZ2-u0-63t"/>
                                         </connections>
                                     </tableViewCell>
@@ -1772,7 +1806,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhC-ve-dGA">
                                         <rect key="frame" x="187.5" y="0.0" width="187.5" height="44"/>
-                                        <color key="backgroundColor" red="0.32788833979999998" green="0.39258638019999997" blue="0.96476185319999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.32941176470588235" green="0.39215686274509803" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <state key="normal" title="Carpool Posts">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2412,6 +2446,7 @@
         <image name="Horizontal Divider" width="640" height="1"/>
         <image name="Login Button" width="474" height="80"/>
         <image name="Map" width="640" height="209"/>
+        <image name="Rate Button" width="140" height="140"/>
         <image name="SIGN UP BUTTON" width="474" height="80"/>
         <image name="Sign up Button (black)" width="474" height="80"/>
         <image name="Star" width="54" height="52"/>

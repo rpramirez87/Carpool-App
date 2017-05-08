@@ -9,7 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "CircleImageView.h"
 @interface PassengerRequestCell : UITableViewCell
+
+
 @property (weak, nonatomic) IBOutlet CircleImageView *passengerRequestImageView;
+
+
 @property (weak, nonatomic) IBOutlet UILabel *requestMessageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *requestStatusLabel;
 

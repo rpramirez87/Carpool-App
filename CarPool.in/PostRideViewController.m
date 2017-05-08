@@ -138,6 +138,8 @@
     NSDictionary *driverPostDict = @{@"ownerKey": currentUID,
                                      @"startingAddress": self.startingAddressTextField.text,
                                      @"endingAddress": self.endingAddressTextField.text,
+                                     @"carModel" : self.carModelTextField.text,
+                                     @"carColor" : self.carColorTextField.text,
                                      @"time" : dateString,
                                      @"isDriver" : @"YES"
                                      };
@@ -180,7 +182,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)postRideButtonPressed:(UIButton *)sender {
-    if (![self.endingAddressTextField.text isEqualToString:@""] && ![self.startingAddressTextField.text isEqualToString:@""]) {
+    if (![self.endingAddressTextField.text isEqualToString:@""] && ![self.startingAddressTextField.text isEqualToString:@""] && ![self.carModelTextField.text isEqualToString:@""] && ![self.carColorTextField.text isEqualToString:@""]) {
         
         SelectViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"SelectVC"];
         [controller setIsSelectingRiders:YES];

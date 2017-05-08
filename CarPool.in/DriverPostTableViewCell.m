@@ -18,8 +18,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    
-    // Configure the view for the selected state
 }
 
 - (void)configureCellWithDriverPost:(DriverPost *)driverPost {
@@ -52,7 +50,6 @@
         self.isDriverLabel.textColor = greenColor;
         self.isDriverLabel.text = @"Driver";
         self.destinationLogoImageView.image = [UIImage imageNamed:@"destinationLogo"];
-        
     }
 
     //Load up user name and image
