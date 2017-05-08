@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray *driverPostsArray;
 @property (nonatomic, strong) UISearchController *searchController;
-
+@property (nonatomic) BOOL isSorting;
 @end
 
 @implementation RideLogViewController
@@ -39,7 +39,7 @@
     self.searchController.searchBar.delegate = self;
     
     //Implement when we have time
-    //self.searchController.searchBar.scopeButtonTitles = @[@"Date", @"Distance"];
+    self.searchController.searchBar.scopeButtonTitles = @[@"Date", @"Distance"];
     self.searchController.dimsBackgroundDuringPresentation = NO;
     self.tableView.tableHeaderView = self.searchController.searchBar;
     self.definesPresentationContext = YES;
@@ -49,6 +49,7 @@
     // TODO: Add JSBadgeView
     
     self.navigationController.navigationBarHidden = NO;
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -92,7 +93,7 @@
 
 #pragma mark - UISearchResultController/UISearchBarDelegate Delegate Functions
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    NSString *searchtext = searchController.searchBar.text;
+    //NSString *searchtext = searchController.searchBar.text;
     //    if (searchtext.length > 0) {
     //        [self.filteredArray removeAllObjects];
     //        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(firstName contains[cd] %@) OR (lastName contains[cd] %@)", searchtext, searchtext];
@@ -107,8 +108,23 @@
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
     NSLog(@"Selected Scoped %d", (int)selectedScope);
+    
+    if (selectedScope == 1) {
+        NSSortDescriptor *milesDescriptor = [[NSSortDescriptor alloc] initWithKey:@"milesInDistanceString" ascending:YES];
+        NSArray *sortDescriptors = @[milesDescriptor];
+        self.driverPostsArray = [NSMutableArray arrayWithArray:[self.driverPostsArray sortedArrayUsingDescriptors:sortDescriptors]];
+        [self.tableView reloadData];
+    }else {
+        NSSortDescriptor *timeDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:YES];
+        NSArray *sortDescriptors = @[timeDescriptor];
+        self.driverPostsArray = [NSMutableArray arrayWithArray:[self.driverPostsArray sortedArrayUsingDescriptors:sortDescriptors]];
+        [self.tableView reloadData];
+        
+    }
+    
+;
+    
 }
-
 
 
 
