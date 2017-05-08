@@ -27,6 +27,7 @@
 		D95E97FD1EB559E6004F41EE /* DataService.m in Sources */ = {isa = PBXBuildFile; fileRef = D95E97FC1EB559E6004F41EE /* DataService.m */; };
 		D98655341EBA7EF400C07EEE /* CarpoolPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D98655331EBA7EF400C07EEE /* CarpoolPostViewController.m */; };
 		D9BD7BA11EB7BCF90011591A /* RequestRideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9BD7BA01EB7BCF90011591A /* RequestRideViewController.m */; };
+		D9D404C01EC0BE3300412792 /* HCSStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D404BE1EC0BE3300412792 /* HCSStarRatingView.m */; };
 		D9F02A451EB42ADB007EB6EB /* RideLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F02A441EB42ADB007EB6EB /* RideLogViewController.m */; };
 		D9F02A481EB4352C007EB6EB /* MaterialView.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F02A471EB4352C007EB6EB /* MaterialView.m */; };
 		D9F9D8961EBBC97400426B9F /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F9D8951EBBC97400426B9F /* ProfileViewController.m */; };
@@ -76,6 +77,8 @@
 		D98D89601EB97DAF002DC15A /* CarPool.in.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CarPool.in.entitlements; sourceTree = "<group>"; };
 		D9BD7B9F1EB7BCF90011591A /* RequestRideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestRideViewController.h; sourceTree = "<group>"; };
 		D9BD7BA01EB7BCF90011591A /* RequestRideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestRideViewController.m; sourceTree = "<group>"; };
+		D9D404BD1EC0BE3300412792 /* HCSStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCSStarRatingView.h; sourceTree = "<group>"; };
+		D9D404BE1EC0BE3300412792 /* HCSStarRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCSStarRatingView.m; sourceTree = "<group>"; };
 		D9F02A431EB42ADB007EB6EB /* RideLogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RideLogViewController.h; sourceTree = "<group>"; };
 		D9F02A441EB42ADB007EB6EB /* RideLogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RideLogViewController.m; sourceTree = "<group>"; };
 		D9F02A461EB4352C007EB6EB /* MaterialView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialView.h; sourceTree = "<group>"; };
@@ -186,6 +189,7 @@
 		D920DB331EB269130087EB95 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D9D404BC1EC0BE3300412792 /* Star Rating View */,
 				D922AA6E1EB641E20004A1A7 /* Cells */,
 				D922AA6D1EB641C40004A1A7 /* Custom Views */,
 			);
@@ -254,6 +258,23 @@
 				D95E97FC1EB559E6004F41EE /* DataService.m */,
 			);
 			name = "Data Service";
+			sourceTree = "<group>";
+		};
+		D9D404BC1EC0BE3300412792 /* Star Rating View */ = {
+			isa = PBXGroup;
+			children = (
+				D9D404BD1EC0BE3300412792 /* HCSStarRatingView.h */,
+				D9D404BE1EC0BE3300412792 /* HCSStarRatingView.m */,
+				D9D404BF1EC0BE3300412792 /* Images */,
+			);
+			path = "Star Rating View";
+			sourceTree = "<group>";
+		};
+		D9D404BF1EC0BE3300412792 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -410,6 +431,7 @@
 				D9F02A451EB42ADB007EB6EB /* RideLogViewController.m in Sources */,
 				D920DB1A1EB268A60087EB95 /* main.m in Sources */,
 				D9541B331EBA246500D28903 /* FlatImageView.m in Sources */,
+				D9D404C01EC0BE3300412792 /* HCSStarRatingView.m in Sources */,
 				D9F9D89F1EBCF3C300426B9F /* PassengerRequestCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -143,6 +143,7 @@
                         NSDictionary *notificationToDriverDict = @{
                                                                    @"senderKey": passengerKey,
                                                                    @"message" : [NSString stringWithFormat:@"Please rate your carpool experience with %@", currentUserName],
+                                                                    @"drivePostID" : self.currentDriverPost.drivePostID,
                                                                    @"isRateNotification" : @"YES"
                                                                    };
                         //Save notification to drivers pending notifications
@@ -162,6 +163,7 @@
                         NSDictionary *notificationToPassengerDict = @{
                                                                    @"senderKey": self.currentDriverPost.ownerKey,
                                                                    @"message" : [NSString stringWithFormat:@"Please rate your carpool experience with your driver %@", self.currentDriverName],
+                                                                    @"drivePostID" : self.currentDriverPost.drivePostID,
                                                                    @"isRateNotification" : @"YES"
                                                                    };
                         
@@ -186,6 +188,8 @@
                                                                };
                         //Send a notification using nodeJS
                         [[[[DataService ds] pushNotificationsReference] childByAutoId] updateChildValues:pushNotificationDict];
+                        
+                        //Delete itself from all the records
                     }
                 }
             }];

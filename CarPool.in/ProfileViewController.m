@@ -16,6 +16,7 @@
 #import "CarpoolPostViewController.h"
 #import "DriverPostTableViewCell.h"
 #import "DriverPost.h"
+#import "HCSStarRatingView.h"
 
 @interface ProfileViewController () <UITableViewDelegate, UITableViewDataSource, FCAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet BorderedCircleImageView *profileImageView;
@@ -26,6 +27,7 @@
 @property (strong, nonatomic) NSMutableArray *notificationDictionaryKeysArray;
 @property (strong, nonatomic) NSMutableArray *carpoolPostsArray;
 @property (nonatomic) BOOL isShowingNotifications;
+@property (weak, nonatomic) IBOutlet HCSStarRatingView *starRatingView;
 
 //Buttons
 @property (weak, nonatomic) IBOutlet UIButton *notificationButton;
@@ -53,6 +55,10 @@
     [self loadCurrentUserInfo];
     [self loadAllNotifications];
     [self loadAllUsersCarpoolPosts];
+    [self loadUserRatings];
+    
+    //Initialize star rating
+    self.starRatingView.enabled = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -145,6 +151,7 @@
             if (currentUserName != nil) {
                 self.profileNameLabel.text = currentUserName;
             }
+            
         }else {
             //Assign empty image
             self.profileImageView.image = [UIImage imageNamed:@"userCircle"];
@@ -215,6 +222,46 @@
      }];
 }
 
+// Load user ratings
+
+- (void)loadUserRatings {
+    
+    //Current User ID
+    NSString *currentUID = [FIRAuth auth].currentUser.uid;
+    
+    [[[[[DataService ds] publicUserReference] child:currentUID] child:@"userRatings"] observeEventType:FIRDataEventTypeValue
+withBlock:^(FIRDataSnapshot *snapshot) {
+    NSLog(@"User Ratings");
+    
+    
+    if ([snapshot exists]) {
+        
+        NSUInteger ratingsCount = [snapshot childrenCount];
+        
+        // Loop over children
+        NSEnumerator *children = [snapshot children];
+        FIRDataSnapshot *child;
+        NSInteger totalValue = 0;
+        while (child = [children nextObject]) {
+            NSNumber *ratingValue = child.value;
+            NSLog(@"Rating Value - %@", ratingValue);
+            totalValue += [ratingValue integerValue];
+        }
+        
+        NSNumber *NSRatingCount = [NSNumber numberWithUnsignedInteger:ratingsCount];
+        float ratingCountFloat = [NSRatingCount floatValue];
+        float currentUserRating = (float)totalValue / ratingCountFloat;
+        
+        NSLog(@"User Rating - %.2f", currentUserRating);
+        
+        self.starRatingView.value = currentUserRating;
+    }
+    
+
+    //Set data
+}];
+}
+
 # pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -229,9 +276,12 @@
         //Add target-action for buttons
         cell.acceptButton.tag = indexPath.row;
         cell.rejectButton.tag = indexPath.row;
+        cell.rateButton.tag = indexPath.row;
+        
         
         [cell.acceptButton addTarget:self action:@selector(notificationAccepted:) forControlEvents:UIControlEventTouchUpInside];
         [cell.rejectButton addTarget:self action:@selector(notificationRejected:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.rateButton addTarget:self action:@selector(rateButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
     }else {
         DriverPost *currentDriverPost = self.carpoolPostsArray[indexPath.row];
@@ -366,6 +416,53 @@
         
     }];
     [alert addButton:@"No" withActionBlock:^{
+    }];
+}
+
+- (void)rateButtonTapped:(UIButton *)button {
+    CGPoint touchPoint = [button convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *clickedButtonIndexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
+    NSLog(@"Rate Button - NSIndex Path Row %ld", (long) clickedButtonIndexPath.row );
+    NSString *currentDictionaryKey = self.notificationDictionaryKeysArray[clickedButtonIndexPath.row];
+
+    //Create an alert
+    FCAlertView *alert = [[FCAlertView alloc] init];
+    [alert makeAlertTypeRateStars:^(NSInteger rating) {
+        NSLog(@"Your Stars Rating: %ld", (long)rating); // Use the Rating as you'd like
+        
+        [[[[DataService ds] notificationsReference] child:currentDictionaryKey] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot *snapshot) {
+            if ([snapshot exists]) {
+                NSString *drivePostID = snapshot.value[@"drivePostID"];
+                NSString *senderkey = snapshot.value[@"senderKey"];
+                NSLog(@"Drive Post ID%@", drivePostID);
+                NSLog(@"Sender %@", senderkey);
+                
+                [[[[[[DataService ds] publicUserReference] child:senderkey] child:@"userRatings"] child:drivePostID] setValue:[NSNumber numberWithInteger:rating]];
+            }
+        }];
+    }];
+    
+    [alert showAlertInView:self
+                 withTitle:@"User Experience Rating"
+              withSubtitle:[NSString stringWithFormat:@"Rate your carpool experience."]
+           withCustomImage:nil
+       withDoneButtonTitle:@"Rate"
+                andButtons:nil];
+    [alert doneActionBlock:^{
+        NSLog(@"Done");
+        
+        //        [self.notificationDictionaryKeysArray removeObjectAtIndex:clickedButtonIndexPath.row];
+        //        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:clickedButtonIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        //        NSString *currentUID = [FIRAuth auth].currentUser.uid;
+        
+        //        NSLog(@"%@ - Dictionary Key", currentDictionaryKey);
+        //Delete this notification in the database
+        //        [[[[DataService ds] notificationsReference] child:currentDictionaryKey] removeValue];
+        
+        //Delete notifications from public user
+        //        [[[[[[DataService ds] publicUserReference] child:currentUID] child:@"pendingRequests"] child:currentDictionaryKey] removeValue];
+        
     }];
 }
 
