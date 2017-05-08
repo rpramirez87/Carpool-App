@@ -1370,6 +1370,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="departureTimeTextField" destination="Sq0-ey-ohj" id="ZWT-eg-7kn"/>
                         <outlet property="endingAddressTextField" destination="Jsp-Yi-C2U" id="Wva-bi-5nM"/>
                         <outlet property="startingAddressTextField" destination="pi7-hu-v6K" id="XqM-bf-q7l"/>
                     </connections>

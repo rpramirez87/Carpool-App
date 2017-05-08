@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *startingAddressTextField;
 @property (weak, nonatomic) IBOutlet UITextField *endingAddressTextField;
 @property (strong, nonatomic) CLLocation *startingLocation;
+@property (weak, nonatomic) IBOutlet UITextField *departureTimeTextField;
 @property (strong, nonatomic) CLLocation *endingLocation;
 @end
 
@@ -27,6 +28,15 @@
     [super viewDidLoad];
     self.startingAddressTextField.delegate = self;
     self.endingAddressTextField.delegate = self;
+    self.departureTimeTextField.delegate = self;
+    //Set current date
+    NSDate *date = [[NSDate alloc] init];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    
+    //Current Time
+    [dateFormatter setDateFormat:@"h:mm a"];
+    NSString *dateString = [dateFormatter stringFromDate:date];
+    self.departureTimeTextField.text = dateString;
     self.navigationController.navigationBarHidden = YES;
 }
 
@@ -98,18 +108,13 @@
     //SAVE TO DRIVERS POSTS
     
     //Date formatter with current date
-    NSDate *date = [[NSDate alloc] init];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    
-    //Current Time
-    [dateFormatter setDateFormat:@"h:mm a"];
-    NSString *dateString = [dateFormatter stringFromDate:date];
+ 
     
     //Driver Post Dictionary to save
     NSDictionary *driverPostDict = @{@"ownerKey": currentUID,
                                      @"startingAddress": self.startingAddressTextField.text,
                                      @"endingAddress": self.endingAddressTextField.text,
-                                     @"time" : dateString,
+                                     @"time" : self.departureTimeTextField.text,
                                      @"isDriver" : @"NO"
                                      };
     
