@@ -545,7 +545,7 @@
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Black" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DjN-KU-mLe">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="White" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DjN-KU-mLe">
                                                                         <rect key="frame" x="46" y="0.0" width="69.5" height="18.5"/>
                                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
                                                                         <nil key="textColor"/>
@@ -1414,7 +1414,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mike Wasowski" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odh-e2-Mgu">
-                                        <rect key="frame" x="68" y="166" width="240" height="32.5"/>
+                                        <rect key="frame" x="108" y="166" width="160" height="32.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="MyanmarSangamMN" family="Myanmar Sangam MN" pointSize="24"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1439,13 +1439,24 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="continuous" value="NO"/>
                                         </userDefinedRuntimeAttributes>
                                     </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(3)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a86-Xw-dQ4">
+                                        <rect key="frame" x="316" y="231" width="40" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="OUa-Nm-kxR"/>
+                                            <constraint firstAttribute="width" constant="40" id="TfY-QH-gWp"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="uRh-Ul-JCd" firstAttribute="centerX" secondItem="odh-e2-Mgu" secondAttribute="centerX" id="0Yu-EY-ywe"/>
+                                    <constraint firstItem="a86-Xw-dQ4" firstAttribute="leading" secondItem="uRh-Ul-JCd" secondAttribute="trailing" constant="8" id="0eV-u3-omr"/>
+                                    <constraint firstAttribute="bottom" secondItem="a86-Xw-dQ4" secondAttribute="bottom" constant="16" id="13y-17-XTH"/>
                                     <constraint firstItem="1IQ-AA-lPc" firstAttribute="centerX" secondItem="FbD-9g-lhu" secondAttribute="centerX" id="GEq-HG-jBE"/>
                                     <constraint firstAttribute="trailing" secondItem="5bs-nV-6u0" secondAttribute="trailing" id="Ne9-LD-BRQ"/>
                                     <constraint firstItem="5bs-nV-6u0" firstAttribute="top" secondItem="FbD-9g-lhu" secondAttribute="top" id="RTt-9T-ibW"/>
-                                    <constraint firstItem="uRh-Ul-JCd" firstAttribute="width" secondItem="odh-e2-Mgu" secondAttribute="width" id="Tem-zl-Qmk"/>
                                     <constraint firstItem="odh-e2-Mgu" firstAttribute="centerX" secondItem="1IQ-AA-lPc" secondAttribute="centerX" id="Y5o-WV-vv8"/>
                                     <constraint firstItem="qR1-JF-ffM" firstAttribute="top" secondItem="FbD-9g-lhu" secondAttribute="top" constant="20" id="YX2-GD-YKF"/>
                                     <constraint firstItem="uRh-Ul-JCd" firstAttribute="top" secondItem="odh-e2-Mgu" secondAttribute="bottom" constant="8" id="ZOf-RM-pIE"/>
@@ -1855,6 +1866,7 @@
                     <connections>
                         <outlet property="carpoolPostsButton" destination="vhC-ve-dGA" id="QPD-RT-Rkg"/>
                         <outlet property="notificationButton" destination="PaL-YY-cab" id="tHw-Ri-S4t"/>
+                        <outlet property="numberOfRatingsLabel" destination="a86-Xw-dQ4" id="D6U-uL-z9P"/>
                         <outlet property="profileImageView" destination="1IQ-AA-lPc" id="wwG-zE-yle"/>
                         <outlet property="profileNameLabel" destination="odh-e2-Mgu" id="ans-Uw-BrS"/>
                         <outlet property="starRatingView" destination="uRh-Ul-JCd" id="9A4-16-hzL"/>

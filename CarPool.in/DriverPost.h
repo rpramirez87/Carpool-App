@@ -16,6 +16,8 @@
 @property (strong, nonatomic) NSString *milesInDistanceString;
 @property (strong, nonatomic) NSString *isDriver;
 @property (strong, nonatomic) NSString *drivePostID;
+@property (strong, nonatomic) NSString *carColor;
+@property (strong, nonatomic) NSString *carModel;
 
 //Initializer methods
 - (instancetype)initWithDict:(NSDictionary *)driverPostDict;

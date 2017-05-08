@@ -19,6 +19,8 @@
         self.time = [driverPostDict valueForKey:@"time"];
         self.milesInDistanceString = [driverPostDict valueForKey:@"miles"];
         self.isDriver = [driverPostDict valueForKey:@"isDriver"];
+        self.carColor = [driverPostDict valueForKey:@"carColor"];
+        self.carModel = [driverPostDict valueForKey:@"carModel"];
     }
     return self;
 }
@@ -31,6 +33,8 @@
         self.time = [driverPostDict valueForKey:@"time"];
         self.milesInDistanceString = [driverPostDict valueForKey:@"miles"];
         self.isDriver = [driverPostDict valueForKey:@"isDriver"];
+        self.carColor = [driverPostDict valueForKey:@"carColor"];
+        self.carModel = [driverPostDict valueForKey:@"carModel"];
         self.drivePostID = key;
     }
     return self;

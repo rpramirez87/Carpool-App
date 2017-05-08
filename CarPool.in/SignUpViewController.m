@@ -15,10 +15,6 @@
 
 @import FirebaseAuth;
 @import FirebaseDatabase;
-
-
-
-
 @interface SignUpViewController () <GIDSignInUIDelegate, GIDSignInDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailAddressTextField;
@@ -106,9 +102,9 @@ didSignInForUser:(GIDGoogleUser *)user
                                       
                                       [[[[DataService ds] userReference]child:user.uid] updateChildValues:userDict];
                                       
-                                      //Load up new view controller
+                                      //Load up Main VC
                                       RideLogViewController *rideLogVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RideLogVC"];
-                                      [self presentViewController:rideLogVC animated:YES completion:nil];
+                                      [self.navigationController pushViewController:rideLogVC animated:YES];
                                       
                                   }];
         
@@ -308,8 +304,9 @@ didDisconnectWithUser:(GIDGoogleUser *)user
             [alert doneActionBlock:^{
                 // Put your action here
                 NSLog(@"Email Verified Done");
+                //Load up Main VC
                 RideLogViewController *rideLogVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RideLogVC"];
-                [self presentViewController:rideLogVC animated:YES completion:nil];
+                [self.navigationController pushViewController:rideLogVC animated:YES];
             }];
         }
     }];

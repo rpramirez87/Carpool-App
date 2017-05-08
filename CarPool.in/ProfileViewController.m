@@ -28,6 +28,7 @@
 @property (strong, nonatomic) NSMutableArray *carpoolPostsArray;
 @property (nonatomic) BOOL isShowingNotifications;
 @property (weak, nonatomic) IBOutlet HCSStarRatingView *starRatingView;
+@property (weak, nonatomic) IBOutlet UILabel *numberOfRatingsLabel;
 
 //Buttons
 @property (weak, nonatomic) IBOutlet UIButton *notificationButton;
@@ -233,10 +234,10 @@
 withBlock:^(FIRDataSnapshot *snapshot) {
     NSLog(@"User Ratings");
     
-    
     if ([snapshot exists]) {
         
         NSUInteger ratingsCount = [snapshot childrenCount];
+        self.numberOfRatingsLabel.text = [NSString stringWithFormat:@"%d", (int)ratingsCount];
         
         // Loop over children
         NSEnumerator *children = [snapshot children];
@@ -424,8 +425,7 @@ withBlock:^(FIRDataSnapshot *snapshot) {
     NSIndexPath *clickedButtonIndexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
     NSLog(@"Rate Button - NSIndex Path Row %ld", (long) clickedButtonIndexPath.row );
     NSString *currentDictionaryKey = self.notificationDictionaryKeysArray[clickedButtonIndexPath.row];
-
-    //Create an alert
+    NSString *currentUID = [FIRAuth auth].currentUser.uid;    //Create an alert
     FCAlertView *alert = [[FCAlertView alloc] init];
     [alert makeAlertTypeRateStars:^(NSInteger rating) {
         NSLog(@"Your Stars Rating: %ld", (long)rating); // Use the Rating as you'd like
@@ -438,6 +438,18 @@ withBlock:^(FIRDataSnapshot *snapshot) {
                 NSLog(@"Sender %@", senderkey);
                 
                 [[[[[[DataService ds] publicUserReference] child:senderkey] child:@"userRatings"] child:drivePostID] setValue:[NSNumber numberWithInteger:rating]];
+                
+                //Delete notification
+                [self.notificationDictionaryKeysArray removeObjectAtIndex:clickedButtonIndexPath.row];
+                [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:clickedButtonIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+                
+                
+                NSLog(@"%@ - Dictionary Key", currentDictionaryKey);
+                //Delete this notification in the database
+                [[[[DataService ds] notificationsReference] child:currentDictionaryKey] removeValue];
+                
+                //Delete notifications from public user
+                [[[[[[DataService ds] publicUserReference] child:currentUID] child:@"pendingRequests"] child:currentDictionaryKey] removeValue];
             }
         }];
     }];
@@ -450,19 +462,7 @@ withBlock:^(FIRDataSnapshot *snapshot) {
                 andButtons:nil];
     [alert doneActionBlock:^{
         NSLog(@"Done");
-        
-        //        [self.notificationDictionaryKeysArray removeObjectAtIndex:clickedButtonIndexPath.row];
-        //        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:clickedButtonIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-        
-        //        NSString *currentUID = [FIRAuth auth].currentUser.uid;
-        
-        //        NSLog(@"%@ - Dictionary Key", currentDictionaryKey);
-        //Delete this notification in the database
-        //        [[[[DataService ds] notificationsReference] child:currentDictionaryKey] removeValue];
-        
-        //Delete notifications from public user
-        //        [[[[[[DataService ds] publicUserReference] child:currentUID] child:@"pendingRequests"] child:currentDictionaryKey] removeValue];
-        
+
     }];
 }
 
