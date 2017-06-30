@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "ProfileViewController.h"
+#import "RequestRideViewController.h"
+#import "PostRideViewController.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 @import UserNotifications;
 
@@ -65,7 +67,29 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     [[FBSDKApplicationDelegate sharedInstance] application:application
                              didFinishLaunchingWithOptions:launchOptions];
     
+    NSLog(@"Shortcut Items - %@",[UIApplication sharedApplication].shortcutItems);
+    
     return YES;
+}
+
+- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
+    
+    NSLog(@"Shorcut Item - %@", shortcutItem.localizedTitle);
+    
+    if ([shortcutItem.localizedTitle isEqualToString:@"Request a Ride"]) {
+        UINavigationController *rootViewController = (UINavigationController *)self.window.rootViewController;
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        RequestRideViewController *requestVC = [storyboard instantiateViewControllerWithIdentifier:@"requestVC"];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:requestVC];
+        [rootViewController.visibleViewController presentViewController:navigationController animated:YES completion:nil];
+    }else if ([shortcutItem.localizedTitle isEqualToString:@"Post A Ride"]) {
+        UINavigationController *rootViewController = (UINavigationController *)self.window.rootViewController;
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        PostRideViewController *postVC = [storyboard instantiateViewControllerWithIdentifier:@"postVC"];
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:postVC];
+        [rootViewController.visibleViewController presentViewController:navigationController animated:YES completion:nil];
+    }
+    
 }
 
 

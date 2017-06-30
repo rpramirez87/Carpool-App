@@ -33,7 +33,6 @@
 //Buttons
 @property (weak, nonatomic) IBOutlet UIButton *notificationButton;
 @property (weak, nonatomic) IBOutlet UIButton *carpoolPostsButton;
-
 @end
 
 @implementation ProfileViewController
@@ -73,7 +72,6 @@
 }
 
 #pragma mark - IBActions
-
 - (IBAction)profileButtonPressed:(UIButton *)sender {
     //    self.navigationController.navigationBar.hidden = NO;
     //    [self.navigationController popViewControllerAnimated:YES];

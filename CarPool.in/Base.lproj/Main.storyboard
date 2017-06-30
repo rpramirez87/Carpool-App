@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ZoL-dp-6KV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ZoL-dp-6KV">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -216,7 +216,7 @@
         <!--Post Ride View Controller-->
         <scene sceneID="eJG-1J-QJW">
             <objects>
-                <viewController id="FBf-9P-lIL" customClass="PostRideViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="postVC" id="FBf-9P-lIL" customClass="PostRideViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="m14-LZ-keu"/>
                         <viewControllerLayoutGuide type="bottom" id="Riv-fJ-AQm"/>
@@ -1221,7 +1221,7 @@
         <!--Request Ride View Controller-->
         <scene sceneID="nEU-8i-sj4">
             <objects>
-                <viewController id="PC8-qD-elV" customClass="RequestRideViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="requestVC" id="PC8-qD-elV" customClass="RequestRideViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EwM-pN-fhY"/>
                         <viewControllerLayoutGuide type="bottom" id="meH-bZ-jhQ"/>
@@ -2454,7 +2454,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="ZoL-dp-6KV" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="FdO-eb-MQ5">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FdO-eb-MQ5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

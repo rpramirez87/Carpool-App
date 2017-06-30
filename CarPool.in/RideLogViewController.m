@@ -23,7 +23,6 @@
 
 @implementation RideLogViewController
 
-
 #pragma mark - View Controller Life Cycle
 
 - (void)viewDidLoad {
@@ -49,7 +48,6 @@
     // TODO: Add JSBadgeView
     
     self.navigationController.navigationBarHidden = NO;
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -110,23 +108,20 @@
     NSLog(@"Selected Scoped %d", (int)selectedScope);
     
     if (selectedScope == 1) {
+        
+        //Sort by distance
         NSSortDescriptor *milesDescriptor = [[NSSortDescriptor alloc] initWithKey:@"milesInDistanceString" ascending:YES];
         NSArray *sortDescriptors = @[milesDescriptor];
         self.driverPostsArray = [NSMutableArray arrayWithArray:[self.driverPostsArray sortedArrayUsingDescriptors:sortDescriptors]];
         [self.tableView reloadData];
     }else {
-        NSSortDescriptor *timeDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:YES];
+        //Sort by time
+        NSSortDescriptor *timeDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:YES  selector:@selector(compare:)];
         NSArray *sortDescriptors = @[timeDescriptor];
         self.driverPostsArray = [NSMutableArray arrayWithArray:[self.driverPostsArray sortedArrayUsingDescriptors:sortDescriptors]];
         [self.tableView reloadData];
-        
     }
-    
-;
-    
 }
-
-
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     NSLog(@"%@", searchBar.text);
@@ -134,7 +129,6 @@
     CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:userDestinationLocation.latitude longitude:userDestinationLocation.longitude];
     [self loadAllDriversPostsUsingGeofireWithLocation:userLocation];
 }
-
 
 #pragma mark - Firebase Functionalities
 - (void)loadAllDriverPostsFromFirebase {
