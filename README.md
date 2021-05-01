@@ -41,7 +41,7 @@ when the ride is done they can provide a rating for each other.
 * APNS
 
 ### Third-Libraries
-* Firebas
+* Firebase
 * FacebookAuth
 * GoogleSignIn
 * JSQMessagesViewController
